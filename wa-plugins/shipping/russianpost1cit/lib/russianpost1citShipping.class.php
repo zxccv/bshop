@@ -12,8 +12,23 @@
 
 class russianpost1citShipping extends waShipping
 {
-    protected function calculate()
+    private function test()
     {
+        $prodModel = new shopProductModel();
+        $prod = $prodModel->getById('6');
+        $stocks = $prodModel->getProductStocksByProductId('6');
+        
+        $sett = new waAppSettingsModel();
+        //$sett->set('russianpost1cit', 'testvalue', 'хуета какая-то');        
+        $settings = $sett->get('russianpost1cit');
+        
+    }
+
+
+    protected function calculate()
+    {                  
+        $this->test();
+        
         require_once 'postcalc.class.php';
         $postcalclib = new postCalc();
         $postResponce = $postcalclib->postcalc_request(192236, $this->getAddress('zip'), $this->getTotalWeight()*1000 , $this->getTotalPrice(), 'RU');
@@ -21,7 +36,10 @@ class russianpost1citShipping extends waShipping
             return $postResponce;
         
         $currency = $this->currency;
-        
+
+        $items = $this->getItems();
+        $cart = new shopCart();
+        $cart_items = $cart->items();
         $CP = $postResponce[Отправления][ЦеннаяПосылка];
         
         $deliveries = array();        
@@ -29,11 +47,11 @@ class russianpost1citShipping extends waShipping
                 array(
                 'name'         => $CP[Название],
                 'currency'     => $currency,
-                'rate'         => $CP[Тариф],
+                'rate'         => $CP[Доставка],
                 'est_delivery' => $CP[СрокДоставки].' дней'
             );
         
-        $CP = $postResponce[Отправления][ПростаяБандероль];
+        /*$CP = $postResponce[Отправления][ПростаяБандероль];
                 
         $deliveries[2] =
                 array(
@@ -41,7 +59,7 @@ class russianpost1citShipping extends waShipping
                 'currency'     => $currency,
                 'rate'         => $CP[Тариф],
                 'est_delivery' => $CP[СрокДоставки].' дней'
-            );
+            );*/
         
         return $deliveries;
     }

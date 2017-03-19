@@ -1,0 +1,11 @@
+/*
+!.gitignore
+!/wa-plugins/shipping/russianpost1cit
+!/wa-config
+/wa-config/*
+!/wa-config/SystemConfig.class.php
+!/wa-system
+/wa-system/*
+!/wa-system/vendors
+/wa-system/vendors/*
+!/wa-system/vendors/1cit
