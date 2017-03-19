@@ -22,6 +22,9 @@ class russianpost1citShipping extends waShipping
         //$sett->set('russianpost1cit', 'testvalue', 'хуета какая-то');        
         $settings = $sett->get('russianpost1cit');
         
+        $helper = new helperClass1cit();
+        
+               
     }
 
 
