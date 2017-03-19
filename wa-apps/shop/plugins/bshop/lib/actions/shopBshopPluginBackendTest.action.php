@@ -19,10 +19,13 @@ class shopBshopPluginBackendTestAction extends waViewAction
                 }
             }
         }*/
-        $help = new helperClass1cit();
+              
+        $prodId = waRequest::request('prodId');
         
-        $result = $help->mult(3, 8);
+        $product = new shopProduct($prodId);
         
-        $this->view->assign('result', $result);
+        $pt = helperClass1cit::getProductPurchaseTime($prodId);
+        
+        $this->view->assign('result', $product['name'].'---->'.$pt);
     }
 }

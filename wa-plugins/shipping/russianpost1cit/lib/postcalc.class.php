@@ -142,8 +142,7 @@ class postCalc
     
     public function postcalc_request($From, $To, $Weight, $Valuation=0, $Country='RU')
     {
-        $arrPostcalcConfig = $this->GetConfig();
-        extract($arrPostcalcConfig, EXTR_PREFIX_ALL, 'config');
+        $arrPostcalcConfig = $this->GetConfig();        
         // Обязательно! Проверяем данные - больше всего ошибочных запросов из-за неверных значений веса и оценки,
         // из-за пропущенного поля "Куда".
         if ( !is_numeric($Weight) || !($Weight > 0 && $Weight <= 100000) ) 
@@ -162,8 +161,8 @@ class postCalc
                 return "Поле 'Куда': '$To' - не является допустимым индексом, названием региона или центра региона!";
         // Если установлен флаг $config_city_as_pindex, то в запрос подставляем почтовый индекс по умолчанию.
         // Если флаг $config_city_as_pindex не установлен, переводим название нас.пункта в "процентную" кодировку.
-        $From = ( $arrPostcalcConfig[city_as_pindex] ) ? $PindexFrom : rawurlencode($From);  
-        $To = ( $arrPostcalcConfig[city_as_pindex] ) ? $PindexTo : rawurlencode($To);
+        $From = ( $arrPostcalcConfig['city_as_pindex'] ) ? $PindexFrom : rawurlencode($From);  
+        $To = ( $arrPostcalcConfig['city_as_pindex'] ) ? $PindexTo : rawurlencode($To);
 
         if ( !$this->postcalc_arr_from_txt('postcalc_light_countries.txt', $Country, 1) ) 
                 return "Код страны '$Country' не найден в базе стран postcalc_light_countries.txt!";
@@ -172,11 +171,11 @@ class postCalc
         $QueryString  = "st=$arrPostcalcConfig[st]&ml=$arrPostcalcConfig[ml]";
         $QueryString .= "&f=$From&t=$To&w=$Weight&v=$Valuation&c=$Country";
         $QueryString .= "&o=php&sw=PostcalcLight_2.2&cs=$arrPostcalcConfig[cs]";
-        if ( $arrPostcalcConfig[d] != 'now' ) $QueryString .= "&d=$arrPostcalcConfig[d]";
-        if ( $arrPostcalcConfig[ib] != 'f' ) $QueryString .= "&ib=$arrPostcalcConfig[ib]";
-        if ( $arrPostcalcConfig[r] != 0.01 ) $QueryString .= "&r=$arrPostcalcConfig[r]";
-        if ( $arrPostcalcConfig[pr] > 0 ) $QueryString .= "&pr=$arrPostcalcConfig[pr]";    
-        if ( $arrPostcalcConfig[pk] > 0 ) $QueryString .= "&pk=$arrPostcalcConfig[pk]";  
+        if ( $arrPostcalcConfig['d'] != 'now' ) $QueryString .= "&d=$arrPostcalcConfig[d]";
+        if ( $arrPostcalcConfig['ib'] != 'f' ) $QueryString .= "&ib=$arrPostcalcConfig[ib]";
+        if ( $arrPostcalcConfig['r'] != 0.01 ) $QueryString .= "&r=$arrPostcalcConfig[r]";
+        if ( $arrPostcalcConfig['pr'] > 0 ) $QueryString .= "&pr=$arrPostcalcConfig[pr]";    
+        if ( $arrPostcalcConfig['pk'] > 0 ) $QueryString .= "&pk=$arrPostcalcConfig[pk]";  
 
         // Название файла - префикс postcalc_ плюс хэш строки запроса
         $CacheFile = "$arrPostcalcConfig[cache_dir]/postcalc_".md5($QueryString).'.txt';
@@ -184,7 +183,7 @@ class postCalc
         $arrCacheFiles = glob( "$arrPostcalcConfig[cache_dir]/postcalc_*.txt" );
         $Now = time();
         foreach ( $arrCacheFiles as $fileObj ) 
-            if ( $Now-filemtime($fileObj) > $arrPostcalcConfig[cache_valid] ) unlink( $fileObj );
+            if ( $Now-filemtime($fileObj) > $arrPostcalcConfig['cache_valid'] ) unlink( $fileObj );
 
         // Если существует файл кэша для данной строки запроса, просто зачитываем его
         if ( file_exists($CacheFile) ) {
@@ -193,14 +192,14 @@ class postCalc
              // Формируем опции запроса. Это _необязательно_, однако упрощает контроль и отладку
             $arrOptions = array('http' =>
               array( 'header'  => 'Accept-Encoding: gzip',
-                     'timeout' => $arrPostcalcConfig[timeout], 
+                     'timeout' => $arrPostcalcConfig['timeout'], 
                      'user_agent' => 'PostcalcLight_2.2 '.phpversion() 
                    )
             );
             $TS = microtime(1);
             // Опрашиваем в цикле сервера Postcalc.RU, пока не получаем ответ
             $ConnectOK = 0;
-            foreach ( $arrPostcalcConfig[servers] as $Server ) {
+            foreach ( $arrPostcalcConfig['servers'] as $Server ) {
                 // Запрос к серверу. Подавляем вывод сообщений и сохраняем ответ в переменной $Response. 
                 $Response = @file_get_contents("http://$Server/?$QueryString", false , stream_context_create($arrOptions));
                 // При ошибке соединения опрашиваем следующий сервер в цепочке.
@@ -208,7 +207,7 @@ class postCalc
                       // === ОБРАБОТКА ОШИБОК СОЕДИНЕНИЯ                  
                       // Журнал ошибок соединения, поля разделены табуляцией: 
                       // метка времени, сервер, истекшее время с начала сессии (т.е. всех запросов), краткое сообщение об ошибке, полное сообщение об ошибке
-                      if ( $arrPostcalcConfig[error_log] && count(error_get_last()) ) {
+                      if ( $arrPostcalcConfig['error_log'] && count(error_get_last()) ) {
                             $ErrorLog = "$arrPostcalcConfig[cache_dir]/postcalc_error_" .date('Y-m') .'.log';
                             $arrError = error_get_last(); 
                             $PHPErrorMessage = $arrError['message'];
@@ -217,7 +216,7 @@ class postCalc
                             $fp_log = fopen($ErrorLog,'a');
                             fwrite($fp_log, date('Y-m-d H:i:s') ."\t$Server\t" .number_format((microtime(1)-$TS),3) ."\t$ErrMessage\t$PHPErrorMessage\n");
                             fclose($fp_log);
-                            if ( $arrPostcalcConfig[error_log_send] > 0 ) {
+                            if ( $arrPostcalcConfig['error_log_send'] > 0 ) {
                                 $fp_log = fopen($ErrorLog,'r');
                                 // Последовательно идем по логу и сохраняем в переменной $MailMessage фрагмент не более $config_error_log_send строк
                                 $MailMessage = '';  $send_log=false;  $line_counter = 0;
@@ -231,7 +230,7 @@ class postCalc
                                     // Если в $MailMessage оказалось ровно $config_error_log_send строк, сбрасываем счетчик строк и устанавливаем флаг $send_log.
                                     // Если следующее чтение вернуло конец файла, цикл будет прерван и фрагмент лога отослан по почте.  
                                     // Иначе фрагмент лога будет сброшен, как и флаг $send_log 
-                                    if ( $line_counter % $arrPostcalcConfig[error_log_send] === 0 ) {
+                                    if ( $line_counter % $arrPostcalcConfig['error_log_send'] === 0 ) {
                                         $line_counter = 0;
                                         $send_log=true;
                                     }
@@ -255,7 +254,7 @@ class postCalc
                     $ConnectOK = 1;      
                     break;
             }
-            if ( !$ConnectOK )  return 'Не удалось соединиться ни с одним из следующих серверов postcalc.ru: '.implode(',',$arrPostcalcConfig[servers]).'. Проверьте соединение с Интернетом.';
+            if ( !$ConnectOK )  return 'Не удалось соединиться ни с одним из следующих серверов postcalc.ru: '.implode(',',$arrPostcalcConfig['servers']).'. Проверьте соединение с Интернетом.';
 
             $ResponseSize = strlen( $Response );
 
@@ -273,7 +272,7 @@ class postCalc
 
             // Журнал успешных соединений, поля разделены табуляцией: 
             // метка времени, сервер, затраченное время, размер ответа, строка запроса
-            if ( $arrPostcalcConfig[log] ) {
+            if ( $arrPostcalcConfig['log'] ) {
                 $fp_log = fopen("$arrPostcalcConfig[cache_dir]/postcalc_light_" .date('Y-m') .'.log','a');
                 fwrite($fp_log,date('Y-m-d H:i:s')."\t$Server\t" .number_format((microtime(1)-$TS),3) ."\t$ResponseSize\t$QueryString\n");
                 fclose($fp_log);
@@ -350,15 +349,13 @@ class postCalc
      */
     private function postcalc_arr_from_txt($src_txt, $search = '', $limit = 0){
          $arrPostcalcConfig = $this->GetConfig();
-         extract($arrPostcalcConfig, EXTR_PREFIX_ALL, 'config');
-         $arr=array();
          // === Источник - таблица mysql
       
          // === Источник - текстовый файл.
          $src_idx = basename($src_txt, 'txt'). 'idx';
-         $src_txt = $arrPostcalcConfig[txt_dir]. '/' .$src_txt;
-         $src_idx = $arrPostcalcConfig[txt_dir]. '/' .$src_idx;
-         $search =  mb_convert_case($search, MB_CASE_LOWER, $arrPostcalcConfig[cs]);
+         $src_txt = $arrPostcalcConfig['txt_dir']. '/' .$src_txt;
+         $src_idx = $arrPostcalcConfig['txt_dir']. '/' .$src_idx;
+         $search =  mb_convert_case($search, MB_CASE_LOWER, $arrPostcalcConfig['cs']);
 
          // == Если нет файла индекса или фильтр отсутствует, идем полным перебором 
          if ( !file_exists($src_idx) || $search == '' ) {
@@ -367,7 +364,7 @@ class postCalc
              while ( ( $line = fgets($fp) ) !== false ) {
                  list($key, $value) = explode("\t", $line);
                  if (  $search == '' || 
-                      ( $search != '' && mb_stripos($key, $search, 0, $arrPostcalcConfig[cs]) === 0 ) 
+                      ( $search != '' && mb_stripos($key, $search, 0, $arrPostcalcConfig['cs']) === 0 ) 
                     ) {
                    $arr[$key] = trim($value);
                    if ($limit > 0 && ++$counter >= $limit) break;
@@ -382,14 +379,14 @@ class postCalc
          $pos = mb_strpos(
                            $string_idx,
                            // Берем два первых символа
-                          "\n".mb_substr($search, 0, 2, $arrPostcalcConfig[cs]), 
+                          "\n".mb_substr($search, 0, 2, $arrPostcalcConfig['cs']), 
                            0,  
-                           $arrPostcalcConfig[cs]
+                           $arrPostcalcConfig['cs']
                  );
-         $idx_len = mb_strlen($string_idx, $arrPostcalcConfig[cs]);
+         $idx_len = mb_strlen($string_idx, $arrPostcalcConfig['cs']);
          // Конец строки с совпадением
-         $pos_line_end = mb_strpos($string_idx, "\n", $pos + 1, $arrPostcalcConfig[cs]);
-         $s = mb_substr($string_idx, $pos + 1, $pos_line_end - $pos - 1, $arrPostcalcConfig[cs]);
+         $pos_line_end = mb_strpos($string_idx, "\n", $pos + 1, $arrPostcalcConfig['cs']);
+         $s = mb_substr($string_idx, $pos + 1, $pos_line_end - $pos - 1, $arrPostcalcConfig['cs']);
          // Получили сдвиг в оригинальном файле.
          list($tmp, $offset) = explode("\t", $s);
          // Теперь длина. 
@@ -399,8 +396,8 @@ class postCalc
             $len = 1000000;
          } else {
             $pos = $pos_line_end + 1;
-            $pos_line_end = mb_strpos($string_idx, "\n", $pos + 1, $arrPostcalcConfig[cs]);
-            $s = mb_substr($string_idx, $pos + 1, $pos_line_end - $pos, $arrPostcalcConfig[cs]);
+            $pos_line_end = mb_strpos($string_idx, "\n", $pos + 1, $arrPostcalcConfig['cs']);
+            $s = mb_substr($string_idx, $pos + 1, $pos_line_end - $pos, $arrPostcalcConfig['cs']);
             list($tmp, $offset2) = explode("\t", $s);
             $len = $offset2 - $offset;
          }
@@ -414,7 +411,7 @@ class postCalc
          foreach ($arr_tmp as $no => $line ) {
               list($key, $value) = explode("\t", $line);
               if (  $search == '' || 
-                      ( $search != '' && mb_stripos($key, $search, 0, $arrPostcalcConfig[cs]) === 0 ) 
+                      ( $search != '' && mb_stripos($key, $search, 0, $arrPostcalcConfig['cs']) === 0 ) 
                     ) {
                    $arr[$key] = trim($value);
                    if ($limit > 0 && ++$counter >= $limit) break;

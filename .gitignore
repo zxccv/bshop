@@ -5,6 +5,7 @@
 !/wa-plugins/shipping
 /wa-plugins/shipping/*
 !/wa-plugins/shipping/russianpost1cit
+!/wa-plugins/shipping/pickup
 
 !/wa-apps
 /wa-apps/*
