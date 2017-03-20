@@ -6,6 +6,7 @@
 /wa-plugins/shipping/*
 !/wa-plugins/shipping/russianpost1cit
 !/wa-plugins/shipping/pickup
+!/wa-plugins/shipping/sdekmuslab
 
 !/wa-apps
 /wa-apps/*
