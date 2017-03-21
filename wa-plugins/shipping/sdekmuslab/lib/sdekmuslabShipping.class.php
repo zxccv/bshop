@@ -3,16 +3,22 @@
 class sdekMusLabShipping extends waShipping
 {
     protected function calculate()
-    {        
-        return 'Хуйс';
-                
+    {          
+        if(!$this->getAddress('zip'))
+            return "Не задан точный адрес доставки";
+        
+        $cart = new shopCart();
+        $calc_result = helperClass1cit::getSdekCalculation($this->getAddress('zip'), $cart->items(),$this->getTotalPrice());
+        if(is_string($calc_result))
+            return $calc_result;
+                       
         $deliveries = array();        
         $deliveries[] =
                 array(
-                'name'         => $CP['Название'],
+                'name'         => 'Доставка курьером СДЭК',
                 'currency'     => $currency,
-                'rate'         => $CP['Доставка'],
-                'est_delivery' => $dost_date->format('d.m.Y')                
+                'rate'         => $calc_result['rate'],
+                'est_delivery' => $calc_result['est_delivery']
             );
                 
         return $deliveries;

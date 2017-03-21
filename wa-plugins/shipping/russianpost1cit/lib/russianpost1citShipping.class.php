@@ -16,7 +16,20 @@ class russianpost1citShipping extends waShipping
     {        
         require_once 'postcalc.class.php';
         $postcalclib = new postCalc();
-        $postResponce = $postcalclib->postcalc_request(192236, $this->getAddress('zip'), $this->getTotalWeight()*1000 , $this->getTotalPrice(), 'RU');
+        
+        if($this->getAddress('zip'))
+            $zip = $this->getAddress('zip');
+        else
+        {
+            $zip = helperClass1cit::getCityZipCodeFromKladr($this->getAddress('city'), $this->getAddress('region'));
+        }
+        
+        //Самойлов НАЧАЛО 21.03.17 15:33 #
+        //Страхуемся только на 100 рублей
+        //$postResponce = $postcalclib->postcalc_request(192236, $zip, $this->getTotalWeight()*1000 , $this->getTotalPrice(), 'RU');
+        $postResponce = $postcalclib->postcalc_request(192236, $zip, $this->getTotalWeight()*1000 , 100, 'RU');
+        //Самойлов КОНЕЦ 21.03.17 15:34
+        
         if(gettype($postResponce) == "string")
             return $postResponce;
         
@@ -31,13 +44,13 @@ class russianpost1citShipping extends waShipping
           $product_ids[]=$cart_item['id'];  
         };
         
-        $purch_time = helperClass1cit::getProductsPurchaseTime($product_ids);
+        $purch_time = helperClass1cit::getProductsPurchaseTime($cart_items);        
         
         $CP = $postResponce['Отправления']['ЦеннаяПосылка'];
         
         $dost_date = new DateTime();
         
-        $dost_date = date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
+        date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
         
         $tire_position = strpos($CP['СрокДоставки'],'-');
         if($tire_position == FALSE)
@@ -49,14 +62,14 @@ class russianpost1citShipping extends waShipping
             $delivery_time = substr($CP['СрокДоставки'], $tire_position+1);
         }
         
-        $dost_date = date_add($dost_date, new DateInterval('P'.$delivery_time.'D'));
+        date_add($dost_date, new DateInterval('P'.$delivery_time.'D'));
                 
         $deliveries = array();        
         $deliveries[] =
                 array(
                 'name'         => $CP['Название'],
                 'currency'     => $currency,
-                'rate'         => $CP['Доставка'],
+                'rate'         => ceil($CP['Доставка']),
                 'est_delivery' => $dost_date->format('d.m.Y')                
             );
         
