@@ -3,9 +3,38 @@
 class helperClass1cit
 {
     /**
-     * 
+     * Возвращает код кладр населенного пункта
      * @param type $city Наименование города
-     * @param type $region Наименование региона
+     * @param type $region Код региона
+     */
+    public static function getCityIDFromKladr($city,$region)
+    {
+        $api = new KladrApi(KladrApi::OurToken, '');
+        
+        $query = new KladrQuery();	
+	$query->ContentName = $city;
+        $query->ParentType = KladrObjectType::Region;
+        $query->ParentId = $region.'00000000000';
+        $query->ContentType = KladrObjectType::City;        
+	$query->Limit = 1;   
+        $query->WithParent = true;
+        
+        $arResult = $api->QueryToArray($query);
+        
+        if(count($arResult)>0)
+        {
+            return $arResult[0]['id'];           
+        } 
+        else
+        {
+            return "";
+        }
+    }
+    
+    /**
+     * Возвращает индекс по населенному пункту и региону
+     * @param type $city Наименование города
+     * @param type $region Код региона
      */
     public static function getCityZipCodeFromKladr($city,$region = NULL)
     {
@@ -44,6 +73,94 @@ class helperClass1cit
     }
             
 
+    /**
+     * Расчитывает варианты доставки деловыми линиями
+     * @param type $receiver_zip - индекс получателя
+     * @param type $items - массив товаров, каждый элемент должен содержать product_id,quantity
+     * @param float $total_price - общая стоимость товаров
+     */
+    public static function getDLCalculation($receiver_kladr_id,$items,$total_price = 0)
+    {
+        $total_weight = 0;
+        $total_volume = 0;
+        foreach ($items as $item)
+        {
+            $product = new shopProduct($item['product_id']);            
+            $features = $product->getFeatures();
+            
+            if($features['weight'] == NULL || $features['volume'] == NULL )
+            {
+                return "Невозможно расчитать стоимость. Для одного из товаров не задан вес или объем";
+            }
+            
+            $total_weight = $total_weight + $features['weight']['value']*$item['quantity'];
+            $total_volume = $total_volume + $features['volume']['value']*$item['quantity'];           
+        }
+        
+        $dl_request = array();
+        $dl_request['appKey'] = '5F133B38-0E0A-11E7-9479-00505683A6D3';
+        $dl_request['derivalPoint'] = '7800000000000000000000000';
+        $dl_request['derivalDoor'] = false;
+        $dl_request['arrivalPoint'] = $receiver_kladr_id.'000000000000';
+        $dl_request['arrivalDoor'] = false;
+        $dl_request['sizedVolume'] = (string)$total_volume;
+        $dl_request['sizedWeight'] = (string)$total_weight;
+        $dl_request['statedValue'] = $total_price;
+        
+        $dl_request_encoded = json_encode($dl_request);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.dellin.ru/v1/public/calculator.json');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dl_request_encoded);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($dl_request_encoded)));
+        
+        $result_json = curl_exec($ch);
+        
+        $result = json_decode($result_json,true);
+        
+        if($result['errors'])
+        {
+            if(is_string($result['errors']))
+            {
+                return $result['errors'];
+            } 
+            elseif(is_array($result['errors']))
+            {
+                $error_text = '';
+                foreach ($result['errors'] as $error_key => $error_desc)
+                {
+                    $error_text = $error_text.$error_key.'('.$error_desc.')<BR>';
+                }
+            }
+            else
+            {
+                return 'Неопознанная ошибка';
+            }
+        }
+        
+        $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
+        
+        $est_delivery_date = new DateTime();        
+        $est_delivery_date->add(new DateInterval('P'.$purchase_time.'D'));
+        $est_delivery_date->add(new DateInterval('P'.$result['time']['value'].'D'));
+        
+        $est_delivery = $est_delivery_date->format('d.m.Y');
+        
+        $rate = $result['price'];
+        
+        $delivery_variants = array();
+        foreach ($result['arrival']['terminals'] as $terminal_data)
+        {
+            $delivery_variants[]=array('name' => $terminal_data['address'],'rate' => $rate,'est_delivery' => $est_delivery);
+        }
+        
+        return $delivery_variants;        
+    }
 
     /**
      * 
@@ -52,16 +169,23 @@ class helperClass1cit
      * @param float $total_price - общая стоимость товаров
      */
     public static function getSdekCalculation($receiver_zip,$items,$total_price = 0)
-    {          
-        $sdek_request = array();
-        $sdek_request['version'] = '1.0';
-        $sdek_request['tariffId'] = '11';
-        $sdek_request['senderCityPostCode'] = '192236';
-        $sdek_request['receiverCityPostCode'] = $receiver_zip;
-        
+    {      
         $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
         $date_execute = new DateTime();
         $date_execute->add(new DateInterval('P'.$purchase_time.'D'));
+                
+        $sdek_request = array();
+        $sdek_request['version'] = '1.0';
+        //Самойлов НАЧАЛО 22.03.17 12:15 #228.1
+        $sdek_request['authLogin'] = '5f9b4a5ad630df114caa9c4cbfdd5920';
+        $sdek_request['secure'] = md5($date_execute->format('Y-m-d').'&'.'6352af35f6e9507a2303f2e87f9d5513');
+        //$sdek_request['tariffId'] = '11';
+        $sdek_request['tariffId'] = '137';
+        //Самойлов КОНЕЦ 22.03.17 12:15
+        
+        $sdek_request['senderCityPostCode'] = '192236';
+        $sdek_request['receiverCityPostCode'] = $receiver_zip;
+        
         $sdek_request['dateExecute'] = $date_execute->format('Y-m-d');
         
         $goods = array();

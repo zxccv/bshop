@@ -14,6 +14,9 @@ class russianpost1citShipping extends waShipping
 {
     protected function calculate()
     {        
+        //Это позволит получить тип оплаты для определения доступности доставки
+        //$data = wa()->getStorage()->get('shop/checkout');
+        
         require_once 'postcalc.class.php';
         $postcalclib = new postCalc();
         

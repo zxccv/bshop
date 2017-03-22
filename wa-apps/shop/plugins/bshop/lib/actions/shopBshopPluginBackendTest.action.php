@@ -39,7 +39,7 @@ class shopBshopPluginBackendTestAction extends waViewAction
         
         $arResult = $api->QueryToArray($query);*/
         
-        $query              = new KladrQuery();	
+        /*$query              = new KladrQuery();	
 	$query->ContentName = 'Кушавера';
         $query->ContentType = KladrObjectType::City;
         //$query->OneString = true;
@@ -48,7 +48,9 @@ class shopBshopPluginBackendTestAction extends waViewAction
 	$query->Limit = 1;        
         $query->WithParent = true;
         
-        $arResult = $api->QueryToArray($query);
+        $arResult = $api->QueryToArray($query);*/
+        
+        $res = helperClass1cit::getCityIDFromKladr('Кушавера', '53');
         
         $this->view->assign('result', $product['name'].'---->'.$pt);
     }
