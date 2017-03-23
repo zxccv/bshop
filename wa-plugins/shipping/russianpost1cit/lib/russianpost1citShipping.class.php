@@ -47,33 +47,43 @@ class russianpost1citShipping extends waShipping
           $product_ids[]=$cart_item['id'];  
         };
         
-        $purch_time = helperClass1cit::getProductsPurchaseTime($cart_items);        
-        
         $CP = $postResponce['Отправления']['ЦеннаяПосылка'];
         
-        $dost_date = new DateTime();
+        $purch_time = helperClass1cit::getProductsPurchaseTime($cart_items);                
         
-        date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
-        
-        $tire_position = strpos($CP['СрокДоставки'],'-');
-        if($tire_position == FALSE)
+        if($purch_time != -1)
         {
-            $delivery_time = $CP['СрокДоставки'];
-        }
+            $dost_date = new DateTime();
+            date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
+
+            $tire_position = strpos($CP['СрокДоставки'],'-');
+            if($tire_position == FALSE)
+            {
+                $delivery_time = $CP['СрокДоставки'];
+            }
+            else
+            {
+                $delivery_time = substr($CP['СрокДоставки'], $tire_position+1);
+            }
+
+            date_add($dost_date, new DateInterval('P'.$delivery_time.'D'));
+            $est_delivery = $dost_date->format('d.m.Y');
+        } 
         else
         {
-            $delivery_time = substr($CP['СрокДоставки'], $tire_position+1);
-        }
-        
-        date_add($dost_date, new DateInterval('P'.$delivery_time.'D'));
+            $est_delivery = '';    
+        }        
                 
         $deliveries = array();        
         $deliveries[] =
                 array(
-                'name'         => $CP['Название'],
+                //Самойлов НАЧАЛО 23.03.17 18:10 #   
+                //'name'         => $CP['Название'],
+                'name'         => 'Почтовое отделение '.$postResponce['Куда']['Адрес'],
+                //Самойлов КОНЕЦ 23.03.17 18:10    
                 'currency'     => $currency,
                 'rate'         => ceil($CP['Доставка']),
-                'est_delivery' => $dost_date->format('d.m.Y')                
+                'est_delivery' => $est_delivery                
             );
         
         /*$CP = $postResponce[Отправления][ПростаяБандероль];

@@ -63,9 +63,15 @@ class pickupShipping extends waShipping
         //Самойлофф++
         $cart = new shopCart();
         $purch_time = helperClass1cit::getProductsPurchaseTime($cart->items());
-        
-        $dost_date = new DateTime();        
-        date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
+        if($purch_time != -1)
+        {
+            $dost_date = new DateTime();        
+            date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
+            $est_delivery = $dost_date->format('d.m.Y');
+        } else
+        {
+            $est_delivery = '';
+        }
         //Самойлов--
         
         $deliveries = array();
@@ -75,7 +81,7 @@ class pickupShipping extends waShipping
                 'name'         => $rate['location'],
                 'currency'     => $currency,
                 'rate'         => $rate['cost'],
-                'est_delivery' => $dost_date->format('d.m.Y')
+                'est_delivery' => $est_delivery
             );
         }
 

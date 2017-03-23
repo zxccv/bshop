@@ -145,11 +145,18 @@ class helperClass1cit
         
         $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
         
-        $est_delivery_date = new DateTime();        
-        $est_delivery_date->add(new DateInterval('P'.$purchase_time.'D'));
-        $est_delivery_date->add(new DateInterval('P'.$result['time']['value'].'D'));
+        if($purchase_time != -1)
+        {
+            $est_delivery_date = new DateTime();        
+            $est_delivery_date->add(new DateInterval('P'.$purchase_time.'D'));
+            $est_delivery_date->add(new DateInterval('P'.$result['time']['value'].'D'));
         
-        $est_delivery = $est_delivery_date->format('d.m.Y');
+            $est_delivery = $est_delivery_date->format('d.m.Y');
+        } 
+        else
+        {
+            $est_delivery = '';
+        }
         
         $rate = $result['price'];
         
@@ -170,9 +177,12 @@ class helperClass1cit
      */
     public static function getSdekCalculation($receiver_zip,$items,$total_price = 0)
     {      
-        $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
         $date_execute = new DateTime();
-        $date_execute->add(new DateInterval('P'.$purchase_time.'D'));
+        $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
+        if($purchase_time != -1)
+        {            
+            $date_execute->add(new DateInterval('P'.$purchase_time.'D'));
+        }
                 
         $sdek_request = array();
         $sdek_request['version'] = '1.0';
@@ -227,12 +237,21 @@ class helperClass1cit
         
         if($result['result'])
         {
-          $min_date = clone $date_execute;
-          $min_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMin'].'D'));
-          $max_date = clone $date_execute;
-          $max_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMax'].'D'));
+            if($purchase_time != -1)
+            {
+                $min_date = clone $date_execute;
+                $min_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMin'].'D'));
+                $max_date = clone $date_execute;
+                $max_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMax'].'D'));
+
+                $est_delivery = $min_date->format('d.m.Y').' - '.$max_date->format('d.m.Y');
+            }
+            else
+            {
+                $est_delivery = '';
+            }
           
-          $est_delivery = $min_date->format('d.m.Y').' - '.$max_date->format('d.m.Y');
+          
           $rate = $result['result']['price'];
           
           //Страховка
