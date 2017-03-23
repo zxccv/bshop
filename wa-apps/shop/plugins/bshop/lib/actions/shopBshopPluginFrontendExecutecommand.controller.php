@@ -14,13 +14,7 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
 
 
     public function execute()
-    {
-        if(!$this->testKey(waRequest::param('key')))
-        {
-            $this->setError('Wrong key. Fuck off.');
-            return;
-        }
-        
+    {                
         $command = waRequest::param('command');
 	
         try {
@@ -28,6 +22,12 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
             $request = json_decode($request_body,true);            
         } catch (Exception $ex) {
             $this->setError('Не удалось распарсить тело запроса.');
+        }
+        
+        if(!$this->testKey($request['key']))
+        {
+            $this->setError('Wrong key. Fuck off.');
+            return;
         }
         
         if($command == 'setsettings')
