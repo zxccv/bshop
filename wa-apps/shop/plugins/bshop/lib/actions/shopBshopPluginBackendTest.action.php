@@ -28,7 +28,10 @@ class shopBshopPluginBackendTestAction extends waViewAction
         //$product = new shopProduct($prodId);          
         //$features = $product->getFeatures();
         $api = new KladrApi(KladrApi::OurToken, '');
+        $fdgd = wa()->getRouting();
         
+        $fdgd->getRoutes();
+        $ee = waRequest::post();
         /*$query              = new KladrQuery();
 	//$query->ContentType = KladrObjectType::City;
         $query->OneString = true;

@@ -1,6 +1,7 @@
 <?php
 
 return array(
-    'name' => 'bshop', // название плагина
-    'img'  => 'img/bshop.png' // относительный путь к файлу иконки плагина (16*16px), обычно в поддиректории img/ 
-);
+    'name' => 'bshop', 
+    'img'  => 'img/bshop.png',
+    'frontend' => true
+    );
