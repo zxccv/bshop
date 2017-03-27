@@ -27,6 +27,11 @@ class russianpost1citShipping extends waShipping
             $zip = helperClass1cit::getCityZipCodeFromKladr($this->getAddress('city'), $this->getAddress('region'));
         }
         
+        if($this->getTotalWeight() == 0)
+        {
+            return "Невозможно расчитать стоимость. Для товаров не задан вес";
+        }
+        
         //Самойлов НАЧАЛО 21.03.17 15:33 #
         //Страхуемся только на 100 рублей
         //$postResponce = $postcalclib->postcalc_request(192236, $zip, $this->getTotalWeight()*1000 , $this->getTotalPrice(), 'RU');
@@ -54,7 +59,7 @@ class russianpost1citShipping extends waShipping
         if($purch_time != -1)
         {
             $dost_date = new DateTime();
-            date_add($dost_date, new DateInterval('P'.$purch_time.'D'));
+            date_add($dost_date, new DateInterval('P'.number_format($purch_time).'D'));
 
             $tire_position = strpos($CP['СрокДоставки'],'-');
             if($tire_position == FALSE)
@@ -66,7 +71,7 @@ class russianpost1citShipping extends waShipping
                 $delivery_time = substr($CP['СрокДоставки'], $tire_position+1);
             }
 
-            date_add($dost_date, new DateInterval('P'.$delivery_time.'D'));
+            date_add($dost_date, new DateInterval('P'.number_format($delivery_time).'D'));
             $est_delivery = $dost_date->format('d.m.Y');
         } 
         else

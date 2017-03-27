@@ -88,7 +88,7 @@ class helperClass1cit
             $product = new shopProduct($item['product_id']);            
             $features = $product->getFeatures();
             
-            if($features['weight'] == NULL || $features['volume'] == NULL )
+            if(!isset($features['weight']) || $features['weight']['value'] == "0" || !isset($features['volume']) || $features['volume']['value'] == "0")
             {
                 return "Невозможно расчитать стоимость. Для одного из товаров не задан вес или объем";
             }
@@ -148,8 +148,8 @@ class helperClass1cit
         if($purchase_time != -1)
         {
             $est_delivery_date = new DateTime();        
-            $est_delivery_date->add(new DateInterval('P'.$purchase_time.'D'));
-            $est_delivery_date->add(new DateInterval('P'.$result['time']['value'].'D'));
+            $est_delivery_date->add(new DateInterval('P'.number_format($purchase_time).'D'));
+            $est_delivery_date->add(new DateInterval('P'.number_format($result['time']['value']).'D'));
         
             $est_delivery = $est_delivery_date->format('d.m.Y');
         } 
@@ -181,7 +181,7 @@ class helperClass1cit
         $purchase_time = helperClass1cit::getProductsPurchaseTime($items);
         if($purchase_time != -1)
         {            
-            $date_execute->add(new DateInterval('P'.$purchase_time.'D'));
+            $date_execute->add(new DateInterval('P'.number_format($purchase_time).'D'));
         }
                 
         $sdek_request = array();
@@ -204,7 +204,7 @@ class helperClass1cit
             $product = new shopProduct($item['product_id']);            
             $features = $product->getFeatures();
             
-            if($features['weight'] == NULL || $features['volume'] == NULL )
+            if(!isset($features['weight']) || $features['weight']['value'] == "0" || !isset($features['volume']) || $features['volume']['value'] == "0")
             {
                 return "Невозможно расчитать стоимость. Для одного из товаров не задан вес или объем";
             }
@@ -240,9 +240,9 @@ class helperClass1cit
             if($purchase_time != -1)
             {
                 $min_date = clone $date_execute;
-                $min_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMin'].'D'));
+                $min_date->add(new DateInterval('P'.number_format($result['result']['deliveryPeriodMin']).'D'));
                 $max_date = clone $date_execute;
-                $max_date->add(new DateInterval('P'.$result['result']['deliveryPeriodMax'].'D'));
+                $max_date->add(new DateInterval('P'.number_format($result['result']['deliveryPeriodMax']).'D'));
 
                 $est_delivery = $min_date->format('d.m.Y').' - '.$max_date->format('d.m.Y');
             }
@@ -300,10 +300,12 @@ class helperClass1cit
         
         $product = new shopProduct($product_id);
         $skus = $product->getSkus();
-        
+        $sku = reset($skus);
         $min_purchase_time = 200;
+             
         
-        foreach ($skus[$product_id]['stock'] as $stock_key => $stock_remain)        
+        
+        foreach ($sku['stock'] as $stock_key => $stock_remain)        
         {
             if((int)$stock_remain > 0)
             {
@@ -315,10 +317,5 @@ class helperClass1cit
         };
         
         return $min_purchase_time;        
-    }
-
-        public function mult($x,$y)
-    {
-        return $x * $y;
     }
 }
