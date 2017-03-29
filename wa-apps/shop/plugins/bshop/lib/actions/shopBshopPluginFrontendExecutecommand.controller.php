@@ -161,6 +161,11 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
                 $feature_model->setValues($feature, $feature_values);                
             }           
         }
+        elseif($command == 'GetOrders')
+        {
+            $shop_order_export_model = new shopOrderExportModel();
+            $this->response = array('Заказы' => $shop_order_export_model->getRegisteredOrders());
+        }
         else
         {
             $this->setError('Неизвестная команда');

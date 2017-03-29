@@ -3,5 +3,8 @@
 return array(
     'name' => 'bshop', 
     'img'  => 'img/bshop.png',
-    'frontend' => true
+    'frontend' => true,
+    'handlers' => array(
+        'order_action.create' => 'orderCreateEvent',
+    ),
     );
