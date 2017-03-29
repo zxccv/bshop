@@ -1,0 +1,204 @@
+{$quickview = $wa->get('quickview')}
+$('#zoom-gallery{if $quickview}-quickview{/if}.with-slider').slick({
+    autoplay: false,
+    draggable: false,
+    infinite: false,
+    appendArrows: $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider').closest('.slider-custom'),
+    {if $theme_settings.image_thumbs == 'left'}
+    vertical: true,
+    prevArrow: '<div class=\"slider-prev\"><i class=\"fa fa-chevron-up\"></i></div>',
+    nextArrow: '<div class=\"slider-next\"><i class=\"fa fa-chevron-down\"></i></div>',
+        {if empty($theme_settings.image_thumbs_smaller)}
+        slidesToShow: 3,
+        {else}
+        slidesToShow: 5,
+        {/if}
+    {else}
+    prevArrow: '<div class=\"slider-prev\"><i class=\"fa fa-chevron-left\"></i></div>',
+    nextArrow: '<div class=\"slider-next\"><i class=\"fa fa-chevron-right\"></i></div>',
+    respondTo: 'slider',
+        {if empty($theme_settings.image_thumbs_smaller)}
+            responsive: [{
+                breakpoint: 700,
+                settings: { slidesToScroll: 1, slidesToShow: 6 }
+            }, {
+                breakpoint: 550,
+                settings: { slidesToScroll: 1, slidesToShow: 5 }
+            }, {
+                breakpoint: 470,
+                settings:  { slidesToScroll: 1, slidesToShow: 4 }
+            }, {
+                breakpoint: 400,
+                settings:  { slidesToScroll: 1, slidesToShow: 3 }
+            }]
+        {else}
+            responsive: [{
+                breakpoint: 700,
+                settings: { slidesToScroll: 1, slidesToShow: 9 }
+            }, {
+                breakpoint: 550,
+                settings: { slidesToScroll: 1, slidesToShow: 8 }
+            }, {
+                breakpoint: 470,
+                settings:  { slidesToScroll: 1, slidesToShow: 7 }
+            }, {
+                breakpoint: 400,
+                settings:  { slidesToScroll: 1, slidesToShow: 5 }
+            }, {
+                breakpoint: 300,
+                settings:  { slidesToScroll: 1, slidesToShow: 4 }
+            }]
+        {/if}
+    {/if}
+});
+$('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider').slick({
+    autoplay: false,
+    draggable: false,
+    infinite: false,
+    appendArrows: $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider').closest('.slider-custom'),
+    {if empty($theme_settings.image_thumbs_smaller)}
+    slidesToShow: 3,
+    {else}
+    slidesToShow: 5,
+    {/if}
+    slidesToScroll: 1,
+    prevArrow: '<div class=\"slider-prev\"><i class=\"fa fa-chevron-left\"></i></div>',
+    nextArrow: '<div class=\"slider-next\"><i class=\"fa fa-chevron-right\"></i></div>'
+});
+
+{if $theme_settings.enlarge_type == 'zoom' || $theme_settings.enlarge_type == 'zoomfancybox'}
+    var imageGalleryResize = function() {
+        var options = { };
+        var destroyZoom = function() {
+            {if !$quickview}$('.magnifier, .statusdiv, .tracker, .cursorshade').remove();{/if}
+        };
+        var refreshZoom = function(options) {
+            destroyZoom();
+            $('#zoom{if $quickview}-quickview{/if}').imagezoomsl({
+                zoomrange: options.zoomrange,
+                disablewheel: options.disablewheel,
+                innerzoom: options.innerzoom,
+                magnifiersize: options.magnifiersize
+            });
+        };
+
+        options.magnifiersize = [400, 500];
+        if ($(window).width() < 1297) {
+            options.innerzoom = true;
+            options.zoomrange = [2, 2];
+            options.disablewheel = false;
+        } else {
+            options.innerzoom = false;
+            options.zoomrange = [2, 10];
+            options.disablewheel = true;
+        }
+        if ($(window).width() < 750) {
+            destroyZoom();
+        } else {
+            refreshZoom(options);
+        }
+    };
+    $(window).resize(function() {
+        imageGalleryResize();
+    });
+    imageGalleryResize();
+
+    {if $theme_settings.enlarge_type == 'zoomfancybox'}
+        $(document).on('click', '.tracker, .images .image', function() {
+           var items = [];
+           var zoom = $('#zoom{if $quickview}-quickview{/if}');
+            items.push({ href: zoom.attr('data-large'), title: zoom.attr('alt') });
+            var imageId = zoom.attr('data-id');
+            var beforeActiveImage = [];
+            var addImages = 0;
+            $('#zoom-gallery{if $quickview}-quickview{/if} .fancybox-img').each(function() {
+                if (addImages) {
+                    items.push({ href: $(this).attr('href'), title: $(this).find('img').attr('alt') });
+                }
+                if (parseInt($(this).attr('data-image-id')) !== parseInt(imageId)) {
+                    !addImages && beforeActiveImage.push({ href: $(this).attr('href'), title: $(this).find('img').attr('alt') });
+                } else {
+                    addImages = 1;
+                }
+            });
+            items = items.concat(beforeActiveImage);
+            $.fancybox.open(items, {
+                helpers: {
+                    overlay: {
+                        locked: false
+                    }
+                }
+            });
+            return false;
+        });
+    {/if}
+{else}
+    $('.fancybox-img-start').on('click', function(){
+        var items = [];
+        var imageId = $(this).attr('data-id');
+        var beforeActiveImage = [];
+        var addImages = 0;
+        items.push({ href: $(this).attr('href'), title: $(this).find('img').attr('alt') });
+        $('#zoom-gallery{if $quickview}-quickview{/if} .fancybox-img').each(function() {
+            if (addImages) {
+                items.push({ href: $(this).attr('href'), title: $(this).find('img').attr('alt') });
+            }
+            if (parseInt($(this).attr('data-image-id')) !== parseInt(imageId)) {
+                !addImages && beforeActiveImage.push({ href: $(this).attr('href'), title: $(this).find('img').attr('alt') });
+            } else {
+                addImages = 1;
+            }
+        });
+        items = items.concat(beforeActiveImage);
+        $.fancybox.open(items, {
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            }
+        });
+        return false;
+    });
+{/if}
+
+$('#zoom-gallery{if $quickview}-quickview{/if} a, #zoom-gallery2{if $quickview}-quickview{/if} a').click(function () {
+    $('.image-thumb a').removeClass('selected');
+    var a = $(this);
+    var img = a.find('img');
+    var src = img.attr("data-image");
+
+    if (a.attr('id') == 'product-image-video') {
+        a.addClass("selected");
+        $("#image-container").hide();
+        $("#video-container").show();
+    } else {
+        $("#image-container").show();
+        $("#video-container").hide();
+        $('#zoom{if $quickview}-quickview{/if}').parent().addClass('loading');
+        $('<img>').attr('src', src).load(function () {
+            $('#zoom{if $quickview}-quickview{/if}').attr('src', src).removeAttr('width').removeAttr('height')
+                .attr('data-large', img.attr('data-large'))
+                .attr('data-id', a.attr('data-image-id'))
+                .parent().attr('href', img.attr('data-large')).attr('data-id', a.attr('data-image-id')).removeClass('loading');
+        }).each(function() {
+            //ensure image load is fired. Fixes opera loading bug
+            if (this.complete) { $(this).trigger('load'); }
+        });
+
+        $('.product-image-'+a.attr('class').match(/\d+/)).addClass('selected');
+        if (img.data('sku-id') && !a.hasClass('without-click')) {
+            $('#lab-'+img.data('sku-id')).addClass('without-click').click();
+        }
+        a.removeClass('without-click');
+    }
+    var parent = a.parent();
+    if ($('#zoom-gallery{if $quickview}-quickview{/if}').hasClass('with-slider')) {
+        var goTo = (parent.data('slick-index') + $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider').slick('slickGetOption', 'slidesToShow') > $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider .image-thumb').length) ? $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider .image-thumb').length - $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider').slick('slickGetOption', 'slidesToShow') : parent.data('slick-index');
+        $('#zoom-gallery{if $quickview}-quickview{/if}.with-slider').slick('slickGoTo', goTo);
+    }
+    if ($('#zoom-gallery2{if $quickview}-quickview{/if}').hasClass('with-slider')) {
+        var goTo = (parent.data('slick-index') + $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider').slick('slickGetOption', 'slidesToShow') > $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider .image-thumb').length) ? $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider .image-thumb').length - $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider').slick('slickGetOption', 'slidesToShow') : parent.data('slick-index');
+        $('#zoom-gallery2{if $quickview}-quickview{/if}.with-slider').slick('slickGoTo', goTo);
+    }
+    return false;
+});

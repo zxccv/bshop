@@ -1,0 +1,144 @@
+<style type="text/css">
+    #yourshop-settings { display: none; }
+</style>
+
+{foreach $order.items as $o}
+    {if $o.type == 'product'}
+        {$products_ids[$o.product_id] = $o.product_id}
+    {/if}
+{/foreach}
+{if !empty($products_ids)}
+    {$products = $wa->shop->products($products_ids)}
+{/if}
+
+<div class='wrap my-page yourshop-form'>
+    <div class="content padded">
+        {if !empty($pin_required)}
+            <h1>
+                [`Order`] {$encoded_order_id}
+            </h1>
+
+            {$wa->myNav('menu-h bottom-padded my-nav')}
+
+            <form action="" method="post">
+                {if $wrong_pin}
+                    <p style="color:red">[`PIN is not valid`]</p>
+                {/if}
+                <p>[`Please enter a 4-digit PIN that you received with your order receipt by email.`]</p>
+                <p>
+                    <input type="text" name="pin">
+                </p>
+                <div>
+                    <input type="submit" value="[`View order`]">
+                </div>
+            </form>
+        {else}
+            <h1>
+                [`Order`] {$order.id_str}
+                <span class="order-status" style="{$order.state->getStyle(1)}">
+                    {$order.state->getName()}
+                </span>
+            </h1>
+
+            {$wa->myNav('menu-h bottom-padded my-nav')}
+
+            <p class="gray">{$order.create_datetime|wa_date:'humandatetime'}</p>
+
+            <!-- shipping -->
+            <h3>[`Shipping`]
+                {if $order.shipping_name}
+                    &mdash; <strong>{$order.shipping_name}</strong>
+                {/if}
+            </h3>
+
+            <!-- shipping plugin output -->
+            {if !empty($order.params.tracking_number)}
+                [`Shipment tracking number`]: {$order.params.tracking_number}<br />
+            {/if}
+            {if !empty($tracking) && $order.state->getId() != 'completed'}
+                <div class="plugin">
+                    {$tracking}
+                </div>
+            {/if}
+
+            <p>
+                {$contact.name|escape}<br>
+                {if $shipping_address}
+                {$shipping_address}
+                {/if}
+            </p>
+
+            <!-- billing -->
+            <h3>[`Payment`]
+                {if $order.payment_name}
+                    &mdash; <strong>{$order.payment_name}</strong>
+                {/if}
+            </h3>
+
+            <!-- payment plugin output -->
+            {if !empty($payment)}
+                <div class="plugin">
+                    {$payment}
+                </div>
+            {/if}
+
+            <p>
+                {$contact.name|escape}<br>
+                {if $billing_address}
+                    {$billing_address}
+                {/if}
+            </p>
+
+            {if !empty($order.comment)}
+                <h3>[`Comment`]</h3>
+                <p>
+                    {$order.comment|escape}<br>
+                </p>
+            {/if}
+
+            <div class="table checkout">
+                <div class="head">
+                    <div class="cell name"></div>
+                    <div class="cell quantity">[`Quantity`]</div>
+                    <div class="cell subtotal">[`Total`]</div>
+                </div>
+                {foreach $order.items as $item}
+                    <div class="row {if $item.type == 'service'}service{else}product{/if}">
+                        <div class="cell name">
+                            {if $item.type == 'service'}+ {/if} {if $item.type == 'product' && !empty($products[$item.product_id])}<a href='{$wa->shop->productUrl($products[$item.product_id])}' title='{$item.name}'>{$item.name}</a>{else}{$item.name}{/if}
+                            {if $item.type == 'product' && !empty($item.download_link)}<a href="{$item.download_link}" title="[`Download`]"><strong>[`Download`]</strong></a>{/if}
+                        </div>
+                        <div class="cell quantity nowrap"><span class="mobile-block heading">[`Quantity`]:</span> <span class="gray">{if $theme_settings.ruble == 'html'}{wa_currency_html($item.price, $order.currency)}{else}{wa_currency($item.price, $order.currency)}{/if} x</span> {$item.quantity}</div>
+                        <div class="cell subtotal nowrap"><span class="mobile-block heading">[`Total`]:</span> {if $theme_settings.ruble == 'html'}{wa_currency_html($item.price * $item.quantity, $order.currency)}{else}{wa_currency($item.price * $item.quantity, $order.currency)}{/if}</div>
+                    </div>
+                {/foreach}
+                <div class="row no-border">
+                    <div class="cell name align-right i100px">[`Subtotal`]</div>
+                    <div class="cell subtotal">{if $theme_settings.ruble == 'html'}{wa_currency_html($subtotal, $order.currency)}{else}{wa_currency($subtotal, $order.currency)}{/if}</div>
+                </div>
+                <div class="row no-border">
+                    <div class="cell name align-right i100px bold">[`Discount`]</div>
+                    <div class="cell price colored subtotal">&minus; {if $theme_settings.ruble == 'html'}{wa_currency_html($order.discount, $order.currency)}{else}{wa_currency($subtotal, $order.currency)}{/if}</div>
+                </div>
+                <div class="row no-border">
+                    <div class="cell name align-right i100px">[`Shipping`] {if !empty($order.params.shipping_name)}(<strong>{$order.params.shipping_name}</strong>){/if}</div>
+                    <div class="cell subtotal">{if $theme_settings.ruble == 'html'}{wa_currency_html($order.shipping, $order.currency)}{else}{wa_currency($order.shipping, $order.currency)}{/if}</div>
+                </div>
+                {if $order.tax > 0}
+                <div class="row no-border">
+                    <div class="cell name align-right i100px">[`Tax`]</div>
+                    <div class="cell subtotal">{if $theme_settings.ruble == 'html'}{wa_currency_html($order.tax, $order.currency)}{else}{wa_currency($order.tax, $order.currency)}{/if}</div>
+                </div>
+                {/if}
+                <div class="row no-border large">
+                    <div class="cell name align-right i100px bold">[`Total`]</div>
+                    <div class="cell price colored subtotal nowrap">{if $theme_settings.ruble == 'html'}{wa_currency_html($order.total, $order.currency)}{else}{wa_currency($order.total, $order.currency)}{/if}</div>
+                </div>
+            </div>
+        {/if}
+        
+        <!-- plugin hook: 'frontend_my_order' -->
+        {* @event frontend_my_order.%plugin_id% *}
+        {foreach $frontend_my_order as $_}{$_}{/foreach}
+    </div>
+</div>

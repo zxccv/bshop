@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><html class="no-js gt-ie8"><![endif]-->
+<!--[if !IE]><!--><html class="no-js"><!--<![endif]-->
+    <head>{strip}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{$wa->title()|escape}</title>
+        <meta name="Keywords" content="{$wa->meta('keywords')|escape}" />
+        <meta name="Description" content="{$wa->meta('description')|escape}" />
+        {if !empty($canonical)}<link rel="canonical" href="{$canonical}"/>{/if}
+        <link rel="shortcut icon" href="/favicon.ico"/>
+        {if $wa->blog}
+            <!-- rss -->
+            {$rss=$wa->blog->rssUrl()}
+            {if $rss}<link rel="alternate" type="application/rss+xml" title="[s`RSS`] &mdash; {$wa->accountName()}" href="{$rss}">{/if}
+        {/if}
+
+        {if $wa->app() !== 'blog' && $wa->app() !== 'photos'}
+            <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-1.11.1.min.js"></script>
+        {else}
+            <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-1.8.2.min.js"></script>
+        {/if}
+        {if !empty($theme_settings.optimize)}
+            <link rel="stylesheet" href="{$wa_theme_url}yourshop.min.css?{$wa_theme_version}" />
+            <script type="text/javascript" src="{$wa_theme_url}yourshop.min.js?v={$wa_theme_version}"></script>
+            <script type="text/javascript">
+                window.js_onload = [];
+                window.js_onload_inline = [];
+                window.css_onload = [];
+                window.css_onload.push('https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,700,700italic&amp;subset=latin,cyrillic-ext,latin-ext,cyrillic');
+                {if $wa->shop && $wa->shop->currency() == 'RUB' && $theme_settings.ruble == 'html'} window.css_onload.push("{$wa_url}wa-content/font/ruble/arial/fontface.css");{/if}
+                window.css_onload.push("{$wa_real_theme_url}igaponov/css/yourshop-icons.min.css");
+                window.js_onload.push("{$wa_theme_url}onload.js?v={$wa_theme_version}");
+                {* VK init *}
+                {if !empty($theme_settings.vk_com_id) || !empty($theme_settings.vk_group_id)}
+                    window.js_onload.push("//vk.com/js/api/openapi.js?120");
+                {/if}
+                {if !empty($theme_settings.vk_com_id)}
+                    window.js_onload_inline.push('VK.init({ apiId: {$theme_settings.vk_com_id}, onlyWidgets: true });');
+                {/if}
+                {if !empty($theme_settings.fb_id) || !empty($theme_settings.fb_group_link)}
+                    window.js_onload_inline.push('(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/{$wa->locale()}/sdk.js#xfbml=1&version=v2.3&appId={$theme_settings.fb_id}"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk"));');
+                {/if}
+            </script>
+        {else}
+            <!-- css -->
+            <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,700,700italic&amp;subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+            {if $wa->shop && $wa->shop->currency() == 'RUB' && $theme_settings.ruble == 'html'} <link href="{$wa_url}wa-content/font/ruble/arial/fontface.css" rel="stylesheet" type="text/css">{/if}
+            <link rel="stylesheet" href="{$wa_theme_url}yourshop.css?{$wa_theme_version}" />
+            <link href="{$wa_real_theme_url}igaponov/css/yourshop-icons.min.css" rel="stylesheet" type="text/css"/>
+            <!-- js -->
+            <script type="text/javascript" src="{$wa_theme_url}scripts.js"></script>
+            <script type="text/javascript" src="{$wa_theme_url}yourshop.js?v={$wa_theme_version}"></script>
+             {* VK init *}
+            {if !empty($theme_settings.vk_com_id) || !empty($theme_settings.vk_group_id)}
+               <script type="text/javascript" src="//vk.com/js/api/openapi.js?120"></script>
+            {/if}
+            {if !empty($theme_settings.vk_com_id)}
+                <script type="text/javascript">VK.init({ apiId: {$theme_settings.vk_com_id}, onlyWidgets: true });</script>
+            {/if}
+            {* Facebook init *}
+            {if !empty($theme_settings.fb_id) || !empty($theme_settings.fb_group_link)}
+            <script type="text/javascript">$(window).load(function() { (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/{$wa->locale()}/sdk.js#xfbml=1&version=v2.3&appId={$theme_settings.fb_id}"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk")); }); </script>
+            {/if}
+        {/if}
+
+        {$wa->css()} {* links active plugins CSS *}
+
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        {$theme_settings.color = $theme_settings.color|regex_replace:['/img\/colors\//', '/\/color\.png/']:""}
+        {$theme_settings.header_type = $theme_settings.header_type|regex_replace:"/[^\d]/":""}
+        {$theme_settings.header_type_mobile = $theme_settings.header_type_mobile|regex_replace:"/[^\d]/":""}
+        {$isMobile = 0}
+        {if $wa->isMobile() || $wa->userAgent('device')}
+            {$isMobile = 1}
+        {/if}
+        {if $wa->shop && !empty($theme_settings.show_viewed) && !empty($theme_settings.show_viewed_popup)}
+            {$find_products[] = waRequest::cookie('shop_yourshop_viewed', '', waRequest::TYPE_STRING)}
+        {/if}
+        {if $wa->shop && !empty($theme_settings.show_favourite) && !empty($theme_settings.show_favourite_popup)}
+            {$find_products[] = waRequest::cookie('shop_yourshop_favourite', '', waRequest::TYPE_STRING)}
+        {/if}
+        {if $wa->shop && !empty($theme_settings.show_compare)}
+            {$compare = $wa->shop->compare()}
+            {if !empty($theme_settings.show_compare_popup) && $compare}
+                {$find_products[] = implode(',', $compare|array_keys)}
+            {/if}
+        {/if}
+        {if !empty($find_products)}
+            {$thumb_products = implode(',', $find_products)}
+            {$thumb_products = $wa->shop->products('id/'|cat:$thumb_products)}
+        {/if}
+        {if $wa->shop}
+            {$currency = $wa->shop->currency(true)}
+        {/if}
+
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $.yourshop = {
+                    xhr: [],
+                    locale: "{$wa->locale()}",
+                    shopUrl: "{if $wa->shop}{$wa->getUrl('shop/frontend')}{/if}",
+                    shopCartUrl: "{if $wa->shop}{$wa->getUrl('shop/frontend/cart')}{/if}",
+                    siteUrl: "{$wa_url}",
+                    activePath: "{$wa_active_theme_path}",
+                    ruble: "{$theme_settings.ruble}",
+                    mobile: {$isMobile},
+                    lazyloading: {if !empty($theme_settings.lazyloading) && ($theme_settings.lazyloading == 'lazyloading' || ($theme_settings.lazyloading == 'productsperpage' && !waRequest::cookie('products_per_page', 0, 'TYPE_INT')))}1{else}0{/if},
+                    htmlSliderSpeed: {if !empty($theme_settings.html_slider_speed)}{$theme_settings.html_slider_speed}{else}5000{/if},
+                    photosSliderSpeed: {if !empty($theme_settings.photos_slider_speed)}{$theme_settings.photos_slider_speed}{else}7000{/if},
+                    searchAutocomplete: {if !empty($theme_settings.search_autocomplete)}1{else}0{/if},
+                    sidebarBrandsHide: {if !empty($theme_settings.sidebar_brands_hide)}1{else}0{/if},
+                    featuresHide: {if !empty($theme_settings.features_hide)}1{else}0{/if},
+                    filterHide: {if !empty($theme_settings.filter_hide)}1{else}0{/if},
+                    {if $wa->shop}
+                    currency: '{if $currency.code == "RUB" && $theme_settings.ruble == "html"}{$currency.sign_html}{else}{$currency.sign}{/if}',
+                    minorderCount: {if !empty($theme_settings.minorder_count)}{$theme_settings.minorder_count}{else}0{/if},
+                    {/if}
+                    messages: {
+                        'ru_RU': {
+                            "Added":"Добавлено",
+                            "Wish+list":"Избранное",
+                            "Loading": "Идет загрузка",
+                            "decrease": "уменьшить",
+                            "increase": "увеличить",
+                            "Wait, please. Information is loading": "Пожалуйста, подождите. Данные загружаются",
+                            "Go to product page": "Страница товара",
+                            "Do you really want to delete product from cart?": "Вы уверены, что хотите удалить товар из корзины?",
+                            "Delete": "Удалить",
+                            "delete": "удалить",
+                            "Added to cart": "Добавлено в корзину",
+                            "Viewed+products": "Просмотренные+товары",
+                            "Remove from Viewed list?": "Удалить из просмотренных товаров?",
+                            "Remove from compare list?": "Удалить из сравнения?",
+                            "Added to compare list": "Добавлено к сравнению",
+                            "Add to compare list?": "Добавить к сравнению?",
+                            "Removed from compare list": "Удалено из сравнения",
+                            "Wish+list": "Избранное",
+                            "Remove from Wish list?": "Удалить из избранного?",
+                            "Added to Wish list": "Добавлено в избранное",
+                            "Add to Wish list?": "Добавить в избранное?",
+                            "Removed from Wish list": "Удалено из избранного",
+                            "No products": "Товары отсутствуют",
+                            "SKU": "[`SKU`]",
+                            "Show all": "Показать все",
+                            "Empty": "Отсутствует",
+                            "Cart is empty": "Корзина пуста"
+                        }
+                    },
+                    translate: function (message) {
+                        if (typeof this.messages[this.locale] !== 'undefined' && this.messages[this.locale][message]) {
+                            return this.messages[this.locale][message];
+                        }
+                        return message;
+                    }
+                };
+            });
+        </script>
+
+        {if $isMobile}
+            <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+        {/if}
+        {$wa->js()} {* links active plugins JS *}
+        {include file="`$wa_active_theme_path`/head.html" inline}
+        {$wa->headJs()} {* links Google Analytics tracking code and current site's custom JS (Site app) *}
+
+        {$user_css = $wa->block('yourshop.user.css')}
+        {if !empty($user_css)}{$user_css}{/if}
+
+        {include file='color_scheme.css.html'}{/strip}
+    </head>
+    <body id="yourshop" class='{$wa_app} {$theme_settings.color}{if $isMobile} mobile{else} not-mobile{/if}'>
+
+        {* Facebook init *}
+        {if !empty($theme_settings.fb_id) || !empty($theme_settings.fb_group_link)}<div id="fb-root"></div>{/if}
+
+        <div class="main-wrapper{if !empty($theme_settings.top_fixed)} fixed-menu{/if}{if $wa->globals('hasSidebar')} has-mobile-sidebar{/if}{if $theme_settings.top_width == 'fullwidth'} not-limited{/if}">
+            <div id="top-fixed"{if $theme_settings.top_width == 'limited'} class='wrap'{/if}>
+                {if $theme_settings.top_width == 'fullwidth'}<div class="wrap">{/if}
+                    <div class="align-center">
+                        <ul class="top-fixed-menu{if empty($theme_settings.show_authblock_topmenu)} without-auth{/if}">
+                            {$active_app = $wa->app()}
+                            {if ($wa->globals('hasSidebar') || $active_app !== 'shop') && !$wa->globals('isMyAccount')}
+                                <li class="mobile-block s-sidebar">
+                                    <a href="javascript:void(0)" title="[`Open menu`]" class="f-open-sidebar"><i class="fa fa-angle-double-right"></i></a>
+                                </li>
+                            {/if}
+
+                            {if !empty($theme_settings.show_authblock_topmenu) && ($wa->isAuthEnabled() || ($wa->shop && isset($currencies) && count($currencies) > 1))}
+                                <li class="mobile-block header-menu-block">
+                                    <a href="javascript:void(0)" title="[`Toogle menu`]"><i class="fa fa-bars"></i></a>
+                                </li>
+                            {/if}
+                            {if $wa->shop && !empty($theme_settings.show_viewed)}
+                                {$viewed_products = waRequest::cookie('shop_yourshop_viewed', [], waRequest::TYPE_ARRAY_INT)}
+                                <li{if !empty($theme_settings.show_viewed_popup)} class="has-popup"{/if}>
+                                    <a class="viewed-block{if !$viewed_products} grey{/if}" href="{if !$viewed_products}javascript:void(0){else}{$wa->getUrl('shop/frontend')}search/?title=[`Viewed+products`]&amp;viewed_products=1{/if}" title='[`Viewed`]'>
+                                        <div>
+                                            <i class="ys ys-eye" style="display: inline-block;"></i>
+                                            <span class="indicator">{count($viewed_products)}</span>
+                                        </div>
+                                        <span>[`Viewed`]</span>
+                                    </a>
+                                    {if !empty($theme_settings.show_viewed_popup)}
+                                        <div class="fly-form white-popup viewed">
+                                            <div class="content">
+                                                {if $viewed_products}
+                                                    <ul class='menu-h'>
+                                                    {foreach $viewed_products as $vp}
+                                                        {if (isset($thumb_products[$vp]))}
+                                                            <li data-id='{$thumb_products[$vp].id}'{if $vp@index > 7} class="hidden"{/if}>
+                                                                <a href="{$thumb_products[$vp].frontend_url}" title='{$thumb_products[$vp].name|escape}'>{$wa->shop->productImgHtml($thumb_products[$vp], '96x96', ['itemprop' => 'image', 'alt' => $thumb_products[$vp].name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])}</a>
+                                                                <a href="javascript:void(0)" class='delete active viewed-link f-without-popup' data-product="{$thumb_products[$vp].id}" title='[`Delete`]'>x</a>
+                                                            </li>
+                                                        {/if}
+                                                    {/foreach}
+                                                    </ul>
+                                                    <a href="{$wa->getUrl('shop/frontend')}search/?title=[`Viewed+products`]&amp;viewed_products=1"{if count($viewed_products) > 8} style="display: block"{/if} title='[`Show all`]' class='show-all'>&lt; &lt; &lt; [`Show all`] &gt; &gt; &gt;</a>
+                                                {else}
+                                                    <div class="empty-field">[`No products`]</div>
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </li>
+                            {/if}
+                            {if $wa->shop && !empty($theme_settings.show_favourite)}
+                                {$favourite = waRequest::cookie('shop_yourshop_favourite', [], waRequest::TYPE_ARRAY_INT)}
+                                <li{if !empty($theme_settings.show_favourite_popup)} class="has-popup"{/if}>
+                                    <a class="favourite-block{if !$favourite} grey{/if}" href="{if !$favourite}javascript:void(0){else}{$wa->getUrl('shop/frontend')}search/?title=[`Wish+list`]&amp;favourite=1{/if}" title='[`Wish list`]'>
+                                        <div>
+                                            <i class="ys ys-heart" style="display: inline-block;"></i>
+                                            <span class="indicator">{count($favourite)}</span>
+                                        </div>
+                                        <span>[`Wish list`]</span>
+                                    </a>
+                                    {if !empty($theme_settings.show_favourite_popup)}
+                                        <div class="fly-form white-popup favourite">
+                                            <div class="content">
+                                                {if $favourite}
+                                                    <ul class='menu-h'>
+                                                    {foreach $favourite as $f}
+                                                        {if (isset($thumb_products[$f]))}
+                                                            <li data-id='{$thumb_products[$f].id}'{if $f@index > 7} class="hidden"{/if}>
+                                                                <a href="{$thumb_products[$f].frontend_url}" title='{$thumb_products[$f].name|escape}'>{$wa->shop->productImgHtml($thumb_products[$f], '96x96', ['itemprop' => 'image', 'alt' => $thumb_products[$f].name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])}</a>
+                                                                <a href="javascript:void(0)" class='delete active favourite-link f-without-popup' data-product="{$thumb_products[$f].id}" title='[`Delete`]'>x</a>
+                                                            </li>
+                                                        {/if}
+                                                    {/foreach}
+                                                    </ul>
+                                                    <a href="{$wa->getUrl('shop/frontend')}search/?title=[`Wish+list`]&amp;favourite=1"{if count($favourite) > 8} style="display: block"{/if} title='[`Show all`]' class='show-all'>&lt; &lt; &lt; [`Show all`] &gt; &gt; &gt;</a>
+                                                {else}
+                                                    <div class="empty-field">[`No products`]</div>
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </li>
+                            {/if}
+                            {if $wa->shop && !empty($theme_settings.show_compare)}
+                                <li{if !empty($theme_settings.show_compare_popup)} class="has-popup"{/if}>
+                                    <a class="compare-block{if !$compare} grey{/if}" href="{if !$compare}javascript:void(0){else}{$wa->getUrl('shop/frontend/compare/', ['id' => implode(',', $compare|array_keys)])}{/if}" title='{if $compare}[`Compare products`]{else}[`Nothing to compare`]{/if}'>
+                                        <div>
+                                            <i class="ys ys-compare" style="display: inline-block;"></i>
+                                            <span class="indicator">{if $compare}{$compare|count}{else}0{/if}</span>
+                                        </div>
+                                        <span>[`Compare`]</span>
+                                    </a>
+                                    {if !empty($theme_settings.show_compare_popup)}
+                                        <div class="fly-form white-popup compare">
+                                            <div class="content">
+                                                {if $compare}
+                                                    <ul class='menu-h'>
+                                                    {foreach $compare|array_keys as $c}
+                                                        {if isset($thumb_products[$c])}
+                                                            <li data-id='{$thumb_products[$c].id}'{if $c@index > 7} class="hidden"{/if}>
+                                                                <a href="{$thumb_products[$c].frontend_url}" title='{$thumb_products[$c].name|escape}'>{$wa->shop->productImgHtml($thumb_products[$c], '96x96', ['itemprop' => 'image', 'alt' => $thumb_products[$c].name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])}</a>
+                                                                <a href="javascript:void(0)" class='delete active compare-link f-without-popup' data-product="{$thumb_products[$c].id}" title='[`Delete`]'>x</a>
+                                                            </li>
+                                                        {/if}
+                                                    {/foreach}
+                                                    </ul>
+                                                    <a href="{if $compare}{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare|array_keys)])}{else}{$wa->getUrl('/frontend/compare/')}{/if}"{if count($compare) > 8} style="display: block"{/if} title='[`Show all`]' class='show-all'>&lt; &lt; &lt; [`Show all`] &gt; &gt; &gt;</a>
+                                                {else}
+                                                    <div class="empty-field">[`No products`]</div>
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </li>
+                            {/if}
+                            {if $wa->isAuthEnabled()}
+                                {if $wa->user()->isAuth()}
+                                    {if $wa->myUrl()}
+                                        <li class="auth-block auth-name no-text{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}">
+                                            <a href="{$wa->myUrl()}" rel="nofollow" title="[`My account`]"><div><i class="ys ys-user" style="display: inline-block;"></i></div> <span>[`My account`]</span></a>
+                                        </li>
+                                    {else}
+                                        <li class="auth-block auth-name{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}" style='cursor: default;'><a href="javascript:void(0)"><div><i class="ys ys-user" style="display: inline-block;"></i></div> <span>{$wa->user('name')}</span></a></li>
+                                    {/if}
+                                    <li class="auth-block{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}"><a href="?logout" rel="nofollow" title='[s`Log out`]'><div><i class="ys ys-unlocked" style="display: inline-block;"></i></div> <span>[s`Log out`]</span></a></li>
+                                {else}
+                                    <li class="auth-block{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}">
+                                        <a href="{$wa->loginUrl(true)}" title="[`Log in`]" rel="nofollow"{if $wa->currentUrl(1,1) !== $wa->loginUrl(true)} class="fly-auth"{/if}><div><i class="ys ys-locked" style="display: inline-block;"></i></div> <span>[`Log in`]</span></a>
+                                    </li>
+                                    <li class="auth-block{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}">
+                                        <a href="{$wa->signupUrl(true)}" title="[`Signup`]" rel="nofollow"{if $wa->currentUrl(1,1) !== $wa->signupUrl(true)} class="fly-auth"{/if}><div><i class="ys ys-user" style="display: inline-block;"></i></div> <span>[`Sign up`]</span></a>
+                                    </li>
+                                {/if}
+                            {/if}
+                            {if $wa->shop}
+                                {$cart_total = $wa->shop->cart->total(false) - $wa->shop->cart->discount()}
+                                {$cart_count = $wa->shop->cart->count()}
+                                <li id="cart" class="{if !empty($theme_settings.show_flying_cart) && !$isMobile}has-popup{/if}{if !empty($theme_settings.show_flying_cart_mobile) && $isMobile} has-popup-mobile{/if}{if $cart_count} has-items{/if}">
+                                    <a {if $cart_count}href="{$wa->getUrl('shop/frontend/cart')}"{else}href="javascript:void(0)" data-url="{$wa->getUrl('shop/frontend/cart')}"{/if} class="no-hover" title="[`Cart`]">
+                                        <div>
+                                            <i style="display: inline-block;" class="ys ys-cart"></i>
+                                            <span class="indicator"{if !$cart_count} style="display: none;"{/if}>{$cart_count}</span>
+                                        </div>
+                                        <span class="price colored cart-total">{if $cart_count}{if $theme_settings.ruble == 'html'}{wa_currency_html($cart_total, $wa->shop->currency())}{else}{wa_currency($cart_total, $wa->shop->currency())}{/if}{else}{if !$isMobile}[`Cart is empty`]{else}[`Empty`]{/if}{/if}</span>
+                                    </a>
+                                    {if ((!empty($theme_settings.show_flying_cart_mobile) && $isMobile) || (!empty($theme_settings.show_flying_cart) && !$isMobile)) && ($wa->param('action') !== 'cart' && $wa->param('action') !== 'checkout')}
+                                        {include file="fly-cart.html"}
+                                    {/if}
+                                </li>
+                                {if empty($theme_settings.hide_currencies) && isset($currencies) && count($currencies) > 1}
+                                <li class="currency-block{if empty($theme_settings.show_authblock_topmenu)} hide-in-mobile{/if}">
+                                    <a href="javascript:void(0)" class="no-hover">
+                                        {if $currency.code == 'RUB' && $theme_settings.ruble == 'html'}{$currency.sign_html}{else}{$currency.sign}{/if}
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="currencies" data-currency='{if $currency.code == "RUB" && $theme_settings.ruble == "html"}{$currency.sign_html}{else}{$currency.sign}{/if}'>
+                                        {foreach $currencies as $c_code => $c}
+                                            {if $c.code !== $currency.code}
+                                                <li title="{$c.title}" data-code="{$c.code}">{if $c.code == 'RUB' && $theme_settings.ruble == 'html'}{$c.sign_html}{else}{$c.sign}{/if}</li>
+                                            {/if}
+                                        {/foreach}
+                                    </ul>
+                                </li>
+                                {/if}
+                            {/if}
+                        </ul>
+                    </div>
+                {if $theme_settings.top_width == 'fullwidth'}</div>{/if}
+            </div>
+           
+            {include file="header.html"}
+
+            {include file="navigation.html"}
+
+            <div class="clear-both"></div>
+            <!-- MAIN CONTENT -->
+            <div class="content">
+                {include file="breadcrumbs.html" inline}
+                {if !empty($frontend_header)}
+                    <div class='padded'>
+                        <!-- plugin hook: 'frontend_header' -->
+                        {* @event frontend_header.%plugin_id% *}
+                        {foreach $frontend_header as $_}{$_}{/foreach}
+                    </div>
+                {/if}
+
+                {include file="`$wa_active_theme_path`/content.html" inline}
+
+                <div class="clear-both"></div>
+            </div>
+
+             <div class="bounce-popup"></div>
+
+            {if $wa->shop}
+                <div id="dialog" class="dialog">
+                    <div class="dialog-window">
+                        <div class="content"></div>
+                    </div>
+                </div>
+            {/if}
+
+            {if $theme_settings.footer_narrow_text}
+                <div class="bottom-line{if $theme_settings.footer_width == 'limited'} wrap{/if}">
+                    <p>{$theme_settings.footer_narrow_text}</p>
+                </div>
+            {/if}
+
+            <!-- FOOTER -->
+            {include file="footer.html" inline}
+
+            {*include file="ys-demo-settings.html"*}
+        </div>
+
+        <div class="bounce-popup"></div>
+        <div id="go-top"><a href="javascript:void(0)" title='[`Go top`]'><i class="fa fa-chevron-up"></i></a></div>
+
+        <!-- Popup form -->
+        {include file="popup_form.html" inline}
+
+        {if !empty($theme_settings.optimize)}
+            <script type="text/javascript">
+                {literal}
+                    function downloadJSAtOnload(){function t(){for(var t;a[0] && "loaded"==a[0].readyState;)if(t=a.shift(),t.onreadystatechange=null,d.parentNode.insertBefore(t,d),t.getAttribute("flag")){var e=document.createEvent("HTMLEvents");e.initEvent("scripts_loaded",!0,!1),document.dispatchEvent(e)}}for(var e,n,o=window.js_onload,a=[],d=document.scripts[0];e=o.shift();)"async"in d?(n=document.createElement("script"),n.async=!1,n.src=e,n.type="text/javascript",document.head.appendChild(n),o.length||(n.onload=n.onerror=function(){if(!this.executed){this.executed=!0;var t=document.createEvent("HTMLEvents");t.initEvent("scripts_loaded",!0,!1),document.dispatchEvent(t)}},n.onreadystatechange=function(){var t=this;("complete"==this.readyState||"loaded"==this.readyState) && setTimeout(function(){t.onload()},0)})):d.readyState?(n=document.createElement("script"),n.type="text/javascript",scripts.length||n.setAttribute("flag",!0),a.push(n),n.onreadystatechange=t,n.src=e):document.write("<script type=\"text/javascript\" src=\"" + src + "\" defer></"+"script>");document.addEventListener("scripts_loaded",function(){window.js_onload_inline.length && setTimeout(function(){var t=window.js_onload_inline;for(var e in t){var n=new Function(t[e]);n()}},100)})}if(window.js_onload.length && (window.addEventListener?window.addEventListener("load",downloadJSAtOnload,!1):window.attachEvent?window.attachEvent("onload",downloadJSAtOnload):window.onload=downloadJSAtOnload),window.css_onload.length){var files=window.css_onload;for(var i in files){var link=document.createElement("link");link.href=files[i],link.type="text/css",link.rel="stylesheet",document.head.appendChild(link)}}
+                {/literal}
+            </script>
+        {/if}
+
+        {$user_js = $wa->block('yourshop.user.js')}
+        {if !empty($user_js)}{$user_js}{/if}
+    </body>
+</html>

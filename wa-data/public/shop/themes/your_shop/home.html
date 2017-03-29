@@ -1,0 +1,281 @@
+{capture name="image_slider"}
+    {if $wa->photos && !empty($theme_settings.photos_slider)}
+        {include file="slider.html" slider_id="p1" photos=$theme_settings.photos_slider search_count=$theme_settings.photos_slider_count width=$theme_settings.photos_slider_size_width height=$theme_settings.photos_slider_size_height lazyload=1}
+    {/if}
+{/capture}
+
+{capture name="html_slider"}
+    {if $theme_settings.html_slider}
+        {if empty($theme_settings.html_slider_count) || (!empty($theme_settings.html_slider_count) && $theme_settings.html_slider_count < 0)}
+            {$theme_settings.html_slider_count = 10}
+        {/if}
+        {$html_slides = $wa->shop->products($theme_settings.html_slider, 0, $theme_settings.html_slider_count, ['params' => 1])}
+        {if $html_slides && count($html_slides)}
+            {if !empty($theme_settings.html_slider_user_pattern)}
+                <style type="text/css">
+                    #da-slider { background: url("{$wa_theme_url}{$theme_settings.html_slider_user_pattern}") repeat; }
+                </style>
+            {/if}
+            {$theme_settings.html_slider_pattern = $theme_settings.html_slider_pattern|regex_replace:["/img\/patterns\/thumbs\//", "/\.(.*)/"]:""}
+
+            <div class="main-slider">
+                <div id="da-slider" class="da-slider {$theme_settings.html_slider_pattern}">
+                    {$primary_currency = $wa->shop->primaryCurrency()}
+                    {foreach $html_slides as $hs}
+                        {$rating = 0}
+                        {if $hs.rating}
+                            {$rating = round($hs.rating*2)/2}
+                        {/if}
+                        <div class="da-slide{if $rating} has-rating{/if}{if !empty($hs.params.slider_text)} has-text{/if}" itemscope itemtype ="http://schema.org/Product">
+                            <div class="da-desc"{if !empty($hs.params.slider_desc_color)} style="background-color: rgba({$hs.params.slider_desc_color},0.8)"{/if}>
+                                <div class="h2"{if !empty($hs.params.slider_title_color) || !empty($hs.params.slider_title_bottom_color)} style="{if !empty($hs.params.slider_title_color)}color: {$hs.params.slider_title_color};{/if}{if !empty($hs.params.slider_title_bottom_color)}border-bottom-color: {$hs.params.slider_title_bottom_color};{/if}"{/if}>
+                                    <span class="da-name" itemprop="name">{if !empty($hs.params.slider_title)}{$hs.params.slider_title|escape}{else}{$hs.name}{/if}</span>
+                                    {if $rating}
+                                        <span class="rating-block"{if !empty($hs.params.slider_rating_color)} style="color: {$hs.params.slider_rating_color}"{/if}>
+                                             {for $i = 1 to 5 step +1}
+                                                {if $i > $rating}
+                                                    {if $i - $rating == 0.5}
+                                                        <i class="fa fa-star-half"></i>
+                                                    {/if}
+                                                {else}
+                                                    <i class="fa fa-star"></i>
+                                                {/if}
+                                            {/for}
+                                        </span>
+                                    {/if}
+                                </div>
+                                {if !empty($hs.params.slider_text)}<p class="da-text"{if !empty($hs.params.slider_text_color)} style="color: {$hs.params.slider_text_color};"{/if}>{$hs.params.slider_text}</p>{/if}
+                                {if !empty($hs.params.slider_description)}<p itemprop="description"{if !empty($hs.params.slider_description_color)} style="color: {$hs.params.slider_description_color};"{/if}>{$hs.params.slider_description}</p>{elseif $hs.summary}<p itemprop="description">{$hs.summary}</p>{/if}
+                                <a href="{if !empty($hs.params.slider_url)}{$hs.params.slider_url}{else}{$hs.frontend_url}{/if}" title="{if !empty($hs.params.slider_button)}{$hs.params.slider_button}{else}{$theme_settings.html_slider_text}{/if}" class="da-link"{if !empty($hs.params.slider_button_bg_color) || !empty($hs.params.slider_button_border_color) || !empty($hs.params.slider_button_text_color)} style="{if !empty($hs.params.slider_button_bg_color)}background-color: {$hs.params.slider_button_bg_color};{/if}{if !empty($hs.params.slider_button_text_color)}color: {$hs.params.slider_button_text_color};{/if}{if !empty($hs.params.slider_button_border_color)}border-color: {$hs.params.slider_button_border_color};{/if}"{/if}>{if !empty($hs.params.slider_button)}{$hs.params.slider_button}{else}{$theme_settings.html_slider_text}{/if}</a>
+                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" ><meta itemprop="price" content="{$hs.price}"><meta itemprop="priceCurrency" content="{$primary_currency}"></div>
+                            </div>
+                            <div class="da-img"{if !empty($hs.params.slider_img_color)} style="background: {$hs.params.slider_img_color};"{/if}><a href="{if !empty($hs.params.slider_url)}{$hs.params.slider_url}{else}{$hs.frontend_url}{/if}" title="{if !empty($hs.params.slider_title)}{$hs.params.slider_title|escape}{else}{$hs.name}{/if}">{if !empty($hs.params.slider_img)}<img src="{$hs.params.slider_img}" alt="{if !empty($hs.params.slider_title)}{$hs.params.slider_title|escape}{else}{$hs.name|escape}{/if}">{else}{$wa->shop->productImgHtml($hs, '300x0', ['itemprop' => 'image', 'alt' => $hs.name, 'default' => "`$wa_theme_url`img/dummy330.jpg"])}{/if}</a></div>
+                        </div>
+                    {/foreach}
+                    <nav class="da-arrows">
+                        <span class="da-arrows-prev"><i class="fa fa-chevron-left"></i></span>
+                        <span class="da-arrows-next"><i class="fa fa-chevron-right"></i></span>
+                    </nav>
+                </div>
+            </div>
+        {/if}
+    {/if}
+{/capture}
+
+{if !empty($theme_settings.photos_slider_fullwidth) && !empty($theme_settings.html_slider_fullwidth)}
+    {if $theme_settings.html_slider_order == 'before'}
+        {$smarty.capture.html_slider}
+        {$smarty.capture.image_slider}
+    {else}
+        {$smarty.capture.image_slider}
+        {$smarty.capture.html_slider}
+    {/if}
+{elseif empty($theme_settings.photos_slider_fullwidth) && !empty($theme_settings.html_slider_fullwidth)}
+    {$smarty.capture.html_slider}
+{elseif !empty($theme_settings.photos_slider_fullwidth) && empty($theme_settings.html_slider_fullwidth)}
+    {$smarty.capture.image_slider}
+{/if}
+
+<div class="wrap">
+    {if !empty($theme_settings.home_catalog) || !empty($theme_settings.home_catalog_mob)}
+        {include file="`$wa_parent_theme_path`/sidebar.html" normal_sidebar=!empty($theme_settings.home_catalog) mobile_sidebar=!empty($theme_settings.home_catalog_mob)}
+    {/if}
+    {if !empty($theme_settings.home_catalog)}
+        <div class="content-sidebar{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+    {/if}
+
+    <!-- plugin hook: 'frontend_homepage' -->
+    {* @event frontend_homepage.%plugin_id% *}
+    {foreach $frontend_homepage as $_}{$_}{/foreach}
+
+    {if empty($theme_settings.photos_slider_fullwidth) && empty($theme_settings.html_slider_fullwidth)}
+        {if $theme_settings.html_slider_order == 'before'}
+            {$smarty.capture.html_slider}
+            {$smarty.capture.image_slider}
+        {else}
+            {$smarty.capture.image_slider}
+            {$smarty.capture.html_slider}
+        {/if}
+    {elseif !empty($theme_settings.photos_slider_fullwidth) && empty($theme_settings.html_slider_fullwidth)}
+        {$smarty.capture.html_slider}
+    {elseif empty($theme_settings.photos_slider_fullwidth) && !empty($theme_settings.html_slider_fullwidth)}
+        {$smarty.capture.image_slider}
+    {/if}
+
+    <!-- Banners -->
+    {if $theme_settings.banner_id}
+        {$banners = $wa->photos->photos("album/`$theme_settings.banner_id`")}
+        {if $banners}
+            {$max_size = $wa->photos->option('max_size')}
+            <ul id="mosaic-banners" class="{if $theme_settings.banner_display == 'recommended'}banners{else}menu-h{/if}">
+                {foreach $banners as $b}
+                    <li class='banner-{$b@index+1}'>
+                        {if $b.width > $max_size}{$b.width = $max_size}{/if}
+                        {$size = "`$b.width`x`$b.height`"}
+                        {if $b.description}<a href="{$b.description}" title='{$b.name}'>{/if}
+                            <img src="{photosPhoto::getPhotoUrl($b, $size)}" {if !empty($theme_settings.banner_width)}style="max-width: {$theme_settings.banner_width}px"{/if} alt="{$b.name}"  />
+                        {if $b.description}</a>{/if}
+                    </li>
+                {/foreach}
+            </ul>
+        {/if}
+    {/if}
+    <!-- End of Banners -->
+
+    <!-- Promo-cards -->
+    {$wa_promos = $wa->shop->promos()}
+    {$custom_promos = $wa->block('yourshop.home.promos')}
+    {if $wa_promos || !empty($custom_promos)}
+        <div class="info-banners">
+            {if !empty($custom_promos)}{$custom_promos}{/if}
+            {foreach $wa_promos as $pr}
+                <div class="info-banner">
+                    <div class="banner-icon"><a href="{$pr.link|escape}"><img src="{$pr.image}" /></a></div>
+                    {if !empty($pr.title)}
+                        <div class="h5"><a href="{$pr.link|escape}" style="color: {$pr.color};" title="{$pr.title|escape}">{$pr.title|escape}</a></div>{/if}
+                    {if !empty($pr.body)}<p style="color: {$pr.color};">{$pr.body|escape}</p>{/if}
+                    {if !empty($pr.countdown_datetime) && time() <= strtotime($pr.countdown_datetime)}
+                        <div class="promo-countdown">
+                            <div class="js-promo-countdown"
+                                  data-start="{date('Y-m-d H:i:s')}"
+                                  data-end="{$pr.countdown_datetime}">
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+            {/foreach}
+        </div>
+    {/if}
+    <!-- End of Promo-cards -->
+
+    <!-- Products slider -->
+    {if !empty($theme_settings.products_slider1)}
+        {include file="slider.html" slider_id="1" search=$theme_settings.products_slider1 search_count=$theme_settings.products_slider_count1 name=$theme_settings.products_slider_name1 speed=$theme_settings.ps_slider_speed1 auto=1}
+    {/if}
+
+    {if !empty($theme_settings.products_slider2)}
+        {include file="slider.html" slider_id="2" search=$theme_settings.products_slider2 search_count=$theme_settings.products_slider_count2 name=$theme_settings.products_slider_name2 speed=$theme_settings.ps_slider_speed2 auto=1}
+    {/if}
+    <!-- End of Products slider -->
+{if empty($theme_settings.home_catalog)}
+</div>
+{/if}
+
+{$has_photos = 0}
+{if $wa->photos && !empty($theme_settings.main_gallery)}
+    {$phs = $wa->photos->photos($theme_settings.main_gallery_mode, null, $theme_settings.main_gallery_count)}
+    {if count($phs)>0}
+        {$has_photos = 1}
+        {$slider_ph = []}
+        {foreach $phs as $photo}
+            {$slider_ph[] = sprintf("<a href='%s' title='%s'><img src='%simg/loading16.gif' alt='%s' data-lazy='%s'></a>", $photo.frontend_link, $photo.name|escape, $wa_theme_url, $photo.name|escape, photosPhoto::getPhotoUrl($photo, '300x300', true, $wa->photos->getCDN()))}
+        {/foreach}
+    {/if}
+{/if}
+{$custom_desc = $wa->block('yourshop.home.description')}
+{if $has_photos || $custom_desc || $theme_settings.main_img || $theme_settings.main_title || $theme_settings.main_desc || $theme_settings.main_link_text}
+    {if empty($theme_settings.main_background) && empty($theme_settings.home_catalog)}
+    <div class="wrap">
+    {/if}
+    <div class="about-block{if $has_photos} with-photos{/if}">
+        {if empty($theme_settings.home_catalog) && !empty($theme_settings.main_background)}<div class="wrap">{/if}
+            <div class="left-block" itemscope itemtype="http://schema.org/Store">
+                <meta itemprop="description" content="{$wa->meta('description')|escape}">
+                <meta itemprop="name" content="{$wa->shop->settings('name')}">
+                <meta itemprop="telephone" content="{if $theme_settings.phone}{$theme_settings.phone|escape}{elseif $wa->shop}{$wa->shop->settings('phone')}{/if}">
+                <meta itemprop="currenciesAccepted" content="{$wa->shop->currency()}">
+                <meta itemprop="address" content="{$wa->shop->settings('country')}">
+                {if !empty($custom_desc)}
+                    {$custom_desc}
+                {else}
+                    {if !empty($theme_settings.main_img)}
+                        <div class="image"><img src="{$wa_theme_url}{$theme_settings.main_img}" alt="{$theme_settings.main_title}" /></div>
+                    {/if}
+                    <div class="about-text">
+                        {if $theme_settings.main_title}<h1>{$theme_settings.main_title}</h1>{/if}
+                        {if $theme_settings.main_desc}{$theme_settings.main_desc}{/if}
+                        {if $theme_settings.main_link_text}<div class='read-more'><a href="{$theme_settings.main_link}" title="{$theme_settings.main_link_text}" class="button">{$theme_settings.main_link_text}</a></div>{/if}
+                    </div>
+                {/if}
+            </div>
+            {if $has_photos}
+                <div class="right-block">
+                    <div id="last-photos">
+                        {include file="slider.html" slider_id="3" images=$slider_ph name="{$theme_settings.main_gallery_title}" speed="7000" auto=1}
+                    </div>
+                </div>
+            {/if}
+        {if empty($theme_settings.home_catalog) && !empty($theme_settings.main_background)}</div>{/if}
+    </div>
+    {if empty($theme_settings.main_background) && empty($theme_settings.home_catalog)}
+    </div>
+    {/if}
+{/if}
+
+{if empty($theme_settings.home_catalog)}<div class="wrap">{/if}
+
+    {if !empty($theme_settings.round_menu)}
+        <ul class="round-menu">
+            {foreach ['round1', 'round2', 'round3', 'round4', 'round5', 'round6', 'round7', 'round8'] as $rm}
+                {if !empty($theme_settings["`$rm`_text"]) || !empty($theme_settings["`$rm`_image"])}
+                    <li>
+                        {if !empty($theme_settings["`$rm`_link"])}
+                        <a href="{$theme_settings["`$rm`_link"]}"{if !empty($theme_settings["`$rm`_text"])} title='{$theme_settings["`$rm`_text"]}'{/if}>
+                        {/if}
+                            {if !empty($theme_settings["`$rm`_image"])}<img src='{$wa_theme_url}{$theme_settings["`$rm`_image"]}'{if !empty($theme_settings["`$rm`_text"])} alt='{$theme_settings["`$rm`_text"]}'{/if} />{/if}
+                            {if !empty($theme_settings["`$rm`_text"])}
+                                {$p_style=""}
+                                {if !empty($theme_settings["`$rm`_menu_bg"])}{$bg=$theme_settings["`$rm`_menu_bg"]}{$p_style="`$p_style` background: `$bg`;"}{/if}
+                                {if !empty($theme_settings["`$rm`_menu_color"])}{$color=$theme_settings["`$rm`_menu_color"]}{$p_style="`$p_style` color: `$color`;"}{/if}
+                                <p{if $p_style} style="{$p_style}"{/if}>{$theme_settings["`$rm`_text"]}</p>
+                            {/if}
+                        {if !empty($theme_settings["`$rm`_link"])}
+                        </a>
+                        {/if}
+                    </li>
+                {/if}
+            {/foreach}
+            {$custom_round = $wa->block('yourshop.home.round')}
+            {if !empty($custom_round)}{$custom_round}{/if}
+        </ul>
+    {/if}
+
+    {if $wa->blog && !empty($theme_settings.news_show)}
+        {$news_id = $theme_settings.news}
+        {if empty($theme_settings.news)}
+            {$news_id = null}
+        {/if}
+        {$news = $wa->blog->posts($news_id, $theme_settings.news_count)}
+        {if $news}
+            <section class="news-block">
+                {if $theme_settings.news_title}<h3>{$theme_settings.news_title}</h3>{/if}
+                {foreach $news as $n}
+                    <article>
+                        <time datetime="{$n.datetime|date_format:'Y-m-d\TH:i'}" class="float-left"><span class="time-day">{$n.datetime|wa_datetime:"d"}</span><br><span class="time-month">{$n.datetime|wa_datetime:"F"|truncate:3:''}</span></time>
+                        <div class="news-content">
+                            <h4><a href="{if !empty($n.external_link)}{$n.external_link}{else}{$n.link}{/if}" title="{$n.title}">{$n.title}</a></h4>
+                            <p>
+                                {if !empty($n.preview)}
+                                    <a href="{if !empty($n.external_link)}{$n.external_link}{else}{$n.link}{/if}" title="{$n.title}">
+                                        <img src="{$n.preview}" alt="{$n.title}"/>
+                                    </a>
+                                {/if}
+                                {$n.text|strip_tags|truncate:150}
+                            </p>
+                            <div>
+                                <a href="{if !empty($n.external_link)}{$n.external_link}{else}{$n.link}{/if}" title="{$n.cut_link_label|default:'[`Continue reading`] →'}">
+                                    {$n.cut_link_label|default:'[`Continue reading`] <span class="arial-font">→</span>'}
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                {/foreach}
+            </section>
+        {/if}
+    {/if}
+    {if !empty($theme_settings.home_catalog)}
+    </div>
+    </div>
+    {/if}
+{if empty($theme_settings.home_catalog)}</div>{/if}
+{$wa->globals('home_page', 1)}

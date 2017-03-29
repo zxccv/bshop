@@ -1,0 +1,159 @@
+{if $wa->mailer && !empty($theme_settings.mailer) && !empty($theme_settings.mailer_id)}
+    {$subscribe_form = $wa->mailer->form($theme_settings.mailer_id)}
+{/if}
+
+<div class="footer{if $theme_settings.footer_width == 'limited'} wrap{/if}">
+    {if $theme_settings.footer_width == 'fullwidth'}<div class="wrap">{/if}
+        <div class="footer-pages{if empty($subscribe_form)} full{/if}">
+            {foreach ['col1', 'col2', 'col3'] as $col}
+                {if !empty($theme_settings["footer_`$col`"])}
+                    <div class="column">
+                        {if !empty($theme_settings["footer_`$col`_head"])}
+                            <div class="h5">{$theme_settings["footer_`$col`_head"]}</div>
+                        {/if}
+                        <ul class="menu-v">
+                            {foreach ['row1', 'row2', 'row3', 'row4', 'row5', 'row6', 'row7', 'row8'] as $row}
+                                {if !empty($theme_settings["footer_`$col`_`$row`"])}
+                                    <li><a href='{$theme_settings["footer_`$col`_`$row`_link"]}' title='{$theme_settings["footer_`$col`_`$row`"]}'{if !empty($theme_settings["footer_`$col`_`$row`_target"])} target='_blank'{/if}>{$theme_settings["footer_`$col`_`$row`"]}</a></li>
+                                {/if}
+                            {/foreach}
+                        </ul>
+                    </div>
+                {/if}
+            {/foreach}
+
+            {$custom_block = $wa->block('yourshop.footer.columns')}
+            {if !empty($custom_block)}{$custom_block}{/if}
+
+        </div>
+
+        {if !empty($subscribe_form)}
+            <div class="subscribe-block mini-subscribe">
+                {if {$theme_settings.mailer_head}}
+                    <div class="subscribe-block-heading">{$theme_settings.mailer_head}</div>
+                {/if}
+                <div class="inputs">{$subscribe_form}</div>
+            </div>
+        {/if}
+
+        <div class="footer-info{if empty($subscribe_form)} full{/if}">
+            {if $theme_settings.show_si_bottom}
+                <!-- SOCIAL ICONS -->
+                <ul class="menu-h social-icons">
+                    {if !empty($theme_settings.social_vk)}
+                    <li class='social_vk'><a href="{$theme_settings.social_vk}" title='[`Vkontakte`]'><i class="fa fa-vk"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_fb)}
+                    <li class='social_fb'><a href="{$theme_settings.social_fb}" title='Facebook'><i class="fa fa-facebook"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_tw)}
+                    <li class='social_tw'><a href="{$theme_settings.social_tw}" title='Twitter'><i class="fa fa-twitter"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_google)}
+                    <li class='social_google'><a href="{$theme_settings.social_google}" title='Google +'><i class="fa fa-google-plus"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_lj)}
+                    <li class='social_lj'><a href="{$theme_settings.social_lj}" title='Livejournal'><i class="ys ys-lj"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_ya)}
+                    <li class='social_ya'><a href="{$theme_settings.social_ya}" title='Yandex'><i class="ys ys-yandex"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_odn)}
+                    <li class='social_odn'><a href="{$theme_settings.social_odn}" title='[`Odnoklassniki`]'><i class="ys ys-odnokl"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_youtube)}
+                    <li class='social_youtube'><a href="{$theme_settings.social_youtube}" title='Youtube'><i class="fa fa-youtube"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_instagram)}
+                    <li class='social_instagram'><a href="{$theme_settings.social_instagram}" title='Instagram'><i class="fa fa-instagram"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_mail)}
+                    <li class='social_mail'><a href="{$theme_settings.social_mail}" title='Mail.ru'><i class="ys ys-mail"></i></a></li>
+                    {/if}
+                    {if !empty($theme_settings.social_pint)}
+                    <li class='social_pint'><a href="{$theme_settings.social_pint}" title='Pinterest'><i class="fa fa-pinterest-p"></i></a></li>
+                    {/if}
+                </ul>
+            {/if}
+
+            {if !empty($theme_settings.footer_block)}
+                {$theme_settings.footer_block}
+            {/if}
+            {$right_block = $wa->block('yourshop.footer.block')}
+            {if !empty($right_block)}{$right_block}{/if}
+
+            <!-- Phone / Телефон -->
+            {if (($wa->shop && $wa->shop->settings('phone')) || $theme_settings.phone) && !empty($theme_settings.footer_show_phone)}
+                <p class="colored">{if $theme_settings.phone}{$theme_settings.phone}{elseif $wa->shop}{$wa->shop->settings('phone')}{/if}</p>
+            {/if}
+
+            <!-- Email -->
+            {if $wa->shop && !empty($theme_settings.footer_show_email)}
+                {$email = $wa->shop->settings('email')}
+                {if $email}<p><a href="mailto:{$email}" title="[`Mail to`] {$email}">{$email}</a></p>{/if}
+            {/if}
+
+            <!-- Payment block -->
+            {if $wa->shop}
+                {$payment = $wa->shop->payment()}
+                {$payment_icons = ['qiwi', 'rbk-money', 'robokassa', 'privat-bank', 'sberbank', 'skrill-moneybookers',
+                'telemoney', 'unistream', 'visa', 'webmoney', 'western-union', 'yandex-money',
+                'alfabank', 'american-express', 'assist', 'payu', 'cirrus', 'contact', 'diners-club',
+                'elecsnet', 'intellectmoney', 'jcb', 'maestro', 'mail-money', 'mastercard', 'migom',
+                'moneymail', 'mts-bank', 'paypal', 'chronopay']}
+                {$payment_custom = ""}
+                {foreach $payment_icons as $pi}
+                    {if !empty($theme_settings["payment-`$pi`"])}
+                        {$payment_custom = "`$payment_custom`<li><i class='payment-icon `$pi`' title='`$pi`'></i></li>"}
+                    {/if}
+                {/foreach}
+                {if $payment || $payment_custom}
+                    <div class="payment-block">
+                        {$count = 0}
+                        <ul class="menu-h">
+                            {if $payment_custom}{$payment_custom}{/if}
+                            {if !empty($theme_settings.payment_auto)}
+                                {foreach $payment as $p}
+                                    {if $count == 8}{break}{/if}
+                                    {if $p.logo}
+                                        <li><img src="{$p.logo}" alt="{$p.name}" title="{$p.name}"></li>
+                                        {$count = $count + 1}
+                                    {/if}
+                                {/foreach}
+                            {/if}
+                        </ul>
+                    </div>
+                {/if}
+            {/if}
+            <!-- End -->
+
+            {if !empty($theme_settings.counters) && $theme_settings.counters_pos == 'right'}<div class="counters right">{$theme_settings.counters}</div>{/if}
+
+            <!-- COPYRIGHT -->
+            <div class="copyright">
+                {if $theme_settings.copyright}
+                    {$theme_settings.copyright},
+                    {time()|wa_datetime:"Y"}
+                {else}
+                    &copy;
+                    {if $wa->shop}
+                        {$name = $wa->shop->settings('name')}
+                        {if $name}{$name}{/if}
+                    {/if}
+                {/if}
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        {if !empty($theme_settings.counters) && $theme_settings.counters_pos == 'down'}<div class="counters">{$theme_settings.counters}</div>{/if}
+
+        {if !empty($frontend_footer)}
+            <div class='footer-hook'>
+                <!-- plugin hook: 'frontend_footer' -->
+                {* @event frontend_footer.%plugin_id% *}
+                {foreach $frontend_footer as $_}{$_}{/foreach}
+            </div>
+        {/if}
+
+    {if $theme_settings.footer_width == 'fullwidth'}</div>{/if}
+</div>

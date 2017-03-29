@@ -1,0 +1,339 @@
+{$wa->globals('last_crumb', $product.name)}
+
+{capture name=features_block}
+    {if $product.features}
+        <table class="features">
+            {foreach $product.features as $f_code => $f_value}
+                <tr{if $features[$f_code].type == 'divider'} class="divider"{/if}>
+                    <td class="name">
+                        {$features[$f_code].name|escape}
+                    </td>
+                    <td class="value" {if $f_code|escape == 'color' || $f_code|escape == 'weight'}itemprop="{$f_code|escape}"{/if}>
+                        {if is_array($f_value)}
+                            {if $features[$f_code].type == 'color'}
+                                {implode('<br /> ', $f_value)}
+                            {else}
+                                {implode(', ', $f_value)}
+                            {/if}
+                        {else}
+                            {$f_value}
+                        {/if}
+                    </td>
+                </tr>
+            {/foreach}
+        </table>
+    {/if}
+{/capture}
+{capture name=product_name}
+    <h1 itemprop="name">
+        {$product.name|escape}
+    </h1>
+    <div class="rating-review">
+        {if !empty($product.rating) && $product.rating > 0}
+            <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" title="{sprintf('[`Average user rating: %s / 5`]', $product.rating)}">
+                {$wa->shop->ratingHtml($product.rating, 16)}
+                <span class="rating">
+                    / [`rating`] <span itemprop="ratingValue">{$product.rating}</span>
+                    <span class="reviews-count">
+                        {if $reviews}
+                        / {sprintf('[`reviews`]: <span itemprop="reviewCount" class="count">%d</span>', $reviews_total_count)}
+                        {/if}
+                    </span>
+                    /
+                </span>
+            </span>
+        {/if}
+        <a href="{if !empty($theme_settings.show_reviews_page)}{$wa->shop->productUrl($product, 'reviews')}{else}#/reviews/{/if}"{if empty($theme_settings.show_reviews_page)} rel="nofollow"{/if} class="goto-review" title="[`Leave a review`]">[`Leave a review`]</a>
+        {if !empty($theme_settings.show_sku)}
+            {$sku = $product.skus[$product.sku_id]}
+            <span class="grey s-sku"{if !$sku.sku} style="display:none;"{/if}>[`SKU`]: <span>{$sku.sku|escape}</span></span>
+        {/if}
+    </div>
+{/capture}
+{capture name=crossselling_sl}
+    {if !empty($theme_settings.cross_sl)}
+        {$crossselling = $product->crossSelling($theme_settings.cross_sl_count)}
+        {if $crossselling}
+            <div class="related">
+                {include file="slider.html" slider_id=4 products=$crossselling speed=$theme_settings.cross_sl_speed name="{$theme_settings.cross_sl_title}"}
+            </div>
+        {/if}
+    {/if}
+{/capture}
+{capture name=upselling_sl}
+    {if !empty($theme_settings.upsell_sl)}
+    {$upselling = $product->upSelling($theme_settings.upsell_sl_count)}
+        {if $upselling}
+            <div class="related">
+                {include file="slider.html" slider_id=3 products=$upselling speed=$theme_settings.upsell_sl_speed name="{$theme_settings.upsell_sl_title}"}
+            </div>
+        {/if}
+    {/if}
+{/capture}
+
+<div class="wrap product-page{if $theme_settings.image_thumbs == 'down'} thumbs-down{else} thumbs-left{/if}{if (count($product.images) == 1 || !$product.images) && $theme_settings.image_thumbs == 'left'} no-thumbs{/if}{if !empty($theme_settings.product_catalog) && $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.product_catalog)} has-sidebar{/if}" itemscope itemtype="http://schema.org/Product">
+
+    {if !empty($theme_settings.product_catalog) || !empty($theme_settings.product_catalog_mob)}
+        {include file="`$wa_parent_theme_path`/sidebar.html" normal_sidebar=!empty($theme_settings.product_catalog) mobile_sidebar=!empty($theme_settings.product_catalog_mob)}
+    {/if}
+    {if !empty($theme_settings.product_catalog)}
+    <div class="content-sidebar{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+        {$smarty.capture.product_name}
+    {/if}
+    <!-- image gallery -->
+
+    <div class="images">
+        {if !empty($product['video_url'])}
+            {$video = $product->getVideo(['96x96'])}
+        {/if}
+        {if $theme_settings.image_thumbs == 'left'}
+            {include file="image-thumbs.html"}
+        {/if}
+
+        <!-- main image -->
+        <div class="image" data-small="{$wa->shop->productImgHtml($product, '96x96', ['itemprop' => 'image', 'alt' => $product.name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])|escape}">
+            {if !empty($video.url)}
+                <div id="video-container" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                    <div itemprop="embedHTML">
+                        <iframe src="{$video.url}" width="{$video.width}" height="{$video.height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <meta itemprop="width" content="{$video.width}">
+                    <meta itemprop="height" content="{$video.height}">
+                </div>
+            {/if}
+            <div id='image-container'{if !empty($video.url)} style='display: none'{/if}>
+                {if !empty($theme_settings.discount_badge2) && $product.compare_price > 0}
+                    {$discount_badge = (100*(1 - $product.price/$product.compare_price))}
+                    {if $discount_badge > 0}
+                        {if $discount_badge > 99 || $discount_badge < 1}{$discount_badge = $discount_badge|round:2}{else}{$discount_badge = $discount_badge|round}{/if}
+                        <div class="badge discount-badge crimson"><span>- {$discount_badge}%</span></div>
+                    {/if}
+                {/if}
+                {if $product.images}
+                    {$wa->shop->badgeHtml($product.badge)}
+                {/if}
+                {$zoom_image = $wa->shop->productImgUrl($product, '970x0')}
+                {if $theme_settings.enlarge_type == 'fancybox'}
+                <a href="{$zoom_image}" data-id='{$product.image_id}' class='fancybox-img-start'>
+                {/if}
+                    {if $wa->get('quickview')}{$quickviewId = '-quickview'}{else}{$quickviewId = ''}{/if}
+                    {$wa->shop->productImgHtml($product, '750x0', [ 'itemprop' => 'image', 'id' => "zoom`$quickviewId`",'data-large' => $zoom_image, 'data-id' => $product.image_id, 'alt' => $product.name|escape, 'default' => "`$wa_theme_url`img/dummy330.jpg"])}
+                {if $theme_settings.enlarge_type == 'fancybox'}
+                </a>
+                {/if}
+            </div>
+        </div>
+
+        {if $theme_settings.image_thumbs == 'down'}
+            {include file="image-thumbs.html"}
+        {/if}
+        {if $theme_settings.image_thumbs == 'left'}
+            {include file="image-thumbs.html" mode="mobile"}
+        {/if}
+
+        {if !empty($theme_settings.yandex_share)}
+            {$share_services = []}
+            {foreach ['vkontakte', 'blogger', 'delicious', 'diary', 'digg', 'evernote', 'facebook', 'friendfeed', 'gplus', 'juick', 'liveinternet',
+            'linkedin', 'lj', 'moikrug', 'moimir', 'myspace', 'odnoklassniki', 'pinterest', 'surfingbird', 'tutby', 'twitter', 'yazakladki'] as $serv}
+                {if !empty($theme_settings["yandex_share_`$serv`"])}
+                    {$share_services[] = $serv}
+                {/if}
+            {/foreach}
+            {if count($share_services) > 0}
+            <div class="yashare-auto-init"
+                 data-yashareType="{$theme_settings.yandex_share_type}"
+                 data-yashareText="{$theme_settings.yandex_share_text}"
+                 data-yashareQuickServices="{implode(',', $share_services)}"
+                 data-yashareTheme="{$theme_settings.yandex_share_theme}"
+                 {if !empty($product.summary)}data-yashareDescription="{$product.summary|strip_tags|escape}"{/if}
+                 {if !empty($product.image_id)}data-yashareImage="{$wa->domainUrl()}{$wa->shop->productImgUrl($product, '96x96')}"{/if}></div>
+            {/if}
+        {/if}
+
+        {if $theme_settings.product_features == 'under_thumbs'}
+            <div class='features-block'>{$smarty.capture.features_block}</div>
+        {/if}
+    </div>
+    <div class="product-info">
+        {if empty($theme_settings.product_catalog)}
+            {$smarty.capture.product_name}
+        {/if}
+
+        <!-- add to cart -->
+        {include file="product.cart.html" inline}
+
+        <!-- plugin hook: 'frontend_product.cart' -->
+        {* @event frontend_product.%plugin_id%.cart *}
+        {if !empty($frontend_product['flexdiscount-plugin'].cart)}{$frontend_product['flexdiscount-plugin'].cart}{/if}
+        {foreach $frontend_product as $plugin_name => $_}
+            {if $plugin_name !== 'quickorder-plugin' && $plugin_name !== 'flexdiscount-plugin'}
+                {$_.cart}
+            {/if}
+        {/foreach}
+
+        {if !empty($rates)}
+            <div class="rating-table">
+                <table class="rating-distribution">
+                    {$_total_count = 0}
+                    {foreach $rates as $_rate => $_count}
+                        {$_total_count = $_total_count + $_count}
+                    {/foreach}
+                    {for $i = 5 to 0 step -1}
+                        {if empty($rates[$i]) || !$rates[$i]}{$_count = 0}{else}{$_count = $rates[$i]}{/if}
+                        {if $i || $_count}
+                            <tr>
+                                <td>
+                                    <span class="rating">{for $j=1 to 5}{if 5-$i >= $j}<i class="icon16 star-empty"></i>{else}<i class="icon16 star"></i>{/if}{/for}{if !$i}<span class="align-center hint" style='display: block'>[`no rate`]</span>{/if}</span>
+                                </td>
+                                <td>
+                                    <div class="bar">
+                                        <div class="filling" style="width: {if $_total_count > 0}{str_replace(',','.', 100*$_count/$_total_count)}{else}0{/if}%;{if !$i} background: #ddd;{/if}"></div>
+                                    </div>
+                                </td>
+                                <td class="min-width">{$_count}</td>
+                            </tr>
+                        {/if}
+                    {/for}
+                </table>
+                <div class="average-rating">
+                    [`Average rating`]: <b>{$product.rating}</b>
+                    <div>{$wa->shop->ratingHtml($product.rating, 16)}</div>
+                    {$req_auth = $wa->shop->settings('require_authorization')}
+                    {if ($wa->isAuthEnabled() && $req_auth) || !$req_auth}
+                        <a href="javascript:void(0)" class="button write-review" title="[`Write a review`]">[`Write a review`]</a>
+                    {/if}
+                </div>
+            </div>
+        {/if}
+
+        <div class="aux">
+            <!-- categories -->
+            {if $product.categories}
+                <p>
+                    [`Categories`]:
+                    {foreach from=$product.categories item=c name=product_categories}
+                        {if $c.status}
+                            <span><a href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url|escape])}" title="{$c.name|escape}">{$c.name|escape}</a>{if !$smarty.foreach.product_categories.last}, {/if}</span>
+                        {/if}
+                    {/foreach}
+                </p>
+            {/if}
+            <!-- tags -->
+            {if $product.tags}
+                <p>
+                    [`Tags`]:
+                    {foreach from=$product.tags item=t name=product_tags}
+                        <span><a href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}" title="{$t}">{$t}</a>{if !$smarty.foreach.product_tags.last}, {/if}</span>
+                    {/foreach}
+                </p>
+            {/if}
+
+            <!-- plugin hook: 'frontend_product.block_aux' -->
+            {* @event frontend_product.%plugin_id%.block_aux *}
+            {foreach $frontend_product as $_}{$_.block_aux}{/foreach}
+
+        </div>
+    </div>
+    <div class="product-full">
+
+        {if $theme_settings.cross_sl_position == 'before_tabs' && $theme_settings.upsell_sl_position == 'before_tabs'}
+            {if $theme_settings.cross_sl_priority == 'before_upselling'}
+                {$smarty.capture.crossselling_sl}
+                {$smarty.capture.upselling_sl}
+            {else}
+                {$smarty.capture.upselling_sl}
+                {$smarty.capture.crossselling_sl}
+            {/if}
+        {elseif $theme_settings.cross_sl_position == 'before_tabs'}
+            {$smarty.capture.crossselling_sl}
+        {elseif $theme_settings.upsell_sl_position == 'before_tabs'}
+            {$smarty.capture.upselling_sl}
+        {/if}
+
+        {if $theme_settings.pr_last_reviews == 'before_tabs'}
+            {$smarty.capture.reviews_block}
+        {/if}
+
+        <!-- plugin hook: 'frontend_product.block' -->
+        {* @event frontend_product.%plugin_id%.block *}
+        {$frontend_product_block = []}
+        {foreach $frontend_product as $_}
+            {if !empty($_.block)}
+                {$frontend_product_block[] = $_.block}
+            {/if}
+        {/foreach}
+        
+        <script type="text/javascript" src="{$wa_active_theme_url}tabs.min.js"></script>
+        <ul class="menu-h" id="product-tabs">
+            {if $product.description || $frontend_product_block}
+                <li{if $theme_settings.active_tab == 'overview' || !$product.features || $theme_settings.product_features !== 'tabs'} class="selected"{/if}><a href="{$wa->shop->productUrl($product)}" title="[`Overview`]" data-id="overview">[`Overview`]</a></li>
+            {/if}
+            {if $product.features && $theme_settings.product_features == 'tabs'}
+                <li{if (!$product.description && !$frontend_product_block) || $theme_settings.active_tab == 'features'} class="selected"{/if}>
+                    <a href="javascript:void(0)" data-tab="features" title="[`Features`]" data-id="features">[`Features`]</a>
+                </li>
+            {/if}
+            <li>
+                <a href="{$wa->shop->productUrl($product, 'reviews')}" title="[`Reviews`]"{if empty($theme_settings.show_reviews_page)} data-tab="reviews" data-id="reviews"{/if}>[`Reviews`] <span class="hint count">{$reviews_total_count}</span></a>
+            </li>
+            {if !empty($theme_settings.vk_com_id) && !empty($theme_settings.show_vk_reviews) && !empty($theme_settings.vk_reviews_text)}
+                <li>
+                    <a href="javascript:void(0)" title="{$theme_settings.vk_reviews_text|strip_tags|escape}" data-id="vk-reviews-tab">{$theme_settings.vk_reviews_text}</a>
+                </li>
+            {/if}
+            {if !empty($theme_settings.fb_id) && !empty($theme_settings.show_fb_reviews) && !empty($theme_settings.fb_reviews_text)}
+                <li>
+                    <a href="javascript:void(0)" title="{$theme_settings.fb_reviews_text|strip_tags|escape}" data-id="fb-reviews-tab">{$theme_settings.fb_reviews_text}</a>
+                </li>
+            {/if}
+            {foreach $product.pages as $page}
+                <li><a href="{$wa->shop->productUrl($product, 'page', ['page_url' => $page.url|escape])}"{if empty($theme_settings.show_page_page)} data-tab="page" data-id="page-{$page.url|regex_replace:'/[\s]/':'_'}"{/if} title="{$page.name|escape}">{$page.name|escape}</a></li>
+            {/foreach}
+
+            <!-- plugin hook: 'frontend_product.menu' -->
+            {* @event frontend_product.%plugin_id%.menu *}
+            {foreach $frontend_product as $_}{$_.menu}{/foreach}
+
+        </ul>
+        <div id="tab-content">
+            {if $product.description || $frontend_product_block}
+            <div id="overview"{if $theme_settings.active_tab == 'overview' || !$product.features || $theme_settings.product_features !== 'tabs'} class="show-tab"{/if}>
+                <!-- plugin hook: 'frontend_product.block' -->
+                {implode("", $frontend_product_block)}
+                {if $product.description}
+                    <div class="description" id="product-description" itemprop="description">{$product.description}</div>
+                {/if}
+            </div>
+            {/if}
+            {if !empty($theme_settings.vk_com_id) && !empty($theme_settings.show_vk_reviews) && !empty($theme_settings.vk_reviews_text)}
+                <div id="vk-reviews-tab">{include file="social.vk.comments.html"}</div>
+            {/if}
+            {if !empty($theme_settings.fb_id) && !empty($theme_settings.show_fb_reviews) && !empty($theme_settings.fb_reviews_text)}
+                <div id="fb-reviews-tab">{include file="social.fb.comments.html"}</div>
+            {/if}
+            {if $product.features && $theme_settings.product_features == 'tabs'}
+                <div id="features"{if (!$product.description && !$frontend_product_block) || $theme_settings.active_tab == 'features'} class="show-tab"{/if}>
+                    {$smarty.capture.features_block}
+                </div>
+            {/if}
+        </div>
+        {if $theme_settings.cross_sl_position == 'after_tabs' && $theme_settings.upsell_sl_position == 'after_tabs'}
+            {if $theme_settings.cross_sl_priority == 'before_upselling'}
+                {$smarty.capture.crossselling_sl}
+                {$smarty.capture.upselling_sl}
+            {else}
+                {$smarty.capture.upselling_sl}
+                {$smarty.capture.crossselling_sl}
+            {/if}
+        {elseif $theme_settings.cross_sl_position == 'after_tabs'}
+            {$smarty.capture.crossselling_sl}
+        {elseif $theme_settings.upsell_sl_position == 'after_tabs'}
+            {$smarty.capture.upselling_sl}
+        {/if}
+    </div>
+
+    {if !empty($theme_settings.product_catalog)}
+    </div>
+    {/if}
+</div>
+{$wa->globals('product_page', 1)}

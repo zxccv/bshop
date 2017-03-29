@@ -1,0 +1,23 @@
+<div class="wrap page-page">
+    <div class="content" itemscope itemtype="http://schema.org/WebPage">
+
+        {include file="`$wa_parent_theme_path`/sidebar.html"}
+
+        <div class="content-sidebar{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+            <div role="main">
+                <h1>{$page.name}</h1>
+                {if !empty($theme_settings.pages_show_subcats)}
+                    {$subpages = $wa->shop->pages($page.id)}
+                    {if $subpages}
+                        <ul class="menu-h subpages">
+                            {foreach $subpages as $p}
+                                <li><a href="{$p.url}" title="{$p.name}">{$p.name}</a></li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                {/if}
+                {$page.content}
+            </div>
+        </div>
+    </div>
+</div>

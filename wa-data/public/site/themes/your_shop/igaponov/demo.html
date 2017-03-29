@@ -1,0 +1,306 @@
+{*** index.html ***}
+
+{* Cancel *}
+{$settings_cancel = $wa->post('settings-cancel')}
+{if !empty($settings_cancel)}
+    {$settings_cancel = 1}
+    {$wa->storage('settings-color', '')}
+    {$wa->storage('settings-pattern', '')}
+    {$wa->storage('settings-layout', '')}
+    {$wa->storage('settings-header-type', '')}
+    {$wa->storage('settings-home-sidebar', '')}
+    {$wa->storage('settings-product-sidebar', '')}
+    {$wa->storage('settings-sidebar-pos', '')}
+    {$wa->storage('settings-menu-category', '')}
+    {$wa->storage('settings-category-list-inside', '')}
+    {$wa->storage('settings-category-list-visibility', '')}
+    {$wa->storage('settings-horiz', [])}
+    {$wa->storage('settings-horiz-brands-col', '')}
+    {$wa->storage('settings-slider', '')}
+    {$wa->storage('settings-home-big-slider', '')}
+    {$wa->storage('settings-banners', '')}
+    {$wa->storage('settings-lazyloading', '')}
+    {$wa->storage('settings-ajax-filters', '')}
+    {$wa->storage('settings-subcat-view', '')}
+    {$wa->storage('settings-zoom', '')}
+    {$wa->storage('settings-product-features', '')}
+{else}
+    {$settings_cancel = 0}
+{/if}
+
+{* Color scheme *}
+{$settings_color = $wa->post('settings-color')}
+{$settings_color2 = $wa->storage('settings-color')}
+{if !empty($settings_color) && !$settings_cancel}
+    {$theme_settings.color = $settings_color}
+    {$wa->storage('settings-color', $settings_color)}
+{elseif (!empty($settings_color2) && !$settings_cancel)}
+    {$theme_settings.color = $settings_color2}
+{/if}
+
+{* Background pattern *}
+{$settings_pattern = $wa->post('settings-pattern')}
+{$settings_pattern2 = $wa->storage('settings-pattern')}
+{if !empty($settings_pattern) && !$settings_cancel}
+    {$theme_settings.pattern = $settings_pattern}
+    {$wa->storage('settings-pattern', $settings_pattern)}
+{elseif (!empty($settings_pattern2) && !$settings_cancel)}
+    {$theme_settings.pattern = $settings_pattern2}
+{/if}
+
+{* Layout width *}
+{$settings_layout = $wa->post('settings-layout')}
+{$settings_layout2 = $wa->storage('settings-layout')}
+{if !empty($settings_layout) && !$settings_cancel}
+    {$wa->globals('settings_layout', $settings_layout)}
+    {$wa->storage('settings-layout', $settings_layout)}
+{elseif (!empty($settings_layout2) && !$settings_cancel)}
+    {$wa->globals('settings_layout', $settings_layout2)}
+{/if}
+{if $wa->globals('settings_layout') == 'limited'}
+    {$theme_settings.top_width = 'limited'}{$theme_settings.header_pages_width = 'limited'}{$theme_settings.header_width = 'limited'}{$theme_settings.category_width = 'limited'}{$theme_settings.footer_width = 'limited'}{$theme_settings.photos_slider_fullwidth = 0}{$theme_settings.html_slider_fullwidth = 0}{$theme_settings.main_background = 0}
+{elseif $wa->globals('settings_layout') == 'wide'}
+    {$theme_settings.top_width = 'fullwidth'}{$theme_settings.header_pages_width = 'fullwidth'}{$theme_settings.header_width = 'fullwidth'}{$theme_settings.category_width = 'combine'}{$theme_settings.footer_width = 'fullwidth'}{$theme_settings.main_background = 1}{$theme_settings.html_slider_fullwidth = 1}
+{/if}
+
+{* Header layout *}
+{$settings_header_type = $wa->post('settings-header-type')}
+{$settings_header_type2 = $wa->storage('settings-header-type')}
+{if !empty($settings_header_type) && !$settings_cancel}
+    {$theme_settings.header_type = $settings_header_type}
+    {if $theme_settings.header_type >= 7}
+        {$theme_settings.header_block1_align = 'center'}
+        {$theme_settings.header_block2_align = 'center'}
+    {/if}
+    {$wa->storage('settings-header-type', $settings_header_type)}
+{elseif (!empty($settings_header_type2) && !$settings_cancel)}
+    {$theme_settings.header_type = $settings_header_type2}
+{/if}
+
+{* Home sidebar *}
+{$home_sidebar = $wa->post('settings-home-sidebar')}
+{$home_sidebar2 = $wa->storage('settings-home-sidebar')}
+{if isset($home_sidebar) && !$settings_cancel}
+    {$theme_settings.home_catalog = $home_sidebar}
+    {$wa->storage('settings-home-sidebar', $home_sidebar)}
+{elseif (isset($home_sidebar2) && !$settings_cancel)}
+    {$theme_settings.home_catalog = $home_sidebar2}
+{/if}
+
+{* Product sidebar *}
+{$product_sidebar = $wa->post('settings-product-sidebar')}
+{$product_sidebar2 = $wa->storage('settings-product-sidebar')}
+{if isset($product_sidebar) && !$settings_cancel}
+    {$theme_settings.product_catalog = $product_sidebar}
+    {$wa->storage('settings-product-sidebar', $product_sidebar)}
+{elseif (isset($product_sidebar2) && !$settings_cancel)}
+    {$theme_settings.product_catalog = $product_sidebar2}
+{/if}
+
+{* Sidebar position *}
+{$sidebar_pos = $wa->post('settings-sidebar-pos')}
+{$sidebar_pos2 = $wa->storage('settings-sidebar-pos')}
+{if !empty($sidebar_pos) && !$settings_cancel}
+    {$theme_settings.catalog_sidebar = $sidebar_pos}
+    {$wa->storage('settings-sidebar-pos', $sidebar_pos)}
+{elseif (!empty($sidebar_pos2) && !$settings_cancel)}
+    {$theme_settings.catalog_sidebar = $sidebar_pos2}
+{/if}
+
+{* Type of horizontal menu *}
+{$settings_menu_category = $wa->post('settings-menu-category')}
+{$settings_menu_category2 = $wa->storage('settings-menu-category')}
+{if !empty($settings_menu_category) && !$settings_cancel}
+    {$theme_settings.category_type = $settings_menu_category}
+    {$wa->storage('settings-menu-category', $settings_menu_category)}
+{elseif (!empty($settings_menu_category2) && !$settings_cancel)}
+    {$theme_settings.category_type = $settings_menu_category2}
+{/if}
+
+{* State of inside categories *}
+{$settings_category_list_inside = $wa->post('settings-category-list-inside')}
+{$settings_category_list_inside2 = $wa->storage('settings-category-list-inside')}
+{if !empty($settings_category_list_inside) && !$settings_cancel}
+    {$theme_settings.category_list_inside = $settings_category_list_inside}
+    {$wa->storage('settings-category-list-inside', $settings_category_list_inside)}
+{elseif (!empty($settings_category_list_inside2) && !$settings_cancel)}
+    {$theme_settings.category_list_inside = $settings_category_list_inside2}
+{/if}
+
+{* Visibility of inside categories *}
+{$settings_category_list_visibility = $wa->post('settings-category-list-visibility')}
+{$settings_category_list_visibility2 = $wa->storage('settings-category-list-visibility')}
+{if !empty($settings_category_list_visibility) && !$settings_cancel}
+    {$theme_settings.category_list_visibility = $settings_category_list_visibility}
+    {$wa->storage('settings-category-list-visibility', $settings_category_list_visibility)}
+{elseif (!empty($settings_category_list_visibility2) && !$settings_cancel)}
+    {$theme_settings.category_list_visibility = $settings_category_list_visibility2}
+{/if}
+
+{* Content of horizontal menu *}
+{$settings_horiz = $wa->post('settings-horiz')}
+{$settings_horiz2 = $wa->storage('settings-horiz2')}
+{if !empty($settings_horiz) && !$settings_cancel}
+    {$wa->storage('settings-horiz2', [])}
+    {foreach ['cats', 'apps', 'brands', 'pages_shop'] as $sh}
+        {if in_array($sh, $settings_horiz)}
+            {$theme_settings["horiz_show_`$sh`"] = 1}
+        {else}
+            {$theme_settings["horiz_show_`$sh`"] = 0}
+        {/if}
+        {$wa->storage('settings-horiz2', $settings_horiz)}
+    {/foreach}
+{elseif (!empty($settings_horiz2) && !$settings_cancel)}
+    {foreach ['cats', 'apps', 'brands', 'pages_shop'] as $sh}
+        {if in_array($sh, $settings_horiz2)}
+            {$theme_settings["horiz_show_`$sh`"] = 1}
+        {else}
+            {$theme_settings["horiz_show_`$sh`"] = 0}
+         {/if}
+    {/foreach}
+{/if}
+
+{* Maximum number of brands in dropdown menu *}
+{$settings_horiz_brands_col = $wa->post('settings-horiz-brands-col')}
+{$settings_horiz_brands_col2 = $wa->storage('settings-horiz-brands-col')}
+{if !empty($settings_horiz_brands_col) && !$settings_cancel}
+    {$theme_settings.horiz_brands_col = $settings_horiz_brands_col}
+    {$wa->storage('settings-horiz-brands-col', $settings_horiz_brands_col)}
+{elseif (!empty($settings_horiz_brands_col2) && !$settings_cancel)}
+    {$theme_settings.horiz_brands_col = $settings_horiz_brands_col2}
+{/if}
+
+{* Slider *}
+{$settings_slider = $wa->post('settings-slider')}
+{$settings_slider2 = $wa->storage('settings-slider')}
+{if !empty($settings_slider) && !$settings_cancel}
+    {if $settings_slider == 'photos'}
+        {$theme_settings.html_slider = ''}
+        {$theme_settings.photos_slider = 'album/16'}
+    {/if}
+    {$wa->storage('settings-slider', $settings_slider)}
+{elseif (!empty($settings_slider2) && !$settings_cancel)}
+    {if $settings_slider2 == 'photos'}
+        {$theme_settings.html_slider = ''}
+        {$theme_settings.photos_slider = 'album/16'}
+    {/if}
+{/if}
+
+{* Background image of slider *}
+{$settings_home_big_slider = $wa->post('settings-home-big-slider')}
+{$settings_home_big_slider2 = $wa->storage('settings-home-big-slider')}
+{if !empty($settings_home_big_slider) && !$settings_cancel}
+    {$theme_settings.html_slider_pattern = $settings_home_big_slider}
+    {$wa->storage('settings-home-big-slider', $settings_home_big_slider)}
+{elseif (!empty($settings_home_big_slider2) && !$settings_cancel)}
+    {$theme_settings.html_slider_pattern = $settings_home_big_slider2}
+{/if}
+
+{* Banners *}
+{$settings_banners = $wa->post('settings-banners')}
+{$settings_banners2 = $wa->storage('settings-banners')}
+{if isset($settings_banners) && !$settings_cancel}
+    {if $settings_banners}
+        {$wa->globals('settings_banners', 1)}
+        {$theme_settings.banner_id = 6}
+        {$theme_settings.banner_display = 'recommended'}
+    {/if}
+    {$wa->storage('settings-banners', $settings_banners)}
+{elseif (isset($settings_banners2) && !$settings_cancel)}
+    {if $settings_banners2}
+        {$theme_settings.banner_id = 6}
+        {$theme_settings.banner_display = 'recommended'}
+        {$wa->globals('settings_banners', 1)}
+    {/if}
+{/if}
+
+{* View of big amount of products *}
+{$lazyloading = $wa->post('settings-lazyloading')}
+{$lazyloading2 = $wa->storage('settings-lazyloading')}
+{if !empty($lazyloading) && !$settings_cancel}
+    {$theme_settings.lazyloading = $lazyloading}
+    {$wa->storage('settings-lazyloading', $lazyloading)}
+{elseif (!empty($lazyloading2) && !$settings_cancel)}
+    {$theme_settings.lazyloading = $lazyloading2}
+{/if}
+
+{* AJAX filters *}
+{$settings_ajax_filters = $wa->post('settings-ajax-filters')}
+{$settings_ajax_filters2 = $wa->storage('settings-ajax-filters')}
+{if isset($settings_ajax_filters) && !$settings_cancel}
+    {$theme_settings.ajax_filters = $settings_ajax_filters}
+    {$wa->storage('settings-ajax-filters', $settings_ajax_filters)}
+{elseif (isset($settings_ajax_filters2) && !$settings_cancel)}
+    {$theme_settings.ajax_filters = $settings_ajax_filters2}
+{/if}
+
+{* Subcategories view (after description) *}
+{$settings_subcat_view = $wa->post('settings-subcat-view')}
+{$settings_subcat_view2 = $wa->storage('settings-subcat-view')}
+{if !empty($settings_subcat_view) && !$settings_cancel}
+    {$theme_settings.subcat_view = $settings_subcat_view}
+    {$wa->storage('settings-subcat-view', $settings_subcat_view)}
+{elseif (!empty($settings_subcat_view2) && !$settings_cancel)}
+    {$theme_settings.subcat_view = $settings_subcat_view2}
+{/if}
+
+{* Product enlarge *}
+{$zoom = $wa->post('settings-zoom')}
+{$zoom2 = $wa->storage('settings-zoom')}
+{if !empty($zoom) && !$settings_cancel}
+    {$theme_settings.enlarge_type = $zoom}
+    {$wa->storage('settings-zoom', $zoom)}
+{elseif (!empty($zoom2) && !$settings_cancel)}
+    {$theme_settings.enlarge_type = $zoom2}
+{/if}
+
+{* Show product features *}
+{$settings_product_features = $wa->post('settings-product-features')}
+{$settings_product_features2 = $wa->storage('settings-product-features')}
+{if !empty($settings_product_features) && !$settings_cancel}
+    {$theme_settings.product_features = $settings_product_features}
+    {$wa->storage('settings-product-features', $settings_product_features)}
+{elseif (!empty($settings_product_features2) && !$settings_cancel)}
+    {$theme_settings.product_features = $settings_product_features2}
+{/if}
+
+
+{*** content.html, sidebar.html ***}
+
+{* Cancel *}
+{$settings_cancel = $wa->post('settings-cancel')}
+{if !empty($settings_cancel)}
+    {$settings_cancel = 1}
+    {$wa->storage('settings-color', '')}
+    {$wa->storage('settings-pattern', '')}
+    {$wa->storage('settings-layout', '')}
+    {$wa->storage('settings-header-type', '')}
+    {$wa->storage('settings-home-sidebar', '')}
+    {$wa->storage('settings-product-sidebar', '')}
+    {$wa->storage('settings-sidebar-pos', '')}
+    {$wa->storage('settings-menu-category', '')}
+    {$wa->storage('settings-category-list-inside', '')}
+    {$wa->storage('settings-category-list-visibility', '')}
+    {$wa->storage('settings-horiz', [])}
+    {$wa->storage('settings-horiz-brands-col', '')}
+    {$wa->storage('settings-slider', '')}
+    {$wa->storage('settings-home-big-slider', '')}
+    {$wa->storage('settings-banners', '')}
+    {$wa->storage('settings-lazyloading', '')}
+    {$wa->storage('settings-ajax-filters', '')}
+    {$wa->storage('settings-subcat-view', '')}
+    {$wa->storage('settings-zoom', '')}
+    {$wa->storage('settings-product-features', '')}
+{else}
+    {$settings_cancel = 0}
+{/if}
+
+{* Sidebar position *}
+{$sidebar_pos = $wa->post('settings-sidebar-pos')}
+{$sidebar_pos2 = $wa->storage('settings-sidebar-pos')}
+{if !empty($sidebar_pos) && !$settings_cancel}
+    {$theme_settings.catalog_sidebar = $sidebar_pos}
+    {$wa->storage('settings-sidebar-pos', $sidebar_pos)}
+{elseif (!empty($sidebar_pos2) && !$settings_cancel)}
+    {$theme_settings.catalog_sidebar = $sidebar_pos2}
+{/if}

@@ -1,0 +1,49 @@
+{$cart_items = $wa->shop->cart->items()}
+<div class="fly-cart">
+    <div class="fly-content">
+        {if $cart_items}
+            {foreach $cart_items as $ci}
+                {$price = shop_currency($ci.price, $ci.currency, null, false)* $ci.quantity}
+                {if isset($ci.services)}
+                    {foreach $ci.services as $cis}
+                        {$price = $price + $cis.price*$cis.quantity}
+                    {/foreach}
+                {/if}
+                <div class="fly-item" data-id="{$ci.id}">
+                    <div class="fly-img">
+                        <a href="{$wa->shop->productUrl($ci.product)}" title="{$ci.name|escape}">
+                            {$wa->shop->productImgHtml($ci.product, '96x0', ['itemprop' => 'image', 'alt' => $ci.product.name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])}
+                        </a>
+                    </div>
+                    <div class="fly-info">
+                        <div class="fly-name"><a href="{$wa->shop->productUrl($ci.product)}" title='{$ci.name|escape}'>{$ci.name|escape}</a></div>
+                        <div class="fly-quantity">
+                            <a href="javascript:void(0)" title="[`decrease`]" class="f-minus"><i class="ys ys-larr"></i></a>
+                            <input type="text" value="{$ci.quantity}" class="qty" />
+                            <a href="javascript:void(0)" title="[`increase`]" class="f-plus"><i class="ys ys-rarr"></i></a>
+                        </div>
+                        <div class="fly-price price colored">{if $theme_settings.ruble == 'html'}{shop_currency_html($price, true)}{else}{shop_currency($price, true)}{/if}</div>
+                    </div>
+                    <div class="fly-icons"><a href="javascript:void(0)" class="delete" title="[`Delete`]" data-id="{$ci.id}">x</a></div>
+                </div>
+            {/foreach}
+        {/if}
+    </div>
+    {$discount = $wa->shop->cart->discount()}
+    <div class="fly-discount"><span class="float-left">% [`Discount`]:</span> <span class="float-right discount">{if $theme_settings.ruble == 'html'}{shop_currency_html($discount, true)}{else}{shop_currency($discount, true)}{/if}</span></div>
+    <div class="fly-total"><span class="float-left">[`TOTAL PRICE`]:</span> <span class="float-right total">{if $theme_settings.ruble == 'html'}{shop_currency_html($cart_total, true)}{else}{shop_currency($cart_total, true)}{/if}</span></div>
+    <div class="fly-buttons">
+
+        {* Плагин "Купить в 1 клик"
+         * Ссылка: http://www.webasyst.ru/store/plugin/shop/quickorder/
+         * Plugin "1-Click Ordering"
+         * Link: http://www.webasyst.com/store/plugin/shop/quickorder/
+         * '[`Go to cart`]'
+         *}
+        {if $wa->shop && $wa->app() == 'shop' && $wa->setting('update_time','','shop.quickorder') && $theme_settings.quickorder_plugin_fly}
+            {shopQuickorderPlugin::submitCart(0)}
+        {/if}
+
+        <a href="{$wa->getUrl('shop/frontend/cart')}" class="button theme" title='[`Go to cart`]'>Перейти в корзину</a>
+    </div>
+</div>

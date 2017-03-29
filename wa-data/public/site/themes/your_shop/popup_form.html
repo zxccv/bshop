@@ -1,0 +1,48 @@
+{if !empty($theme_settings.popupf) || !empty($theme_settings.popupf_mobile)}
+    <div class='yourshop-footer-popup'{if !empty($theme_settings.popupf_width)} style='width: {$theme_settings.popupf_width}px;'{/if}>
+        <a href="javascript:void(0)" class="close" title='[`close`]'>х</a>
+        {if !empty($theme_settings.popupf_title)}<div class="h3">{$theme_settings.popupf_title}</div>{/if}
+        {$popup_block = $wa->block('yourshop.popup')}
+        {if !empty($popup_block)}
+            {$popup_block}
+        {elseif $theme_settings.popupf_subscribe && $wa->mailer}
+            {$mailer_form = $wa->mailer->form($theme_settings.popupf_subscribe)}
+            {if $mailer_form}
+                <div class="mini-subscribe">{$mailer_form}</div>
+            {else}
+                {sprintf("[`<a href='%s'>Create subscribe form</a> or add any content to the popup block in your Theme settings`]", $wa_backend_url|cat:'mailer/#/subscribers/form/new')}
+            {/if}
+        {else}
+            <p>[`Create content of the popup block in your Theme settings!`]</p>
+        {/if}
+    </div>
+    <script type="text/javascript">
+        {if !empty($theme_settings.optimize)}
+            window.js_onload_inline.push("$(function() { var popupBlock = $.cookie('shop_yourshop_popup'); if (!popupBlock) { setTimeout(function() { $('{if empty($theme_settings.popupf_mobile)}.not-mobile {/if}{if empty($theme_settings.popupf)}.mobile {/if}.yourshop-footer-popup').css('display', 'block').animate({ 'bottom': '2%' }, 1500); }, {if !$theme_settings.popupf_delay}3000{else}{$theme_settings.popupf_delay}{/if});  } $('.yourshop-footer-popup .close').click(function() { var that = $(this); if (that.hasClass('closed')) { return false; } that.addClass('closed'); {if $theme_settings.popupf_frequence == 'close'} $.cookie('shop_yourshop_popup', 1, { expires: 30, path: $.yourshop.siteUrl });  {else} $.cookie('shop_yourshop_popup', 1, { path: $.yourshop.siteUrl });  {/if} $('.yourshop-footer-popup').animate({ 'bottom': '-100%' }, 1500, function() { $(this).css('display', 'none'); }); }); });");
+       {else}
+            $(function() {
+                var popupBlock = $.cookie('shop_yourshop_popup');
+                if (!popupBlock) {
+                    setTimeout(function() {
+                        $("{if empty($theme_settings.popupf_mobile)}.not-mobile {/if}{if empty($theme_settings.popupf)}.mobile {/if}.yourshop-footer-popup").css('display', 'block').animate({ 'bottom': '2%' }, 1500);
+                    }, {if !$theme_settings.popupf_delay}3000{else}{$theme_settings.popupf_delay}{/if});
+                }
+                $(".yourshop-footer-popup .close").click(function() {
+                    var that = $(this);
+                    if (that.hasClass("closed")) {
+                        return false;
+                    }
+                    that.addClass("closed");
+                    {if $theme_settings.popupf_frequence == 'close'}
+                        $.cookie('shop_yourshop_popup', 1, { expires: 30, path: $.yourshop.siteUrl });
+                    {else}
+                        $.cookie('shop_yourshop_popup', 1, { path: $.yourshop.siteUrl });
+                    {/if}
+                    $(".yourshop-footer-popup").animate({ 'bottom': '-100%' }, 1500, function() {
+                        $(this).css("display", "none");
+                    });
+                });
+            });
+        {/if}
+    </script>
+{/if}

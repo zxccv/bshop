@@ -1,0 +1,451 @@
+{$crumbs = []}
+{if isset($breadcrumbs)}
+    {foreach $breadcrumbs as $b}
+        {$crumbs[] = $b.url}
+    {/foreach}
+{/if}
+
+{* Build category menu *}
+
+{function name=build_shop_sidebar}
+    {if $collapsible == 'collapsed' || ($collapsible == 'expanded1' && $level > 0) || ($collapsible == 'expanded2' && $level > 1)}
+        {$hide = 1}
+    {else}
+        {$hide = 0}
+    {/if}
+    {if ($collapsible == 'expanded2' && $level < 1) || $collapsible == 'expanded'}
+        {$child_hide = 0}
+    {else}
+        {$child_hide = 1}
+    {/if}
+
+    <ul class="menu-v l{$level}{if $hide && !$show_branch} hidden{/if}{if $type == 'accordeon'} no-dropdown{/if}">
+        {foreach $cats as $c}
+            <li{if $type == 'dropdown'} class='dropdown-menu'{/if}>
+                {if in_array($c.url, $crumbs)}{$show_branch = 1}{else}{$show_branch = 0}{/if}
+                <a href="{$c.url}" title="{$c.name}" {if $selected_category == $c.id || (in_array($c.url, $crumbs) && $type == 'dropdown')}class="selected"{/if}>
+                   {if !empty($c.childs)}{if $type == 'accordeon'}{if $child_hide && !$show_branch}<i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i>{else}<i class="fa fa-minus collapsible-icon" title="[`Collapse`]" data-toggle="[`Expand`]"></i>{/if}{elseif $theme_settings.catalog_sidebar == 'right'}<i class="fa fa-chevron-left close"></i>{else}<i class="fa fa-chevron-right close"></i>{/if}{/if}
+                   {$c.name}
+                   {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex)} style="background-color: #{$c.params.badge_color_hex}"{/if}>{$c.params.badge}</span>{/if}
+                </a>
+                {if !empty($c.childs)}
+                    {build_shop_sidebar type = $type cats = $c.childs crumbs = $crumbs show_branch = $show_branch level=$level+1 collapsible = $collapsible}
+                {/if}
+            </li>
+        {/foreach}
+    </ul>
+{/function}
+
+{* Build category list *}
+
+{function name=build_shop_sidebar_list}
+    {if ($collapsed == 'third' && $level == 2) || ($collapsed == 'fourth' && $level == 3) || $collapsed == 'fifth' && $level == 4}
+        {$collapsed = 'collapsed'}
+    {/if}
+
+    {if ($visibility == 'second' && $level > 0) || ($visibility == 'third' && $level > 1) || ($visibility == 'fourth' && $level > 2) || ($visibility == 'fifth' && $level > 3)}
+        {$visibility = 'hidden'}
+    {/if}
+
+    {if $level == 0}
+    <div class="dropdown-holder">
+        {if $top_block}
+            <div class='top-block'>
+                {$wa->block($top_block)}
+            </div>
+        {/if}
+        {if $right_block}
+            <div class='right-block'>
+                {$wa->block($right_block)}
+            </div>
+        {/if}
+        <ul class="menu-h">
+    {else}
+        {if $visibility !== 'hidden'}
+            <ul class="menu-v"{if $collapsed == 'collapsed' && (($level == 1 && !empty($theme_settings.category_heading_plus_sidebar)) || $level > 1)} style='display: none;'{/if}>
+        {/if}
+    {/if}
+    {if $visibility !== 'hidden'}
+        {foreach $cats as $c}
+            <li{if $selected_category == $c.id || in_array($c.url, $crumbs)} class="selected"{/if}>
+                {if $level == 0}
+                <div class="category-heading">
+                {/if}
+                    {if $visibility == 'second' || ($visibility == 'third' && $level > 0) || ($visibility == 'fourth' && $level > 1) || ($visibility == 'fifth' && $level > 2)}
+                        {$hide_child = 1}
+                    {else}
+                        {$hide_child = 0}
+                    {/if}
+                    <a href="{$c.url}" title="{$c.name}" class='{if !$hide_child}has-child{/if}{if empty($theme_settings.category_heading_plus_sidebar) && $level !== 0} no-margin{/if}'>
+                        {if !empty($c.childs)}
+                            {if (!empty($theme_settings.category_heading_plus_sidebar) && $level == 0) || $level > 0}
+                                {if ($collapsed == 'third' && $level == 1) || ($collapsed == 'fourth' && $level == 2) || $collapsed == 'fifth' && $level == 3}
+                                    {$collapsed = 'collapsed'}
+                                {/if}
+                                {if !$hide_child}
+                                    <i class="fa fa-{if $collapsed == 'collapsed'}plus{else}minus{/if} f-collapsible"></i>
+                                {/if}
+                            {/if}
+                        {/if}
+                        {$c.name}
+                        {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex)} style="background-color: #{$c.params.badge_color_hex}"{/if}>{$c.params.badge}</span>{/if}
+                    </a>
+                {if $level == 0}
+                </div>
+                {/if}
+                {if !empty($c.childs)}
+                    {build_shop_sidebar_list cats=$c.childs level=$level+1 collapsed=$collapsed visibility=$visibility}
+                {/if}
+            </li>
+        {/foreach}
+        </ul>
+    {/if}
+    {if $level == 0}
+        {if $bottom_block}
+            <div class='bottom-block'>
+                {$wa->block($bottom_block)}
+            </div>
+        {/if}
+        </div>
+    {/if}
+{/function}
+
+{* Build sidebar pages *}
+
+{function name=build_sidebar_pages}
+    <ul class="menu-v l{$level}">
+        {foreach $pages as $p}
+            <li class="dropdown-menu">
+                <a href="{$p.url}" title='{$p.title}'{if $p.id == $page_id || (!empty($crumbs) && in_array($p.url, $crumbs))} class="selected"{/if}>{if !empty($p.childs)}<span class="mobile-sidebar"><i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i></span>{/if}{$p.name}{if !empty($p.childs)} <span class='default-sidebar'>{if $theme_settings.catalog_sidebar == 'right'}<i class="fa fa-chevron-left"></i>{else}<i class="fa fa-chevron-right"></i>{/if}</span>{/if}</a>
+                {if !empty($p.childs)}{build_sidebar_pages pages=$p.childs page_id=$page_id level=$level+1}{/if}
+            </li>
+        {/foreach}
+    </ul>
+{/function}
+
+{$active_app = $wa->app()}
+{capture name=active_pages}
+    {if $wa->shop && $active_app == 'shop' && !empty($theme_settings.shop_pages)}
+        {$pages=$wa->shop->pages()}
+    {/if}
+    {if $wa->photos && $active_app == 'photos' && !empty($theme_settings.photos_pages)}
+        {$pages=$wa->photos->pages()}
+    {/if}
+    {if $wa->blog && $active_app == 'blog' && !empty($theme_settings.blog_pages)}
+        {$pages=$wa->blog->pages()}
+    {/if}
+    {if $wa->hub && $active_app == 'hub' && !empty($theme_settings.hub_pages)}
+        {$pages=$wa->hub->pages()}
+    {/if}
+    {if $wa->helpdesk && $active_app == 'helpdesk' && !empty($theme_settings.helpdesk_pages)}
+        {$pages=$wa->helpdesk->pages()}
+    {/if}
+    {if $active_app == 'site' && !empty($theme_settings.site_pages)}
+        {$pages=$wa->site->pages()}
+    {/if}
+    {if !empty($pages)}
+        <div class="sidebar-block">
+            {if !empty($theme_settings.pages_title)}
+                <div class="heading">{$theme_settings.pages_title|escape}</div>
+            {/if}
+            {if empty($page.id)}{$page_id = 0}{else}{$page_id = $page.id}{/if}
+            <ul class='categories-tree menu-v dropdown'>
+                {foreach $pages as $p}
+                    <li class='dropdown-menu'>
+                        <div class="h4"><a href="{$p.url}"{if $wa->currentUrl() == $p.url || (!empty($crumbs) && in_array($p.url, $crumbs))} class="selected"{/if} title='{$p.title}'>{if !empty($p.childs)}<span class="mobile-sidebar"><i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i></span>{/if}{$p.name}{if !empty($p.childs)} <span class='default-sidebar'>{if $theme_settings.catalog_sidebar == 'right'}<i class="fa fa-chevron-left"></i>{else}<i class="fa fa-chevron-right"></i>{/if}</span>{/if}</a></div>
+                        {if !empty($p.childs)}{build_sidebar_pages pages=$p.childs page_id=$page_id level=0}{/if}
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+    {/if}
+{/capture}
+
+<div id="sidebar-categories" class="category-sidebar{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}{if isset($mobile_sidebar)}{if empty($normal_sidebar)} mobile-block s-sidebar{elseif empty($mobile_sidebar)} hide-in-mobile{/if}{/if}">
+    <div id='sidebar-cat-content'>
+        {if !empty($theme_settings.show_authblock_sidebar)}
+            {if $wa->isAuthEnabled()}
+                <div class="sidebar-block mobile-sidebar uppercase">
+                    <div class="heading">[`Account`]</div>
+                    {if $wa->user()->isAuth()}
+                        {if $wa->myUrl()}
+                            <a href="{$wa->myUrl()}" rel="nofollow" title="[`My account`]"><i class="ys ys-user"></i> <span>[`My account`]</span></a><br><br>
+                        {else}
+                            <i class="ys ys-user"></i> {$wa->user('name')}
+                        {/if}
+                        <a href="?logout" rel="nofollow" title='[s`Log out`]'><i class="ys ys-unlocked"></i> [s`Log out`]</a>
+                    {else}
+                        <a href="{$wa->loginUrl(true)}" title="[`Log in`]" rel="nofollow" class="fly-auth"><i class="ys ys-locked"></i> [`Log in`]</a><br><br>
+                        <a href="{$wa->signupUrl(true)}" title="[`Signup`]" rel="nofollow" class="fly-auth"><i class="ys ys-user"></i> [`Sign up`]</a>
+                    {/if}
+                </div>
+            {/if}
+
+            {if $wa->shop}
+                {$currencies = $wa->shop->currencies()}
+                {if empty($theme_settings.hide_currencies) && !empty($currencies) && $currencies|count > 1}
+                    {$currency = $wa->shop->currency(true)}
+                    <div class="mobile-sidebar sidebar-block">
+                        <div class="heading">[`Currencies`]</div>
+                        <ul class="s-currencies menu-v" data-currency='{if $currency.code == "RUB" && $theme_settings.ruble == "html"}{$currency.sign_html}{else}{$currency.sign}{/if}'>
+                            {foreach $currencies as $c}
+                                <li title="{$c.title}"><a href="?currency={$c.code}" rel="nofollow" data-code="{$c.code}"{if $currency.code == $c.code} class="selected"{/if}>{$c.title}</a></li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                {/if}
+            {/if}
+        {/if}
+
+        {include file="`$wa_active_theme_path`/app_sidebar.html"}
+
+        {if $active_app !== 'shop'}{$smarty.capture.active_pages}{/if}
+
+        {* Дерево категорий *}
+
+        {$show_ctree = 0}
+        {if $active_app == 'site' && !empty($theme_settings.show_ctree_site)}
+            {$show_ctree = 1}
+        {elseif $active_app == 'shop' && !empty($theme_settings.show_ctree_shop)}
+            {$show_ctree = 1}
+        {elseif $active_app == 'blog' && !empty($theme_settings.show_ctree_blog)}
+            {$show_ctree = 1}
+        {elseif $active_app == 'photos' && !empty($theme_settings.show_ctree_photos)}
+            {$show_ctree = 1}
+        {elseif $active_app == 'helpdesk' && !empty($theme_settings.show_ctree_helpdesk)}
+            {$show_ctree = 1}
+        {elseif $active_app == 'hub' && !empty($theme_settings.show_ctree_hub)}
+            {$show_ctree = 1}
+        {/if}
+
+        {if $show_ctree && $wa->shop}
+            {if $theme_settings.catalog_cat_display == 'children' && isset($category)}
+                {$category_display = $category.id}
+            {elseif $theme_settings.catalog_cat_display == 'parent' && isset($root_category_id)}
+                {$category_display = $root_category_id}
+            {else}
+                {$category_display = null}
+            {/if}
+
+            {$categories = $wa->shop->categories($category_display, null, true, true)}
+            {if isset($category)}
+                {$selected_category=$category.id}
+            {else}
+                {$selected_category=null}
+            {/if}
+
+            {if $active_app == 'shop' && $theme_settings.filter_position == 'up' && !empty($filters)}
+                <div class="sidebar-block">{if $theme_settings.filter_title}<div class="heading">{$theme_settings.filter_title|escape}</div>{/if}{include file='filter.html'}</div>
+            {/if}
+
+            {if $categories}
+
+                <div class="sidebar-block">
+                    {if !empty($theme_settings.categories_title)}
+                        <div class="heading">{$theme_settings.categories_title|escape}</div>
+                    {/if}
+                    <ul class="categories-tree menu-v default-sidebar dropdown{if $theme_settings.category_list_plus_sidebar == 'left'} plus-align-left{/if}">
+                    {foreach $categories as $c}
+                        {$category_type = $theme_settings.sidebar_category_type}
+                        {if !empty($c.params.category_type)}
+                            {$category_type = $c.params.category_type}
+                        {/if}
+                        <li class="{if $category_type == 'dropdown_list'}appear-menu{elseif $category_type == 'dropdown'}dropdown-menu{else}accordeon-menu{/if}">
+                            {if in_array($c.url, $crumbs) || $selected_category == $c.id}{$show_branch = 1}{else}{$show_branch = 0}{/if}
+                            <div class="h4">
+                                <a href="{$c.url}" title="{$c.name}"{if $selected_category == $c.id || ($category_type !== 'accordeon' && in_array($c.url, $crumbs))} class="selected"{if isset($category)}{$crumbs[]=$category.url}{/if}{/if}>
+                                   {if !empty($c.childs)}{if $category_type == 'accordeon'}{if $theme_settings.catalog_cat_collapsible == 'collapsed' && !$show_branch}<i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i>{else}<i class="fa fa-minus collapsible-icon" title="[`Collapse`]" data-toggle="[`Expand`]"></i>{/if}{elseif $theme_settings.catalog_sidebar == 'right'}<i class="fa fa-chevron-left"></i>{else}<i class="fa fa-chevron-right"></i>{/if}{/if}
+                                    {$c.name}
+                                    {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex)} style="background-color: #{$c.params.badge_color_hex}"{/if}>{$c.params.badge}</span>{/if}
+                                </a>
+                            </div>
+                            {if !empty($c.childs)}
+                                {if isset($root_category_id) && $c.id == $root_category_id}{$cat_id = $selected_category}{else}{$cat_id = 0}{/if}
+                                {if $category_type == 'dropdown_list'}
+                                    {if !empty($c.params.right_block)}{$right_block = $c.params.right_block}{else}{$right_block = ''}{/if}
+                                    {if !empty($c.params.top_block)}{$top_block = $c.params.top_block}{else}{$top_block = ''}{/if}
+                                    {if !empty($c.params.bottom_block)}{$bottom_block = $c.params.bottom_block}{else}{$bottom_block = ''}{/if}
+                                    {build_shop_sidebar_list cats=$c.childs level=0 collapsed=$theme_settings.category_list_inside_sidebar visibility=$theme_settings.category_list_visibility_sidebar right_block=$right_block top_block=$top_block bottom_block=$bottom_block}
+                                {else}
+                                    {build_shop_sidebar cats = $c.childs level=0 category_id = $cat_id show_branch=$show_branch crumbs=$crumbs collapsible = $theme_settings.catalog_cat_collapsible type=$category_type}
+                                {/if}
+                            {/if}
+                        </li>
+                    {/foreach}
+                    </ul>
+                    <ul class="categories-tree menu-v mobile-sidebar  dropdown{if $theme_settings.category_list_plus_sidebar == 'left'} plus-align-left{/if}">
+                        {foreach $categories as $c}
+                            <li class='accordeon-menu'>
+                                {if in_array($c.url, $crumbs) || $selected_category == $c.id}{$show_branch = 1}{else}{$show_branch = 0}{/if}
+                                <div class="h4">
+                                    <a href="{$c.url}" title="{$c.name}"{if $selected_category == $c.id} class="selected"{if isset($category)}{$crumbs[]=$category.url}{/if}{/if}>
+                                        {if !empty($c.childs)}{if $theme_settings.catalog_cat_collapsible == 'collapsed' && !$show_branch}<i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i>{else}<i class="fa fa-minus collapsible-icon" title="[`Collapse`]" data-toggle="[`Expand`]"></i>{/if}{/if}
+                                        {$c.name}
+                                        {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex)} style="background-color: #{$c.params.badge_color_hex}"{/if}>{$c.params.badge}</span>{/if}
+                                    </a>
+                                </div>
+                                {if !empty($c.childs)}
+                                    {if isset($root_category_id) && $c.id == $root_category_id}{$cat_id = $selected_category}{else}{$cat_id = 0}{/if}
+                                    {build_shop_sidebar cats = $c.childs level=0 category_id = $cat_id show_branch=$show_branch crumbs=$crumbs collapsible = $theme_settings.catalog_cat_collapsible type='accordeon'}
+                                {/if}
+                            </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            {/if}
+        {/if}
+
+        {if $active_app == 'shop' && $theme_settings.filter_position == 'down' && !empty($filters)}
+            <div class="sidebar-block">{if $theme_settings.filter_title}<div class="heading">{$theme_settings.filter_title|escape}</div>{/if}{include file='filter.html'}</div>
+        {/if}
+
+        {* Страницы активного приложения *}
+
+        {if $active_app == 'shop'}{$smarty.capture.active_pages}{/if}
+
+        {* Социальные сети *}
+
+        {if !empty($theme_settings.sidebar_social_vk)}
+            <div class="sidebar-block">
+                <div class="heading">[`VK group`]</div>
+                {include file="social.vk.group.html"}
+            </div>
+        {/if}
+
+        {if !empty($theme_settings.sidebar_social_fb)}
+            <div class="sidebar-block">
+                <div class="heading">[`Facebook page`]</div>
+                {include file="social.fb.group.html"}
+            </div>
+        {/if}
+
+        {* Последние новости *}
+
+        {if !empty($theme_settings.sidebar_news) && $wa->blog}
+            {$news_id = $theme_settings.sidebar_news_id}
+            {if empty($theme_settings.sidebar_news_id)}
+                {$news_id = null}
+            {/if}
+            {$latest_news = $wa->blog->posts($news_id, $theme_settings.sidebar_news_count)}
+            {if $latest_news}
+                <div class="sidebar-block slider-custom">
+                    <div class="heading">{$theme_settings.sidebar_news_title} <div class="slider-controls"></div></div>
+                    <div class="news-sidebar-slider hide-before-init">
+                    {foreach $latest_news as $ln}
+                        <div>
+                            <div class="h4"><a href="{if !empty($ln.external_link)}{$ln.external_link}{else}{$ln.link}{/if}" title="{$ln.title}">{$ln.title}</a></div>
+                            <p>
+                                {$ln.text|strip_tags|truncate:150}
+                            </p>
+                            <div>
+                                <a href="{if !empty($ln.external_link)}{$ln.external_link}{else}{$ln.link}{/if}" title="{$ln.cut_link_label|default:'[`Continue reading`] →'}">
+                                    {$ln.cut_link_label|default:'[`Continue reading`] <span class="arial-font">→</span>'}
+                                </a>
+                            </div>
+                        </div>
+                    {/foreach}
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    {if !empty($theme_settings.optimize)}
+                        window.js_onload_inline.push("$('.news-sidebar-slider').slick({ slidesToShow: 1, slidesToScroll: 1, infinite: false, autoplay: true, prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>', nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>', appendArrows: $('.news-sidebar-slider').closest('.slider-custom').find('.slider-controls') });");
+                    {else}
+                        $(function() {
+                           $('.news-sidebar-slider').slick({
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                infinite: false,
+                                autoplay: true,
+                                prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>',
+                                nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>',
+                                appendArrows: $('.news-sidebar-slider').closest('.slider-custom').find('.slider-controls')
+                            });
+                        });
+                    {/if}
+                </script>
+            {/if}
+        {/if}
+
+        {* Последние фото *}
+
+        {if !empty($theme_settings.sidebar_photos) && $wa->photos}
+            {$album_id = "/album/`$theme_settings.sidebar_photos_id`"}
+            {if empty($theme_settings.sidebar_photos_id)}
+                {$album_id = ''}
+            {/if}
+            {$photos = $wa->photos->photos($album_id, null, 9)}
+            {if count($photos)>0}
+                <div class="sidebar-block slider-custom">
+                    <div class="heading">{$theme_settings.sidebar_photos_title} <div class="slider-controls"></div></div>
+                    {if $theme_settings.sidebar_photos_mode == 'single'}
+                        <div class="sidebar-photos-slider hide-before-init">
+                        {foreach $photos as $ph}
+                            <div>{sprintf("<a href='%s' title='%s'><img src='%simg/loading16.gif' alt='%s' data-lazy='%s'></a>", $ph.frontend_link, $ph.name|escape, $wa_theme_url, $ph.name|escape, photosPhoto::getPhotoUrl($ph, '230x230', true, $wa->photos->getCDN()))}</div>
+                        {/foreach}
+                        </div>
+                        <script type="text/javascript">
+                            {if !empty($theme_settings.optimize)}
+                                window.js_onload_inline.push("$(function() { $('.sidebar-photos-slider').slick({ slidesToShow: 1, slidesToScroll: 1, infinite: false, autoplay: true, lazyLoad: 'ondemand', fade: true, cssEase: 'linear', prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>', nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>', appendArrows: $('.sidebar-photos-slider').closest('.slider-custom').find('.slider-controls') }); });");
+                            {else}
+                                $(function() {
+                                   $('.sidebar-photos-slider').slick({
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1,
+                                        infinite: false,
+                                        autoplay: true,
+                                        lazyLoad: 'ondemand',
+                                        fade: true,
+                                        cssEase: 'linear',
+                                        prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>',
+                                        nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>',
+                                        appendArrows: $('.sidebar-photos-slider').closest('.slider-custom').find('.slider-controls')
+                                    });
+                                });
+                            {/if}
+                        </script>
+                    {else}
+                        <ul class="menu-h sidebar-photos">
+                            {foreach $photos as $ph}
+                                <li>{sprintf("<a href='%s' title='%s'>%s</a>", $ph.frontend_link, $ph.name, $wa->photos->getImgHtml($ph, '70x70'))}</li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                </div>
+            {/if}
+        {/if}
+
+        {* Теги *}
+
+        {if !empty($theme_settings.sidebar_tags)}
+            {$cloud = ""}
+            {if $wa->shop && $active_app == 'shop'}
+                {$cloud=$wa->shop->tags()}
+            {/if}
+            {if $wa->photos && $active_app == 'photos'}
+                {$cloud=$wa->photos->tags()}
+            {/if}
+            {if $wa->blog && $active_app == 'blog'}
+                {if !empty($frontend_action['tag-plugin']['sidebar'])}
+                    {$cloud = 1}
+                {/if}
+            {/if}
+            {if $cloud}
+                <div class="sidebar-block">
+                    <div class="heading">[`Tags`]</div>
+                    <div class="tags align-center">
+                        {if $active_app == 'blog'}
+                            {$frontend_action['tag-plugin']['sidebar']}
+                        {else}
+                            {foreach $cloud as $tag}
+                            <a href="{$wa_app_url}tag/{$tag.uri_name}/" title="{$tag.name}" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name}</a>
+                            {/foreach}
+                        {/if}
+                    </div>
+                </div>
+            {/if}
+        {/if}
+    </div>
+ </div>
+{if !isset($mobile_sidebar) || (isset($mobile_sidebar) && !empty($mobile_sidebar))}
+    {$wa->globals('hasSidebar', 1)}
+{/if}

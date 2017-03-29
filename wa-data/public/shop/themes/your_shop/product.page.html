@@ -1,0 +1,54 @@
+{$wa->globals('last_crumb', $page.title)}
+
+{capture name=product_name}
+    <h1>{$product.name|escape} - {$page.title|escape}</h1>
+{/capture}
+
+<div class="wrap product-page{if $theme_settings.image_thumbs == 'down'} thumbs-down{else} thumbs-left{/if}{if (count($product.images) == 1 || !$product.images) && $theme_settings.image_thumbs == 'left'} no-thumbs{/if}{if !empty($theme_settings.product_catalog) && $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.product_catalog)} has-sidebar{/if}" itemscope itemtype="http://schema.org/Product">
+
+    {if !empty($theme_settings.product_catalog) || !empty($theme_settings.product_catalog_mob)}
+        {include file="`$wa_parent_theme_path`/sidebar.html" normal_sidebar=!empty($theme_settings.product_catalog) mobile_sidebar=!empty($theme_settings.product_catalog_mob)}
+    {/if}
+    {if !empty($theme_settings.product_catalog)}
+    <div class="content-sidebar{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+        {$smarty.capture.product_name}
+    {/if}
+
+    <div class="product-info">
+        {if empty($theme_settings.product_catalog)}
+            {$smarty.capture.product_name}
+        {/if}
+    </div>
+    <div class="product-full">
+        <ul class="menu-h" id="product-tabs">
+            <li><a href="{$wa->shop->productUrl($product)}" title="[`Overview`]">[`Overview`]</a></li>
+            <li>
+                <a href="{$wa->shop->productUrl($product, 'reviews')}" title="[`Reviews`]">[`Reviews`] <span class="hint count">{$reviews_total_count}</span></a>
+            </li>
+            {if $product.features && $theme_settings.product_features == 'tabs'}
+                <li>
+                    <a href="{$wa->shop->productUrl($product)}#/features/" rel="nofollow" title="[`Features`]">[`Features`]</a>
+                </li>
+            {/if}
+            {foreach $product.pages as $p}
+                <li{if $p.id == $page.id} class="selected"{/if}><a href="{if !empty($theme_settings.show_page_page)}{$wa->shop->productUrl($product, 'page', ['page_url' => $p.url|escape])}{else}{$wa->shop->productUrl($product)}#/page-{$p.url|regex_replace:'/[\s]/':'_'}{/if}"{if empty($theme_settings.show_page_page)} rel="nofollow"{/if} title="{$p.name|escape}">{$p.name|escape}</a></li>
+            {/foreach}
+
+            <!-- plugin hook: 'frontend_product.menu' -->
+            {* @event frontend_product.%plugin_id%.menu *}
+            {foreach $frontend_product as $_}{$_.menu}{/foreach}
+
+        </ul>
+        <div id="tab-content">
+            <div id="page-content" style="display: block">
+                {$page.content}
+            </div>
+        </div>
+
+    </div>
+
+    {if !empty($theme_settings.product_catalog)}
+    </div>
+    {/if}
+</div>
+{$wa->globals('product_page', 1)}

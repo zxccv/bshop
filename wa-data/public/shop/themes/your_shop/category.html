@@ -1,0 +1,135 @@
+{$wa->globals('last_crumb', $category.name)}
+
+{function name=category_image}
+    {$img_width = "`$theme_settings.category_img_width`px"}
+    {$img_height = "`$theme_settings.category_img_height`px"}
+    {if !empty($c.params.category_img_width)}{$img_width = "`$c.params.category_img_width`px"}{/if}
+    {if !empty($c.params.category_img_height)}{$img_height = "`$c.params.category_img_height`px"}{/if}
+
+    {if $theme_settings.category_img_pl == 'categoryimages' && $wa->pluginName('categoryimages')}
+        {$categoryImageUrl = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+        {if $categoryImageUrl !== false}
+            <img src="{$categoryImageUrl}" alt='{$c.name|escape}'{if $img_width || $img_height} style="{if $img_width}max-width: {$img_width};{/if}{if $img_height}max-height: {$img_height};{/if}"{/if} />
+        {elseif !empty($show_dummy)}
+            <img src="{$wa_theme_url}img/dummy96.jpg" alt="{$c.name|escape}" />
+        {/if}
+    {elseif $theme_settings.category_img_pl == 'categoryimage' && $wa->pluginName('categoryimage')}
+        {if !empty($c.image)}
+            <img src="{$wa_static_url}wa-data/public/shop/categories/{$c.id}/{$c.id}{$c.image}" alt='{$c.name|escape}'{if $img_width || $img_height} style="{if $img_width}max-width: {$img_width};{/if}{if $img_height}max-height: {$img_height};{/if}"{/if} />
+        {elseif !empty($show_dummy)}
+            <img src="{$wa_theme_url}img/dummy96.jpg" alt="{$c.name|escape}" />
+        {/if}
+    {elseif $theme_settings.category_img_pl == 'wmimageincat' && $wa->pluginName('wmimageincat')}
+        {$img_src = shopWmimageincatPlugin::getCategoryImage($c.id, 'image')}
+        {if $img_src}
+            <img src="{$img_src}" alt='{$c.name|escape}'{if $img_width || $img_height} style="{if $img_width}max-width: {$img_width};{/if}{if $img_height}max-height: {$img_height};{/if}"{/if} />
+        {elseif !empty($show_dummy)}
+            <img src="{$wa_theme_url}img/dummy96.jpg" alt="{$c.name|escape}" />
+        {/if}
+    {elseif $theme_settings.category_img_pl == 'params'}
+        {if !empty($c.params.image)}
+            <img src="{$c.params.image}" alt='{$c.name|escape}'{if $img_width || $img_height} style="{if $img_width}max-width: {$img_width};{/if}{if $img_height}max-height: {$img_height};{/if}"{/if} />
+        {elseif !empty($show_dummy)}
+            <img src="{$wa_theme_url}img/dummy96.jpg" alt="{$c.name|escape}" />
+        {/if}
+    {/if}
+{/function}
+
+<div class="wrap category-content">
+
+    {if !empty($theme_settings.sidebar_catalog)}
+        {include file="`$wa_parent_theme_path`/sidebar.html"}
+    {/if}
+
+    <div class="content-sidebar{if !empty($theme_settings.sidebar_catalog)}{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}{else} without-sidebar{/if}">
+        <h1 class="category-name">
+            {$category.name|escape}
+        </h1>
+
+        <!-- plugin hook: 'frontend_category' -->
+        {* @event frontend_category.%plugin_id% *}
+        {foreach $frontend_category as $plugin_name => $_}
+            {$_}
+        {/foreach}
+
+        <!-- description -->
+        {if $category.description && $theme_settings.catalog_desc_pos == 'up' && !$wa->get('page')}
+            {if !empty($theme_settings.cut_cat_desc) && $category.description|strlen > 540}{$cut_cat = 1}{else}{$cut_cat = 0}{/if}
+            <div {if $cut_cat}class='category-desc-cut'{/if} style="line-height: 1.5;">
+                {$category.description}
+            </div>
+            {if $cut_cat}
+                <div class="align-right" style="margin-bottom: 10px;">
+                    <a href="javascript:void(0)" class="cat-cut-link" title="{$theme_settings.cut_cat_desc_text}" data-toggle="{$theme_settings.cut_cat_desc_text_close}">{$theme_settings.cut_cat_desc_text} <i class="fa fa-arrow-circle-down"></i></a>
+                </div>
+            {/if}
+        {/if}
+
+        <!-- subcategories -->
+        {if $category.subcategories}
+            {$subcat_view = $theme_settings.subcat_view}
+            {if !empty($category.params.subcat_view)}
+                {$subcat_view = $category.params.subcat_view}
+            {/if}
+            {if $subcat_view !== 'hide'}
+                {if $subcat_view == 'slider'}
+                <div class="catalog-sub slider-custom">
+                    <div class="sub-slider hide-before-init">
+                        {foreach $category.subcategories as $sc}
+                            <div>
+                                <a href="{$sc.url}" class="sub-item" title="{$sc.name|escape}">
+                                    {category_image c=$sc}
+                                    <div class="sub-name">{$sc.name|escape}</div>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                </div>
+                {else}
+                    <div class="catalog-sub{if $subcat_view == 'list_images'} with-images{/if}">
+                        <ul class="menu-h">
+                            {foreach $category.subcategories as $sc}
+                                <li>
+                                    <a href="{$sc.url}" title="{$sc.name|escape}"{if $subcat_view == 'list_images'} class='image'{/if}>
+                                        {if $subcat_view == 'list_images'}
+                                            {category_image c=$sc show_dummy = 1}
+                                        {/if}
+                                    </a>
+                                    <div><a href="{$sc.url}" title="{$sc.name|escape}">{$sc.name|escape}</a></div>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                {/if}
+            {/if}
+        {/if}
+
+        <div id="product-list">
+            {if !$products}
+                {if !empty($filters)}
+                    <p class="align-center double-padded">[`No products were found.`]</p>
+                {else}
+                    <p class="align-center double-padded">[`This category does not contain any products.`]</p>
+                {/if}
+            {else}
+                {include file='catalog.html' sorting=!empty($category.params.enable_sorting) is_category=1}
+            {/if}
+        </div>
+
+        <!-- description -->
+        {if $category.description && $theme_settings.catalog_desc_pos == 'down' && !$wa->get('page')}
+         {if !empty($theme_settings.cut_cat_desc) && $category.description|strlen > 540}{$cut_cat = 1}{else}{$cut_cat = 0}{/if}
+            <div {if $cut_cat}class='category-desc-cut'{/if} style="line-height: 1.5; clear: both;">
+                {$category.description}
+            </div>
+            {if $cut_cat}
+                <div class="align-right" style="margin-bottom: 10px;">
+                    <a href="javascript:void(0)" class="cat-cut-link" title="{$theme_settings.cut_cat_desc_text}" data-toggle="{$theme_settings.cut_cat_desc_text_close}">{$theme_settings.cut_cat_desc_text} <i class="fa fa-arrow-circle-down"></i></a>
+                </div>
+            {/if}
+        {/if}
+
+    </div>
+    <div class="clear-both"></div>
+</div>
+{if !empty($theme_settings.sidebar_catalog)}{$wa->globals('hasSidebar', 1)}{/if}

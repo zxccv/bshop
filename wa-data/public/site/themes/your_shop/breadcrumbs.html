@@ -1,0 +1,26 @@
+{if $wa->currentUrl() !== $wa_app_url}
+    {$apps = []}
+    {foreach $wa->apps() as $a}
+        {$apps[$a.url] = $a.name}
+    {/foreach}
+    <div class="wrap breadcrumbs-block" itemscope itemtype="http://schema.org/WebPage">
+        <nav class="breadcrumbs" itemprop="breadcrumb">
+            <a href="{$wa_app_url}" title='{if isset($apps[$wa_app_url])}{$apps[$wa_app_url]|escape}{else}{$wa->appName()}{/if}'>{if isset($apps[$wa_app_url])}{$apps[$wa_app_url]|escape}{else}{$wa->appName()}{/if}</a>
+            {if !empty($breadcrumbs)}
+                {foreach $breadcrumbs as $breadcrumb}
+                    / <a href="{$breadcrumb.url}" title="{$breadcrumb.name|escape}">{$breadcrumb.name|escape}</a>
+                {/foreach}
+            {/if}
+            {$crumbs = $wa->globals('crumbs')}
+            {if !empty($crumbs)}
+                {foreach $crumbs as $c}
+                    / <a href="{$c.url}" title="{$c.name|escape}">{$c.name|escape}</a>
+                {/foreach}
+            {/if}
+            / <span>{$last_crumb  = $wa->globals('last_crumb')}{if !empty($last_crumb)}{$last_crumb|escape}{else}{$wa->title()|escape}{/if}</span>
+        </nav>
+    </div>
+{/if}
+
+
+

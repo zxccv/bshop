@@ -17,6 +17,25 @@
 /wa-apps/shop/plugins/*
 !/wa-apps/shop/plugins/bshop
 
+!/wa-data
+/wa-data/*
+!/wa-data/public
+/wa-data/public/*
+
+!/wa-data/public/shop
+/wa-data/public/shop/*
+!/wa-data/public/shop/themes/
+/wa-data/public/shop/themes/*
+!/wa-data/public/shop/themes/your_shop
+
+
+!/wa-data/public/site
+/wa-data/public/site/*
+!/wa-data/public/site/themes/
+/wa-data/public/site/themes/*
+!/wa-data/public/site/themes/your_shop
+
+
 !/wa-config
 /wa-config/*
 !/wa-config/SystemConfig.class.php

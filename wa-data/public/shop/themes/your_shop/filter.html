@@ -1,0 +1,82 @@
+{$count = 0}
+{$filter_count = $filters|count}
+<div class="filters stylish-form{if !empty($theme_settings.ajax_filters)} ajax{/if}">
+    <form method="get" action="{$wa->currentUrl(0,1)}">
+        {$filter_select = explode(',', $theme_settings.filter_select)}
+        {foreach $filters as $fid => $filter}
+            {$count = $count + 1}
+            {if $fid == 'price'}
+                <div class="price-filter">
+                    {$c = $wa->shop->currency(true)}
+                    <div class="heading small">[`Price`]</div>
+                    <div id="slider-price" class="slider-range"></div>
+                    <div class="price-inputs">
+                        [`from`] <input type="text" class="width50px min f-price" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
+                        [`to`] <input type="text" class="width50px max f-price" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}"> {$c.sign}
+                    </div>
+                </div>
+            {else}
+                <div class="filter-block {if $count == $filter_count}last{/if}" data-id="{$filter.id}">
+                    <a href="javascript:void(0)" title="{$filter.name|escape}">{$filter.name|escape}{if !empty($filter.description)} <span title="{$filter.name|escape}" data-feature-id="{$fid}" class="q"></span>{/if} <i class="fa {if $theme_settings.filter_state == 'opened' and (empty($filter.collapsed) or $wa->get($filter.code))}fa-chevron-down open{else}fa-chevron-right close{/if}"></i></a>
+                    <div class="filter-value" {if $theme_settings.filter_state == 'opened' and (empty($filter.collapsed) or $wa->get($filter.code))}style='display: block;'{/if}>
+                        {if $filter.type == 'boolean'}
+                        <div class="filter-field{if $wa->get($filter.code)} checked{/if}">
+                            <input type="radio" id="fil-yes-{$filter.id}" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1">
+                            <label for="fil-yes-{$filter.id}"><span class="stylish-wrap"></span>[`Yes`]</label>
+                        </div>
+                        <div class="filter-field{if $wa->get($filter.code) === '0'} checked{/if}">
+                            <input type="radio" id="fil-no-{$filter.id}" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0">
+                            <label for="fil-no-{$filter.id}"><span class="stylish-wrap"></span>[`No`]</label>
+                        </div>
+                        <div class="filter-field{if $wa->get($filter.code, '') === ''} checked{/if}">
+                            <input type="radio" id="fil-any-{$filter.id}" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value="">
+                            <label for="fil-any-{$filter.id}"><span class="stylish-wrap"></span>[`Any`]</label>
+                        </div>
+                         {elseif isset($filter.min)}
+                           {$_v = $wa->get($filter.code)}
+                           <div class="price-inputs">
+                                [`from`] <input type="text" class="width50px min f-price" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
+                                [`to`] <input type="text" class="width50px max f-price" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
+                                {if !empty($filter.unit)}
+                                    {$filter.unit.title}
+                                    {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
+                                {/if}
+                           </div>
+                           <div class="slider-range"></div>
+                        {elseif $theme_settings.filter_type == 'select' || in_array($filter.code, $filter_select)}
+                            <select class='filter-select' data-code='{$filter.code}' data-fid='{$fid}'>
+                                <option value="" selected>--- [`Choose option`] ---</option>
+                                {foreach $filter.values as $v_id => $v}
+                                    <option value="{$v_id}">{$v}</option>
+                                {/foreach}
+                            </select>
+                            {foreach $filter.values as $v_id => $v}
+                                {if in_array($v_id, (array)$wa->get($filter.code, array()))}
+                                <div class="filter-field" id="fil-{$fid}-{$v_id}">
+                                    <input type="hidden" name='{$filter.code}[]' class='hidden' value="{$v_id}" />
+                                    {$v} <a href="javascript:void(0)" class='filter-delete' title='[`delete`]'>X</a>
+                                </div>
+                                {/if}
+                            {/foreach}
+                        {else}
+                            {foreach $filter.values as $v_id => $v}
+                            <div class="filter-field{if in_array($v_id, (array)$wa->get($filter.code, array()))} checked{/if}">
+                                <input type="checkbox" id="fil-{$fid}-{$v_id}" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
+                                <label for="fil-{$fid}-{$v_id}"><span class="stylish-wrap"></span>{$v}</label>
+                            </div>
+                            {/foreach}
+                        {/if}
+                    </div>
+                </div>
+            {/if}
+        {/foreach}
+        {if $wa->get('sort')}<input type="hidden" name="sort" value="{$wa->get('sort')|escape}">{/if}
+        {if $wa->get('order')}<input type="hidden" name="order" value="{$wa->get('order')|escape}">{/if}
+        {if empty($theme_settings.ajax_filters)}
+            <div class="align-right">
+                <a href="{$wa->currentUrl(false, true)}" title="[`Reset`]" class="filters-reset">[`Reset`]</a>
+                <input type="submit" class="button grey" value="[`Filter products`]">
+            </div>
+        {/if}
+    </form>
+</div>

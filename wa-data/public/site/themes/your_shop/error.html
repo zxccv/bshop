@@ -1,0 +1,43 @@
+<style type="text/css">
+    .content-sidebar { margin: 0 !important; }
+    {if !empty($theme_settings.error_page_replace)}
+        #top-fixed, #header, .bottom-line, .footer, .main-wrapper > .wrap, .breadcrumbs-block, .category-sidebar { display: none; }
+    {else}
+        .category-sidebar { display: none; }
+    {/if}
+</style>
+<div class="wrap align-center">
+    <div class="error-page">
+        {if $theme_settings.error_page_type == 'theme'}
+            <img src="{$wa_theme_url}img/error404.png" class="float-left" />
+            <div class="text">
+                <p style="color: #af7942; font-size: 45px;">[`Ooops`].. :(</p>
+                <p style="color: #009598; font-size: 65px; font-weight: bold">404</p>
+                <p style="color: #009598; font-size: 35px;">[`Page not found`]</p>
+                <p style=" font-size: 16px;">[`Perhaps You entered the wrong address or the page has been removed`]</p>
+                <p>
+                    <a style="color: #009598; font-size: 20px;" class="underlined" title="[`Go to home page`]" href="{if $wa->shop}{$wa->getUrl('shop/frontend')}{else}{$wa_static_url}{/if}">
+                        {if $wa->shop}<i class="ys ys-cart" style="display: inline-block; font-size: 30px; margin-right: 15px"></i>{/if}[`Go to home page`]
+                    </a>
+                    [`or`]
+                    <a style="color: #009598; font-size: 20px;" class="underlined" title="[`Back`]" href="javascript:void(0)" onclick="window.history.back()">
+                        <span class='arial-font'>←</span> [`Back`]
+                    </a>
+                </p>
+            </div>
+        {else}
+            <h1 class='heading'>{$error_message|default:"[`Error`]"}</h1>
+            <p>{if $error_code}<strong>{$error_code}.</strong> {/if}[`The requested resource is not available.`]</p>
+            <p>
+                <a style="color: #009598; font-size: 20px;" class="underlined" title="[`Go to home page`]" href="{if $wa->shop}{$wa->getUrl('shop/frontend')}{else}{$wa_static_url}{/if}">
+                    {if $wa->shop}<i class="ys ys-cart" style="display: inline-block; font-size: 30px; margin-right: 15px"></i>{/if}[`Go to home page`]
+                </a>
+                [`or`]
+                <a style="color: #009598; font-size: 20px;" class="underlined" title="[`Back`]" href="javascript:void(0)" onclick="window.history.back()">
+                    <span class='arial-font'>←</span> [`Back`]
+                </a>
+            </p>
+        {/if}
+        <div class="clear-both"></div>
+    </div>
+</div>

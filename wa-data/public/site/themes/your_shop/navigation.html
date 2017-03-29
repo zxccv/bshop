@@ -1,0 +1,369 @@
+{$categories = null}
+{if $wa->shop}
+    {$categories=$wa->shop->categories(0,null,true, true)}
+{/if}
+
+{if isset($category)}{$category_id=$category.id}{elseif isset($product)}{$category_id=$product.category_id}{else}{$category_id=null}{/if}
+{if !empty($breadcrumbs)}
+    {foreach $breadcrumbs as $crumb}
+        {$crumbs[]=$crumb.url}
+    {/foreach}
+{else}
+    {$crumbs = []}
+{/if}
+
+{* Выпадающее меню / Dropdown menu  *}
+
+{function name=build_dropdown_menu}
+    {if !empty($cats)}
+        <ul class="menu-v dropdown">
+            {foreach $cats as $c}
+            <li class="dropdown-menu{if $category_id == $c.id || in_array($c.url, $crumbs) || $wa->currentUrl() == $c.url} selected{/if}">
+                <a href="{$c.url}" title="{$c.name}">
+                    {$c.name}
+                    {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex) || !empty($c.params.badge_text_color)} style="{if !empty($c.params.badge_text_color)}color: #{$c.params.badge_text_color};{/if}{if !empty($c.params.badge_color_hex)}background-color: #{$c.params.badge_color_hex};{/if}"{/if}>{$c.params.badge}</span>{/if}
+                    {if !empty($c.childs)}<i class="fa fa-chevron-right"></i>{/if}
+                </a>
+                {if !empty($c.childs)}{build_dropdown_menu cats=$c.childs}{/if}
+            </li>
+            {/foreach}
+        </ul>
+    {/if}
+{/function}
+
+{* END *}
+
+{* Выпадающие списки / Dropdown lists  *}
+
+{function name=build_dropdown_list}
+
+    {if ($collapsed == 'third' && $level == 2) || ($collapsed == 'fourth' && $level == 3) || $collapsed == 'fifth' && $level == 4}
+        {$collapsed = 'collapsed'}
+    {/if}
+
+    {if ($visibility == 'second' && $level > 0) || ($visibility == 'third' && $level > 1) || ($visibility == 'fourth' && $level > 2) || ($visibility == 'fifth' && $level > 3)}
+        {$visibility = 'hidden'}
+    {/if}
+
+    {if $level == 0 && $theme_settings.category_type == 'vertical_dropdown_list'}
+    <div class="dropdown-holder">
+        <a href="javascript:void(0)" class="mobile-close" title='[`close`]'>X</a>
+        {if $top_block}
+            <div class='top-block'>
+                {$wa->block($top_block)}
+            </div>
+        {/if}
+        {if $right_block}
+            <div class='right-block'>
+                {$wa->block($right_block)}
+            </div>
+        {/if}
+        <ul class="menu-h">
+    {else}
+        {if $visibility !== 'hidden'}
+            <ul class="menu-v"{if $collapsed == 'collapsed' && $theme_settings.category_type !== 'vertical_dropdown' && (($level == 1 && !empty($theme_settings.category_heading_plus)) || $level > 1)} style='display: none;'{/if}>
+        {/if}
+    {/if}
+    {if $visibility !== 'hidden'}
+        {foreach $cats as $c}
+            <li class="{if $category_id == $c.id || in_array($c.url, $crumbs)} selected{/if}{if $theme_settings.category_type == 'vertical_dropdown'} dropdown-menu{/if}">
+                {if $level == 0 && $theme_settings.category_type == 'vertical_dropdown_list'}
+                <div class="category-heading">
+                {/if}
+                    {if $visibility == 'second' || ($visibility == 'third' && $level > 0) || ($visibility == 'fourth' && $level > 1) || ($visibility == 'fifth' && $level > 2)}
+                        {$hide_child = 1}
+                    {else}
+                        {$hide_child = 0}
+                    {/if}
+                    <a href="{$c.url}" title="{$c.name}" class='{if !$hide_child}has-child{/if}{if empty($theme_settings.category_heading_plus) && $level !== 0} no-margin{/if}'>
+                        {if !empty($c.childs)}
+                            {if $theme_settings.category_type == 'vertical_dropdown_list' && ((!empty($theme_settings.category_heading_plus) && $level == 0) || $level > 0)}
+                                {if ($collapsed == 'third' && $level == 1) || ($collapsed == 'fourth' && $level == 2) || $collapsed == 'fifth' && $level == 3}
+                                    {$collapsed = 'collapsed'}
+                                {/if}
+                                {if !$hide_child}
+                                    <i class="fa fa-{if $collapsed == 'collapsed'}plus{else}minus{/if} f-collapsible"></i>
+                                {/if}
+                            {/if}
+                            {if $theme_settings.category_type == 'vertical_dropdown'}<i class="fa fa-chevron-right"></i>{/if}
+                        {/if}
+                        {$c.name}
+                        {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex) || !empty($c.params.badge_text_color)} style="{if !empty($c.params.badge_text_color)}color: #{$c.params.badge_text_color};{/if}{if !empty($c.params.badge_color_hex)}background-color: #{$c.params.badge_color_hex};{/if}"{/if}>{$c.params.badge}</span>{/if}
+                    </a>
+                {if $level == 0 && $theme_settings.category_type == 'vertical_dropdown_list'}
+                </div>
+                {/if}
+                {if !empty($c.childs)}
+                    {build_dropdown_list cats=$c.childs level=$level+1 collapsed=$collapsed visibility=$visibility}
+                {/if}
+            </li>
+        {/foreach}
+        </ul>
+    {/if}
+    {if $level == 0 && $theme_settings.category_type == 'vertical_dropdown_list'}
+        {if $bottom_block}
+            <div class='bottom-block'>
+                {$wa->block($bottom_block)}
+            </div>
+        {/if}
+        </div>
+    {/if}
+{/function}
+
+{* END *}
+
+{* Меню мобильной версии / Mobile menu *}
+
+{function name=build_shop_mobile_menu}
+    <ul class="menu-v hidden">
+        {foreach $cats as $c}
+            <li {if $category_id == $c.id || in_array($c.url, $crumbs)}class="selected"{/if}>
+                <a href="{$c.url}" title="{$c.name}">
+                    {$c.name}
+                    {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex) || !empty($c.params.badge_text_color)} style="{if !empty($c.params.badge_text_color)}color: #{$c.params.badge_text_color};{/if}{if !empty($c.params.badge_color_hex)}background-color: #{$c.params.badge_color_hex};{/if}"{/if}>{$c.params.badge}</span>{/if}
+                    {if !empty($c.childs)}<i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i>{/if}
+                </a>
+                {if !empty($c.childs)}{build_shop_mobile_menu cats = $c.childs level=$level+1}{/if}
+            </li>
+        {/foreach}
+    </ul>
+{/function}
+
+{* END *}
+
+{if $theme_settings.category_width == 'limited'}
+<div class="wrap">
+{/if}
+<div id="horizontal-menu">
+    {if $theme_settings.category_width == 'combine'}
+    <div class="wrap">
+    {/if}
+    <div class="home">
+        <a href="{if $wa->shop}{$wa->getUrl('shop/frontend')}{else}{$wa_static_url}{/if}" title='[`Home`]'><i class="ys ys-home"></i></a>
+    </div>
+    <div class="mobile-block">
+        <a href="javascript:void(0)" class="mobile-menu" title="[`Menu`]">[`Menu`]</a>
+    </div>
+    <div class="categories-block">
+        <ul class="menu-h categories-list{if $theme_settings.category_list_plus == 'left'} plus-align-left{/if}">
+            {$is_first = 1}
+            {if $wa->shop}
+
+                {* Вывод категорий *}
+
+                {if $categories && !empty($theme_settings.horiz_show_cats)}
+                    {$is_first = 0}
+                    {if $theme_settings.category_type == 'dropdown'}
+                        {foreach from=$categories item=cat name=categories}
+                            <li class="{if $smarty.foreach.categories.first}first{/if}{if $category_id == $cat.id || in_array($cat.url, $crumbs)} selected{/if}">
+                                <a href="{$cat.url}" title='{$cat.name}'>
+                                    {$cat.name}
+                                    {if !empty($cat.params.badge)}<span class="badge{if !empty($cat.params.badge_color)} {$cat.params.badge_color|escape}{/if}"{if !empty($cat.params.badge_color_hex) || !empty($cat.params.badge_text_color)} style="{if !empty($cat.params.badge_text_color)}color: #{$cat.params.badge_text_color};{/if}{if !empty($cat.params.badge_color_hex)}background-color: #{$cat.params.badge_color_hex};{/if}"{/if}>{$cat.params.badge}</span>{/if}
+                                </a>
+                                {if !empty($cat.childs)}
+                                    {build_dropdown_menu cats=$cat.childs}
+                                {/if}
+                            </li>
+                        {/foreach}
+                    {/if}
+                    {if $theme_settings.category_type == 'vertical_dropdown_list' || $theme_settings.category_type == 'vertical_dropdown'}
+                        <li class="first category-list">
+                            <a href="javascript:void(0)" title="{$theme_settings.category_type_vertical_text|strip_tags|escape}">{$theme_settings.category_type_vertical_text} <span><i class="fa fa-chevron-down"></i></span></a>
+
+                            <ul class="menu-v dropdown vertical-menu{if $theme_settings.category_type == 'vertical_dropdown_list'} appear-menu{/if}">
+                                {foreach from=$categories item=cat name=categories}
+                                     <li{if $category_id == $cat.id || in_array($cat.url, $crumbs)} class="selected"{/if}>
+                                        <a href="{$cat.url}" title="{$cat.name}">
+                                            {$cat.name}
+                                            {if !empty($cat.params.badge)}<span class="badge{if !empty($cat.params.badge_color)} {$cat.params.badge_color|escape}{/if}"{if !empty($cat.params.badge_color_hex) || !empty($cat.params.badge_text_color)} style="{if !empty($cat.params.badge_text_color)}color: #{$cat.params.badge_text_color};{/if}{if !empty($cat.params.badge_color_hex)}background-color: #{$cat.params.badge_color_hex};{/if}"{/if}>{$cat.params.badge}</span>{/if}
+                                            {if !empty($cat.childs)}<i class="fa fa-chevron-right"></i>{/if}
+                                        </a>
+                                        {if !empty($cat.childs)}
+                                            {if !empty($cat.params.right_block)}{$right_block = $cat.params.right_block}{else}{$right_block = ''}{/if}
+                                            {if !empty($cat.params.top_block)}{$top_block = $cat.params.top_block}{else}{$top_block = ''}{/if}
+                                            {if !empty($cat.params.bottom_block)}{$bottom_block = $cat.params.bottom_block}{else}{$bottom_block = ''}{/if}
+                                            {build_dropdown_list cats=$cat.childs level=0 collapsed=$theme_settings.category_list_inside visibility=$theme_settings.category_list_visibility right_block=$right_block top_block=$top_block bottom_block=$bottom_block}
+                                        {/if}
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </li>
+                    {/if}
+                {/if}
+
+                {* Вывод брендов *}
+
+                {if !empty($theme_settings.horiz_show_brands) && (!empty($frontend_nav['productbrands-plugin']) || !empty($frontend_nav['brands-plugin']))}
+                    <li class="brands-tab col{$theme_settings.horiz_brands_col}{if $is_first} first{/if}{if strpos($wa->currentUrl(), '/brand/') !== false} selected{/if}">
+                        <a href="javascript:void(0)" style='cursor: default;' title='[`Brands`]'>
+                            [`Brands`]
+                        </a>
+                        {if !empty($frontend_nav['productbrands-plugin'])}
+                            <ul class="menu-v brands plugin">
+                                {foreach $brands as $b}
+                                    <li class="{if $b.image && !empty($theme_settings.horiz_brands_image)}has-image{else}no-image{/if}{if $b.name == $wa->param('brand')} selected{/if}">
+                                        <a href="{$b.url}" title="{$b.name}">{if $b.image && !empty($theme_settings.horiz_brands_image)}<img src="{$wa_static_url}wa-data/public/shop/brands/{$b.id}/{$b.id}{$b.image}">{else}{$b.name}{/if}</a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        {else}
+                            {$frontend_nav['brands-plugin']}
+                        {/if}
+                    </li>
+                    {$is_first = 0}
+                {/if}
+            {/if}
+
+            {* Вывод меню $wa->apps() *}
+
+            {if !empty($theme_settings.horiz_show_apps)}
+                {$apps = $wa->apps()}
+                {if $apps}
+                    {foreach $wa->apps() as $a}
+                        {if !empty($a.url)}
+                            <li class="{if $is_first && $a@first}first{/if}{if in_array($a.url, $crumbs) || $wa->currentUrl() == $a.url} selected{/if}">
+                                <a href="{$a.url}" title="{$a.name|escape}">
+                                    {$a.name|escape}
+                                </a>
+                            </li>
+                        {/if}
+                    {/foreach}
+                    {$is_first = 0}
+                {/if}
+            {/if}
+
+            {* Вывод страниц *}
+
+            {function name=build_horiz_menu}
+                {if !empty($pages)}
+                    {foreach $pages as $p}
+                        <li class="{if $is_first && $p@first}first{/if}{if in_array($p.url, $crumbs) || $wa->currentUrl() == $p.url} selected{/if}">
+                            <a href="{$p.url}" title='{$p.name}'>{$p.name}</a>
+                            {if !empty($p.childs)}{build_dropdown_menu cats=$p.childs}{/if}
+                        </li>
+                    {/foreach}
+                {/if}
+            {/function}
+            {$app = $wa->app()}
+            {if $wa->shop && ((!empty($theme_settings.horiz_show_pages) && $app == 'shop') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_shop)))}
+                {$shop_pages = $wa->shop->pages()}
+                {build_horiz_menu pages = $shop_pages}
+            {/if}
+            {if (!empty($theme_settings.horiz_show_pages) && $app == 'site') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_site))}
+                {$pages = $wa->site->pages()}
+                {build_horiz_menu pages = $pages}
+            {/if}
+            {if $wa->photos && ((!empty($theme_settings.horiz_show_pages) && $app == 'photos') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_photos)))}
+                {$photos_pages = $wa->photos->pages()}
+                {build_horiz_menu pages = $photos_pages}
+            {/if}
+            {if $wa->blog && ((!empty($theme_settings.horiz_show_pages) && $app == 'blog') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_blog)))}
+                {$blog_pages = $wa->blog->pages()}
+                {build_horiz_menu pages = $blog_pages}
+            {/if}
+            {if $wa->hub && ((!empty($theme_settings.horiz_show_pages) && $app == 'hub') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_hub)))}
+                {$hub_pages = $wa->hub->pages()}
+                {build_horiz_menu pages = $hub_pages}
+            {/if}
+            {if $wa->helpdesk && ((!empty($theme_settings.horiz_show_pages) && $app == 'helpdesk') || (empty($theme_settings.horiz_show_pages) && !empty($theme_settings.horiz_show_pages_helpdesk)))}
+                {$helpdesk_pages = $wa->helpdesk->pages()}
+                {build_horiz_menu pages = $helpdesk_pages}
+            {/if}
+        </ul>
+    </div>
+    {if $theme_settings.category_width == 'combine'}
+    </div>
+    {/if}
+</div>
+{if $theme_settings.category_width == 'limited'}
+</div>
+{/if}
+<div class="mobile-categories-block">
+        {if $wa->shop}
+
+            {* Вывод категорий *}
+
+            {if $categories && !empty($theme_settings.horiz_show_cats)}
+                <ul class="menu-v">
+                    {foreach $categories as $cat}
+                        <li class="{if $category_id == $cat.id || in_array($cat.url, $crumbs)} selected{/if}">
+                            <a href="{$cat.url}" title='{$cat.name}'>
+                                {$cat.name}
+                                {if !empty($cat.params.badge)}<span class="badge{if !empty($cat.params.badge_color)} {$cat.params.badge_color|escape}{/if}"{if !empty($cat.params.badge_color_hex) || !empty($cat.params.badge_text_color)} style="{if !empty($cat.params.badge_text_color)}color: #{$cat.params.badge_text_color};{/if}{if !empty($cat.params.badge_color_hex)}background-color: #{$cat.params.badge_color_hex};{/if}"{/if}>{$cat.params.badge}</span>{/if}
+                                {if !empty($cat.childs)}<i class="fa fa-plus collapsible-icon" title="[`Expand`]" data-toggle="[`Collapse`]"></i>{/if}
+                            </a>
+                            {if !empty($cat.childs)}{build_shop_mobile_menu cats = $cat.childs level=0}{/if}
+                        </li>
+                    {/foreach}
+                </ul>
+            {/if}
+
+            {* Вывод брендов *}
+            {if !empty($theme_settings.horiz_show_brands) && (!empty($frontend_nav['productbrands-plugin']) || !empty($frontend_nav['brands-plugin']))}
+                <ul class="menu-v">
+                    <li>
+                        <a href="javascript:void(0)" title='[`Brands`]' style="cursor: default;">
+                            [`Brands`]
+                            <i class="fa fa-plus collapsible-icon" title="[`Expand`]"></i>
+                        </a>
+                        {if !empty($frontend_nav['productbrands-plugin'])}
+                            <ul class="menu-v brands">
+                                {foreach $brands as $b}
+                                    <li {if $b.name == $wa->param('brand')}class="selected"{/if}>
+                                        <a href="{$b.url}">{if $b.image}<img src="{$wa_static_url}wa-data/public/shop/brands/{$b.id}/{$b.id}{$b.image}">{else}{$b.name}{/if}</a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        {else}
+                            {$frontend_nav['brands-plugin']}
+                        {/if}
+                    </li>
+                </ul>
+            {/if}
+        {/if}
+
+        {* Вывод меню $wa->apps() *}
+
+        {if !empty($theme_settings.horiz_show_apps)}
+            {$apps = $wa->apps()}
+            {if $apps}
+                <ul class="menu-v">
+                    {foreach $wa->apps() as $a}
+                        {if !empty($a.url)}
+                            <li class="{if $is_first && $a@first}first{/if}{if in_array($a.url, $crumbs) || $wa->currentUrl() == $a.url} selected{/if}">
+                                <a href="{$a.url}" title="{$a.name|escape}">
+                                    {$a.name|escape}
+                                </a>
+                            </li>
+                        {/if}
+                    {/foreach}
+                </ul>
+                {$is_first = 0}
+            {/if}
+        {/if}
+
+        {* Вывод страниц *}
+
+        {function name=build_horiz_menu_mobile}
+            {if !empty($pages)}
+                <ul class="menu-v{if $level} hidden{/if}">
+                    {$level = $level + 1}
+                    {foreach $pages as $p}
+                        <li class="{if in_array($p.url, $crumbs) || $wa->currentUrl() == $p.url} selected{/if}">
+                            <a href="{$p.url}" title='{$p.name}'>
+                                {$p.name}
+                                {if !empty($p.childs)}<i class="fa fa-plus collapsible-icon" title="[`Expand`]"></i>{/if}
+                            </a>
+                            {if !empty($p.childs)}{build_horiz_menu_mobile pages=$p.childs level = $level}{/if}
+                        </li>
+                    {/foreach}
+                </ul>
+            {/if}
+        {/function}
+        {if !empty($shop_pages)}{build_horiz_menu_mobile pages = $shop_pages level = 0}{/if}
+        {if !empty($pages)}{build_horiz_menu_mobile pages = $pages level = 0}{/if}
+        {if !empty($photos_pages)}{build_horiz_menu_mobile pages = $photos_pages level = 0}{/if}
+        {if !empty($blog_pages)}{build_horiz_menu_mobile pages = $blog_pages level = 0}{/if}
+        {if !empty($hub_pages)}{build_horiz_menu_mobile pages = $hub_pages level = 0}{/if}
+
+</div>

@@ -1,0 +1,280 @@
+{if isset($is_category) && $is_category == 1}
+
+{* Постраничная навигация *}
+{$ppp = waRequest::cookie('products_per_page', 0, 'TYPE_INT')}
+<div class="found-info">
+    <div class="float-left uppercase">[`found`]: {$products_count} </div>
+    {if isset($pages_count) && $pages_count > 1}
+        <div class="float-right {if $theme_settings.lazyloading == 'lazyloading' || ($theme_settings.lazyloading == 'productsperpage' && $ppp == '-1')}lazyloading-paging{/if}">
+            {wa_pagination total=$pages_count attrs=['class' => "pagination"] next="<span class='arial-font'>→</span>" prev="<span class='arial-font'>←</span>"}
+        </div>
+    {/if}
+</div>
+
+<div class="sort-view">
+   <div class="float-left">
+
+        {* Сортировка товаров *}
+        {if !empty($sorting)}
+            <!-- sorting -->
+            {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
+            {if !isset($active_sort)}
+                {$active_sort = $wa->get('sort', 'create_datetime')}
+            {/if}
+            <div class="sorting">
+                [`Sort by`]:
+                <div class="active-sort">
+                    <form action="{$wa->currentUrl(0,1)}">
+                        <select id="sorting-select">
+                            {if !empty($category) && !$category.sort_products}
+                                <option value="{$wa->currentUrl(0,1)}" {if !$active_sort}selected{/if}>[`New & Popular`]</option>
+                            {/if}
+                            {foreach $sort_fields as $sort => $name}
+                                <option value="" data-id="{$sort}"{if $active_sort == $sort}selected{/if}>{$name}</option>
+                                {if $wa->get('sort') == $sort}{$wa->title( $wa->title()|cat:' — '|cat:$name)}{/if}
+                            {/foreach}
+                        </select>
+                    </form>
+                    <ul id="sorting-block">
+                        {foreach $sort_fields as $sort => $name}
+                            <li data-id="{$sort}">{$wa->shop->sortUrl($sort, $name, $active_sort)}</li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+        {/if}
+
+        {* Типы отображения товаров *}
+        {$product_view = waRequest::cookie('your_product_view')}
+        {if !empty($theme_settings.thumbs_view)}<a href="javascript:void(0)" title="[`Thumbs`]" class="f-view{if $product_view == 'thumbs' || (!$product_view && $theme_settings.default_view == 'thumbs')} active{/if}" data-view='thumbs'><i class="fa fa-th-large"></i></a>{/if}
+        {if !empty($theme_settings.thumbs_small_view)}<a href="javascript:void(0)" title="[`Small thumbs`]" class="f-view{if $product_view == 'thumbs-small' || (!$product_view && $theme_settings.default_view == 'thumbs-small')} active{/if}" data-view='thumbs-small'><i class="fa fa-th"></i></a>{/if}
+        {if !empty($theme_settings.table_view)}<a href="javascript:void(0)" title="[`List`]" data-view='table' class="f-view{if $product_view == 'table' || (!$product_view && $theme_settings.default_view == 'table')} active{/if}"><i class="fa fa-th-list"></i></a>{/if}
+        {if !empty($theme_settings.table_small_view)}<a href="javascript:void(0)" title="[`Small list`]" data-view='table-small' class="f-view{if $product_view == 'table-small' || (!$product_view && $theme_settings.default_view == 'table-small')} active{/if}"><i class="fa fa-list"></i></a>{/if}
+    </div>
+
+    <div class="float-right">
+
+        {* Количество товаров на странице *}
+        {if $theme_settings.lazyloading == 'productsperpage' && $theme_settings.products_per_page}
+            {$products_per_page = explode(',', $theme_settings.products_per_page)}
+            {if $products_per_page}
+                {capture name=perpage}
+                    {if $theme_settings.products_per_page_display == 'string'}
+                        {$current_url = $wa->currentUrl(0, 1)}
+                        <ul id='products-per-page'>
+                        {foreach from=$products_per_page item=pp name=perpage}
+                            {if $smarty.foreach.perpage.last && $pp|regex_replace:['/\d/', '/\s/']:""}
+                                <li><a href="{$current_url}" title="{$pp}" {if $ppp == '-1'}class="selected"{/if} data-perpage="-1">{$pp}</a></li>
+                            {else}
+                                <li><a href="{$current_url}" title="{$pp}" {if $pp == $ppp}class="selected"{/if} data-perpage="{$pp}">{$pp}</a></li>
+                            {/if}
+                        {/foreach}
+                        </ul>
+                    {else}
+                        <form action="{$wa->currentUrl(0,1)}">
+                            <select id='products-per-page'>
+                                {foreach from=$products_per_page item=pp name=perpage}
+                                    {if $smarty.foreach.perpage.last && $pp|regex_replace:['/\d/', '/\s/']:""}
+                                        <option{if $ppp == '-1'} selected{/if} value="-1">{$pp}</option>
+                                    {else}
+                                        <option{if $pp == $ppp} selected{/if} value="{$pp}">{$pp}</option>
+                                    {/if}
+                                {/foreach}
+                            </select>
+                        </form>
+                    {/if}
+                {/capture}
+                {$theme_settings.products_per_page_text|regex_replace:'/%productsperpage%/':$smarty.capture.perpage}
+            {/if}
+        {/if}
+
+    </div>
+</div>
+{/if}
+
+{$ignore_stock_count = $wa->shop->settings('ignore_stock_count')}
+{$isMobile = 0}
+{if $wa->isMobile() || $wa->userAgent('device')}
+    {$isMobile = 1}
+{/if}
+
+{* Отбираем артикулы товаров и их изображения *}
+{if $theme_settings.show_cat_thumbs !== 'hide' || !empty($theme_settings.show_cat_sku_sku) || !empty($theme_settings.show_cat_sku_name) || $theme_settings.cat_main_image == 'sku'}
+    {$skus = $wa->shop->skus($products|array_keys)}
+    {$product_skus = []}
+    {$common_skus = []}
+    {foreach $skus as $sk}
+        {foreach $sk as $s}
+            {if $theme_settings.show_cat_thumbs == 'skus' && $sk|count > 1}
+                {if $products[$s.product_id].status && $s.available && ($ignore_stock_count || $s.count === null || $s.count > 0) && $s.image_id}
+                    {if !empty($theme_settings.cat_thumbs_unique)}
+                        {$product_skus[$s.product_id][$s.image_id] = $s}
+                    {else}
+                        {$product_skus[$s.product_id][] = $s}
+                    {/if}
+                {/if}
+            {/if}
+            {$common_skus[$s.product_id][$s.id] = $s}
+        {/foreach}
+    {/foreach}
+    {$product_images = $wa->shop->images($products|array_keys)}
+{/if}
+
+<ul class="product-list{if ((!empty($product_skus) && $theme_settings.show_cat_thumbs == 'skus') || ($theme_settings.show_cat_thumbs == 'images' && !empty($product_images))) && $theme_settings.cat_thumbs_type == 'thumbs'} has-thumbs-slider{/if}{if ($theme_settings.show_cat_thumbs == 'skus' && !empty($product_skus) || $theme_settings.show_cat_thumbs == 'images')} show-cat-thumbs{/if}{if !$product_view} {$theme_settings.default_view}{/if}">
+
+    {* Товары для сравнения и избранные *}
+    {$compare = $wa->shop->compare()}
+    {$favourite = waRequest::cookie('shop_yourshop_favourite', [], waRequest::TYPE_ARRAY_INT)}
+
+    {foreach $products as $p}
+        {$available = $ignore_stock_count || $p.count === null || $p.count > 0}
+
+        {* Определяем, есть ли у товара изображения или артикулы с изображеиями *}
+        {if (!empty($product_skus[$p.id]) && ($product_skus[$p.id]|count > 1 || ($product_skus[$p.id]|count == 1 && !isset($product_skus[$p.id][$common_skus[$p.id][$p.sku_id].image_id])))) || (empty($product_skus[$p.id]) && $theme_settings.show_cat_thumbs == 'images' && !empty($product_images[$p.id]) && $product_images[$p.id]|count > 1)}
+            {$has_images = 1}
+            {if $wa->shop->config('enable_2x')}
+                {$small_size = '48x48@2x'}
+                {$large_size = '200x0@2x'}
+            {else}
+                {$small_size = '48x48'}
+                {$large_size = '200x0'}
+            {/if}
+        {else}
+            {$has_images = 0}
+        {/if}
+
+        <li itemscope itemtype ="http://schema.org/Product" data-id="{$p.id}" class="product-item{if !$isMobile} not-mobile{/if}{if $has_images} has-images{if $theme_settings.cat_thumbs_type == 'thumbs'} type-thumbs{else} type-slider{/if}{/if}">
+
+            {* Вывод миниатюр слева от товара. Доступно только на десктопных версиях *}
+            {if $has_images && $theme_settings.cat_thumbs_type == 'thumbs' && !$isMobile}
+                <div class="sku-thumbs slider-custom">
+                    {if $theme_settings.show_cat_thumbs == 'skus'}
+                        <div class="sku-thumbs-slider hide-before-init" data-images='{ "{$p.sku_id}":{ "id": "{$p.sku_id}", "img": "{$wa->shop->imgUrl(["id" => $common_skus[$p.id][$p.sku_id].image_id, "product_id" => $p.id, "ext" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].ext, "filename" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].filename], $small_size)|escape}", "largeImg": "{$wa->shop->productImgUrl(["image_id" => $common_skus[$p.id][$p.sku_id].image_id, "id" => $p.id, "ext" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].ext, "image_filename" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].filename], $large_size, ["itemprop" => "image", "alt" => $p.name, "default" => "`$wa_theme_url`img/dummy200.jpg"])|escape}", "price": "{if $p.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($p.price)|replace:'"':'\"'}{else}{shop_currency($p.price)}{/if}{else}0{/if}", "comparepr": "{if $p.compare_price > 0 && $p.compare_price > $p.price}{if $theme_settings.ruble == 'html'}{shop_currency_html($p.compare_price)|replace:'"':'\"'}{else}{shop_currency($p.compare_price)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus[$p.id][$p.sku_id].sku)}, "sku": "{$common_skus[$p.id][$p.sku_id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus[$p.id][$p.sku_id].name)}, "skuName": "{$common_skus[$p.id][$p.sku_id].name|replace:'"':'\"'|escape}"{/if} }{foreach $product_skus[$p.id] as $psi}{if $psi.id !== $p.sku_id}{if !empty($product_images[$p.id][$psi.image_id])}, "{$psi.id}": { "img": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images[$p.id][$psi.image_id].ext, "filename" => $product_images[$p.id][$psi.image_id].filename], $small_size)|escape}", "largeImg": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images[$p.id][$psi.image_id].ext, "filename" => $product_images[$p.id][$psi.image_id].filename], $large_size)|escape}", "comparepr": "{if $psi.compare_price > 0 && $psi.compare_price > $psi.price}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.compare_price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.compare_price, $psi.currency)}{/if}{else}0{/if}", "price": "{if $psi.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.price, $psi.currency)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus[$psi.product_id][$psi.id].sku)}, "sku": "{$common_skus[$psi.product_id][$psi.id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus[$psi.product_id][$psi.id].name)}, "skuName": "{$common_skus[$psi.product_id][$psi.id].name|replace:'"':'\"'|escape}"{/if} }{/if}{/if}{/foreach} }'></div>
+                    {elseif $theme_settings.show_cat_thumbs == 'images'}
+                        <div class="sku-thumbs-slider hide-before-init only-images" data-images='{ {foreach $product_images[$p.id] as $psi}"{$psi.id}": { "img": "{$wa->shop->imgUrl(["id" => $psi.id, "product_id" => $psi.product_id, "ext" => $psi.ext, "filename" => $psi.filename], $small_size)|escape}", "largeImg": "{$wa->shop->imgUrl(["id" => $psi.id, "product_id" => $psi.product_id, "ext" => $psi.ext, "filename" => $psi.filename], $large_size)|escape}" }{if !$psi@last},{/if}{/foreach} }'></div>
+                    {/if}
+                </div>
+            {/if}
+
+            <form class="addtocart" method="post" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} action="{$wa->getUrl('/frontendCart/add')}">
+
+                {* Вывод артикула *}
+                {if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus[$p.id][$p.sku_id].sku)}<div class="sku">[`SKU`]: {$common_skus[$p.id][$p.sku_id].sku|escape}</div>{/if}
+
+                <div class="image{if $has_images} swipeable{/if}" data-small="{if !empty($common_skus[$p.id][$p.sku_id].image_id)}{$wa->shop->productImgHtml(["image_id" => $common_skus[$p.id][$p.sku_id].image_id, "id" => $p.id, "ext" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].ext, "image_filename" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].filename], '96x96', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy96.jpg"])|escape}{else}{$wa->shop->productImgHtml($p, '96x96', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy96.jpg"])|escape}{/if}">
+
+                    {* Стрелочки для типа отображения миниатюр "слайдер" *}
+                    {if $has_images && ($isMobile || $theme_settings.cat_thumbs_type == 'slider')}
+                        <a href="javascript:void(0)" class="image-thumbs-nav s-prev" title="[`previous`]"><i class="fa fa-chevron-left"></i></a>
+                        <a href="javascript:void(0)" class="image-thumbs-nav s-next" title="[`next`]"><i class="fa fa-chevron-right"></i></a>
+                    {/if}
+
+                    {* Наклейки *}
+                    {if !empty($theme_settings.discount_badge) && $p.compare_price > 0}
+                        {$discount_badge = (100*(1 - $p.price/$p.compare_price))}
+                        {if $discount_badge > 0}
+                            {if $discount_badge > 99 || $discount_badge < 1}{$discount_badge = $discount_badge|round:2}{else}{$discount_badge = $discount_badge|round}{/if}
+                            <div class="badge discount-badge crimson"><span>- {$discount_badge}%</span></div>
+                        {/if}
+                    {/if}
+                    {$badge_html = $wa->shop->badgeHtml($p.badge)}
+                    {if $badge_html}
+                        {$badge_html}
+                    {/if}
+
+                    {* Отображение миниатюр в моб версии или для типа отображения "слайдер" *}
+                    {if $has_images && ($isMobile || $theme_settings.cat_thumbs_type == 'slider')}
+                        {if $theme_settings.show_cat_thumbs == 'skus'}
+                            <a href="{$p.frontend_url}" title="{$p.name}" class="product-image" data-sku-id="{$p.sku_id}s" data-images-keys='{$p.sku_id}s{foreach $product_skus[$p.id] as $psi}{if !empty($product_images[$p.id][$psi.image_id]) && $psi.id !== $p.sku_id},{$psi.id}s{/if}{/foreach}' data-images='{ "{$p.sku_id}s":{ "id": "{$p.sku_id}", "largeImg": "{$wa->shop->productImgUrl(["image_id" => $common_skus[$p.id][$p.sku_id].image_id, "id" => $p.id, "ext" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].ext, "image_filename" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].filename], $large_size, ["itemprop" => "image", "alt" => $p.name, "default" => "`$wa_theme_url`img/dummy200.jpg"])|escape}", "price": "{if $p.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($p.price)|replace:'"':'\"'}{else}{shop_currency($p.price)}{/if}{else}0{/if}", "comparepr": "{if $p.compare_price > 0 && $p.compare_price > $p.price}{if $theme_settings.ruble == 'html'}{shop_currency_html($p.compare_price)|replace:'"':'\"'}{else}{shop_currency($p.compare_price)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus[$p.id][$p.sku_id].sku)}, "sku": "{$common_skus[$p.id][$p.sku_id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus[$p.id][$p.sku_id].name)}, "skuName": "{$common_skus[$p.id][$p.sku_id].name|replace:'"':'\"'|escape}"{/if} }{foreach $product_skus[$p.id] as $psi}{if $psi.id !== $p.sku_id}{if !empty($product_images[$p.id][$psi.image_id]) && $psi.id !== $p.sku_id},"{$psi.id}s": { "id": "{$psi.id}", "img": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images[$p.id][$psi.image_id].ext, "filename" => $product_images[$p.id][$psi.image_id].filename], $small_size)|escape}", "largeImg": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images[$p.id][$psi.image_id].ext, "filename" => $product_images[$p.id][$psi.image_id].filename], $large_size)|escape}", "comparepr": "{if $psi.compare_price > 0 && $psi.compare_price > $psi.price}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.compare_price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.compare_price, $psi.currency)}{/if}{else}0{/if}", "price": "{if $psi.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.price, $psi.currency)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus[$psi.product_id][$psi.id].sku)}, "sku": "{$common_skus[$psi.product_id][$psi.id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus[$psi.product_id][$psi.id].name)}, "skuName": "{$common_skus[$psi.product_id][$psi.id].name|replace:'"':'\"'|escape}"{/if} }{/if}{/if}{/foreach} }'>
+                        {else}
+                            <a href="{$p.frontend_url}" title="{$p.name}" class="product-image" data-sku-id="{$p.image_id}s" data-images-keys='{foreach $product_images[$p.id] as $psi}{if !$p.image_id && $psi@first}0{else}{$psi.id}{/if}s{if !$psi@last},{/if}{/foreach}' data-images='{ {foreach $product_images[$p.id] as $psi}"{if !$p.image_id && $psi@first}0{else}{$psi.id}{/if}s": { "id": "{$psi.id}", "largeImg": "{$wa->shop->productImgUrl(["image_id" => $psi.id, "id" => $p.id, "ext" => $psi.ext, "image_filename" => $psi.filename], $large_size, ["itemprop" => "image", "alt" => $p.name, "default" => "`$wa_theme_url`img/dummy200.jpg"])|escape}" }{if !$psi@last},{/if}{/foreach} }'>
+                        {/if}
+                    {else}
+                        <a href="{$p.frontend_url}" title="{$p.name}" class="product-image">
+                    {/if}
+                       {if !empty($common_skus[$p.id][$p.sku_id].image_id) && $theme_settings.cat_main_image == 'sku'}
+                            {$wa->shop->productImgHtml(["image_id" => $common_skus[$p.id][$p.sku_id].image_id, "id" => $p.id, "ext" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].ext, "image_filename" => $product_images[$p.id][$common_skus[$p.id][$p.sku_id].image_id].filename ], '200x0', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.jpg"])}
+                        {else}
+                            {$wa->shop->productImgHtml($p, '200x0', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.jpg"])}
+                        {/if}
+                    </a>
+
+                    {* Определяем стоит ли выводить плагин Купить в 1 клик *}
+                    {$quickorder = 0}
+                    {if $wa->shop && $wa->app() == 'shop' && $wa->setting('update_time','','shop.quickorder') && $theme_settings.quickorder_plugin_cat}
+                        {$quickorder = 1}
+                    {/if}
+
+                    {* Быстрый просмотр *}
+                    {$quick_view = 0}
+                    {if !empty($theme_settings.quick_view) && (!$isMobile || ($isMobile && empty($theme_settings.quick_view_mob_hide)))}
+                        {$quick_view = 1}
+                        <a href="{$p.frontend_url}" class="quick-view{if $theme_settings.quick_view_type !== 'image'} text{/if}{if $theme_settings.quick_view_type == 'button'} no-underline{/if}{if $quickorder} has-quickorder{/if}"{if !empty($theme_settings.quick_view_text)} title="{$theme_settings.quick_view_text}"{/if}>
+                            {if $theme_settings.quick_view_type == 'image'}
+                                <img src="{$wa_theme_url}{$theme_settings.quick_view_image}" alt="{if !empty($theme_settings.quick_view_text)}{$theme_settings.quick_view_text}{/if}" />
+                            {else}
+                                <span{if $theme_settings.quick_view_type == 'button'} class='button'{/if}>
+                                    {$theme_settings.quick_view_text}
+                                </span>
+                            {/if}
+                        </a>
+                    {/if}
+
+                    {* Плагин "Купить в 1 клик"
+                     * Ссылка: http://www.webasyst.ru/store/plugin/shop/quickorder/
+                     * Plugin "1-Click Ordering"
+                     * Link: http://www.webasyst.com/store/plugin/shop/quickorder/
+                     *}
+                    {if $quickorder && (!$isMobile || ($isMobile && empty($theme_settings.quickorder_plugin_cat_hide)))}
+                        <div{if $quick_view} class="has-quickview"{/if}>{shopQuickorderPlugin::quickorderForm($p, 0)}</div>
+                    {/if}
+
+                </div>
+                <h5 {if empty($theme_settings.cat_fixed_name)} class="not-fixed"{/if}>
+                    <a href="{$p.frontend_url}" title="{$p.name}">
+                        <span class="thumbs">{$p.name|truncate:90}</span>
+                        <span class="table" itemprop="name">{$p.name}</span>
+
+                        {* Наименование артикула *}
+                        {if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus[$p.id][$p.sku_id].name)}<span class="sku-name">{$common_skus[$p.id][$p.sku_id].name|escape}</span>{/if}
+                    </a>
+                </h5>
+                {if $p.summary}<meta itemprop="description" content="{$p.summary|strip_tags|escape}">{/if}
+                <div class="rating table">{if $p.rating > 0}{$wa->shop->ratingHtml($p.rating, 16)} <span class="reviews"> / <a href="{if !empty($theme_settings.show_reviews_page)}{$wa->shop->productUrl($p, 'reviews')}{else}{$p.frontend_url}#/reviews/{/if}" title="[`reviews`]">[`reviews`]: {$p.rating_count}</a></span>{/if}</div>
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="offers">
+                    <div class="prices">
+                        {if $p.compare_price > 0}<span class="compare-price">{if $theme_settings.ruble == 'html'}{shop_currency_html($p.compare_price)}{else}{shop_currency($p.compare_price)}{/if}</span>{/if}
+                        <span class="price{if $p.compare_price > 0} colored{/if}" itemprop="price">{if $theme_settings.ruble == 'html'}{shop_currency_html($p.price)}{else}{shop_currency($p.price)}{/if}</span>
+                    </div>
+                    {if $p.summary}<div class='description table'>{$p.summary|truncate:200}</div>{/if}
+                    <div class="addtocart-form{if !$available} disabled{/if}">
+                        {if !empty($theme_settings.show_compare)}
+                            <a href="javascript:void(0)" class="action-icon compare-link{if $compare && isset($compare[$p.id])} active{/if}" data-product="{$p.id}" title="{if $compare && isset($compare[$p.id])}[`Remove from compare list?`]{else}[`Add to compare list?`]{/if}"><i class="ys ys-compare"></i></a>
+                        {/if}
+                        {if $available}
+                            <input type="hidden" name="product_id" value="{$p.id}" />
+                            <input type="submit" value="[`Buy`]" />
+                            <link itemprop="availability" href="http://schema.org/InStock" />
+                        {else}
+                            <input type="submit" value="{if $ignore_stock_count}[`Pre-order only`]{else}[`Out of stock`]{/if}" class="disabled" disabled="disabled" title="{if $ignore_stock_count}[`Pre-order only`]{else}[`Out of stock`]{/if}">
+                            <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                        {/if}
+                        <meta itemprop="price" content="{$p.price}">
+                        {if !empty($p.currency)}<meta itemprop="priceCurrency" content="{$p.currency}">{/if}
+                        {if !empty($theme_settings.show_favourite)}
+                            <a href="javascript:void(0)" class="action-icon favourite-link{if in_array($p.id, $favourite)} active{/if}" data-product="{$p.id}" title="{if in_array($p.id, $favourite)}[`Remove from Wish list?`]{else}[`Add to Wish list?`]{/if}"><i class="ys ys-heart"></i></a>
+                        {/if}
+                    </div>
+                    <div class="rating thumbs">{if $p.rating > 0}{$wa->shop->ratingHtml($p.rating, 16)}{/if}</div>
+                </div>
+            </form>
+        </li>
+    {/foreach}
+</ul>
+
+{* Постраничная навигация *}
+{if isset($pages_count) && $pages_count > 1}
+    <div class="float-right bottom-paging {if $theme_settings.lazyloading == 'lazyloading' || ($theme_settings.lazyloading == 'productsperpage' && $ppp == '-1')}lazyloading-paging{/if}">
+        {wa_pagination total=$pages_count attrs=['class' => "pagination"] next="<span class='arial-font'>→</span>" prev="<span class='arial-font'>←</span>"}
+    </div>
+{/if}

@@ -1,0 +1,48 @@
+{if count($product.images) > 1 || (!empty($video.url) && count($product.images) === 1)}
+    <div class="thumbs-container{if !empty($mode)} c2{/if}{if !empty($theme_settings.image_thumbs_smaller)} smaller{/if} slider-custom">
+
+        <div id='zoom-gallery{if !empty($mode)}2{/if}{if $wa->get('quickview')}-quickview{/if}'{if !empty($theme_settings.image_thumbs_slider)} class="hide-before-init with-slider"{/if}>
+            {foreach $product.skus as $ps}
+                {if $ps.image_id}
+                    {$sku_image[$ps.image_id] = $ps.id}
+                {/if}
+            {/foreach}
+            {if !empty($video.url)}
+                <div class="image-thumb">
+                    <a id="product-image-video" class='selected' href="{$video.url}">
+                        <img src="{$video.images[0]}" alt='[`Video`]'>
+                    </a>
+                </div>
+            {/if}
+            {foreach $product.images as $image}
+                <div class="image-thumb">
+                    <a class="product-image-{$image.id}{if $theme_settings.enlarge_type !== 'zoom'} fancybox-img{/if}"
+                        {$zoom_thumb = $wa->shop->imgUrl($image, '970x0')}
+                        {$image_normal_size = $wa->shop->imgUrl($image, '750x0')}
+                        {if $theme_settings.enlarge_type == 'zoom' || $theme_settings.enlarge_type == 'zoomfancybox'}
+                            data-image="{$image_normal_size}"
+                            data-zoom-image="{$zoom_thumb}"
+                            {if $theme_settings.enlarge_type == 'zoomfancybox'}
+                                data-image-id='{$image.id}'
+                                href="{$zoom_thumb}"
+                            {else}
+                                href="javascript:void(0)"
+                            {/if}
+                        {else}
+                            href="{$zoom_thumb}"
+                            data-image-id='{$image.id}'
+                        {/if}
+                        >
+                        {$image_alt = $product.name|escape}
+                        {if $image.description}
+                             {$image_alt = $image_alt|cat:' - ':$image.description|escape}
+                        {/if}
+                        {if isset($sku_image[$image.id])}{$image_sku_id = $sku_image[$image.id]}{else}{$image_sku_id = 0}{/if}
+                        {$wa->shop->imgHtml($image, '96x96@2x', ['alt' => $image_alt, 'data-large'=>$zoom_thumb, 'data-image' => $image_normal_size, 'data-sku-id' => $image_sku_id])}
+                    </a>
+                </div>
+            {/foreach}
+        </div>
+
+    </div>
+{/if}

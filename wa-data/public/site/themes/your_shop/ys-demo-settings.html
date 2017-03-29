@@ -1,0 +1,454 @@
+{$active_app = $wa->param('app')}
+{$current_locale = $wa->locale()}
+{$locale_data = [
+    'ru_RU' => [
+        'Design' => 'Внешний вид (дизайн)',
+        'Layout' => 'Макет',
+        'Horizontal menu of categories' => 'Горизонтальное меню категорий',
+        'Home page' => 'Главная страница',
+        'Catalog page' => 'Страница каталога',
+        'Product page' => 'Страница товара',
+        'Available more than 600 theme settings!' => 'Доступно более 600 настроек для темы дизайна!',
+        'https://www.webasyst.com/store/theme/your_shop/' => 'https://www.webasyst.ru/store/theme/your_shop/',
+        'Buy theme' => 'Купить тему',
+        'http://yourshop-en.igaponov.ru/hub/documentation/' => 'http://yourshop.igaponov.ru/hub/documentation/',
+        'Read docs' => 'Документация',
+        'https://www.webasyst.com/store/vendor/969712/' => 'https://www.webasyst.ru/store/vendor/969712/',
+        'Other products' => 'Другие продукты',
+        'Color scheme' => 'Цветовая схема',
+        'Available more than 170 color settings for theme elements' => 'Доступно более 170 настроек цветов для элементов темы дизайна',
+        'Texture' => 'Текстура',
+        'You can upload any texture to the site and configure it as you want' => 'Вы можете загрузить любую текстуру на сайт и настроить ее отображение так, как захотите',
+        'Layout width' => 'Ширина макета',
+        'Width can be specified for several elements separately' => 'Ширина может быть задана отдельно для некоторых элементов темы дизайна',
+        'Header layout' => 'Макет шапки сайта',
+        'Contents of blocks 1 and 2 can be changed in theme settings and the alignment also.' => 'Содержимое блоков 1 и 2, выравнивание в них может быть изменено в настройках темы дизайна',
+        'Sidebar on home page' => 'Сайдбар на главной странице',
+        'Sidebar on product page' => 'Сайдбар на странице товара',
+        'Position of sidebar' => 'Расположение сайдбара',
+        'Type of menu' => 'Тип меню',
+        'State of inside categories' => 'Состояние вложенных категорий',
+        'All categories collapsed' => 'Все категории свернуты',
+        'All categories expanded' => 'Все категории развернуты',
+        'Third level categories collapsed' => 'Категории 3 уровня свернуты',
+        'Fourth level categories collapsed' => 'Категории 4 уровня свернуты',
+        'Fifth level and upper categories collapsed' => 'Категории 5 и последующих уровней свернуты',
+        'Visibility of inside categories' => 'Видимость вложенных категорий',
+        'All categories visible' => 'Все категории видимы',
+        'Up to second level' => 'Категории до 2 уровня',
+        'Up to third level' => 'Категории до 3 уровня',
+        'Up to fourth level' => 'Категории до 4 уровня',
+        'Up to fifth level' => 'Категории до 5 уровня',
+        'Content' => 'Содержимое',
+        'Maximum number of brands column in dropdown menu' => 'Максимальное количество колонок брендов в выпадающем меню',
+        'Slider' => 'Слайдер',
+        'Big products slider' => 'Большой слайдер товаров',
+        'Photos slider' => 'Слайдер изображений',
+        'Sliders have much more settings in your admin page' => 'В теме дизайна имеются дополнительные настройки для слайдеров',
+        'Background image of <br>slider' => 'Задний фон слайдера',
+        'Pattern' => 'Текстура',
+        'Banners' => 'Баннеры',
+        'View of big amount of products' => 'Отображение большого количества товаров',
+        'AJAX filters' => 'AJAX фильтрация',
+        'Enable' => 'Включить',
+        'Disable' => 'Выключить',
+        'Subcategories view (after description)' => 'Отображение подкатегорий (после описания)',
+        'In slider' => 'В слайдере',
+        'List' => 'Списком',
+        'List with images' => 'Списком с картинками',
+        "Don't show" => 'Не отображать',
+        'Continue editing' => 'Продолжить изменения',
+        'Show product features' => 'Вывести характеристики товара',
+        'In product tabs' => 'Во вкладках товара',
+        'Under the thumbs' => 'Под миниатюрами',
+        'Before skus' => 'Перед артикулами',
+        'After skus' => 'После артикулов'
+    ]
+]}
+
+{* SYSTEM FUNCTION. DON'T REMOVE / Системная функция. Не удалять  *}
+{function name=translate locale=$current_locale}{strip}
+    {if isset($message)}
+        {if isset($locale_data[$current_locale][$message])}
+            {$locale_data[$current_locale][$message]}
+        {else}
+            {$message}
+        {/if}
+    {/if}{/strip}
+{/function}
+{* END / Конец *}
+
+<style type="text/css">
+    #dialog.dialog.demo-dial .dialog-window .content { width: 90%; font-size: 14px; }
+    #dialog.dialog.demo-dial .dialog-window .content:after, .settings-content .setting-block:after { clear: both; display: block; content: ''; }
+    .settings-sidebar { float: left; width: 230px; padding: 0 10px; word-wrap: break-word; }
+    .settings-sidebar .settings-list { list-style: none; padding: 0; }
+    .settings-sidebar .settings-list li.selected a, .settings-sidebar .settings-list li:hover a { background: #f6f6f6; }
+    .settings-sidebar .settings-list li a:hover { text-decoration: none; }
+    .settings-sidebar .settings-list a { padding: 10px 15px; display: block; height: 100%; color: #000; }
+    .settings-sidebar .settings-list li { border-bottom: 1px solid #eee; }
+    .settings-commercial { margin-top: 50px; }
+    .settings-commercial a { margin-bottom: 10px; display: block; }
+    .settings-content { margin-left: 260px; word-wrap: break-word; overflow: hidden; padding: 10px; }
+    .settings-content .settings-body > div, .settings-footer .continue { display: none; }
+    .settings-content .settings-body > div.selected { display: block; }
+    .settings-content .settings-set-img li img { border: 3px solid transparent; }
+    .settings-content .settings-set-img li.selected img { border: 3px solid #fdda3b; }
+    .settings-content .setting-name { float: left; font-weight: 600; width: 175px; }
+    .settings-content .setting-value { margin-left: 180px }
+    .settings-content .setting-value > label { margin-right: 40px; display: inline-block; }
+    .settings-content .setting-value > div, .settings-content .setting-value > label { margin-bottom: 10px; }
+    .settings-content .setting-block { margin-bottom: 20px; }
+    .settings-content .settings-footer { clear: both; margin-top: 10px; }
+    .settings-info { margin: 10px 0; }
+    .settings-info i { font-size: 30px; }
+    @media only screen and (max-width: 760px) {
+        .settings-sidebar, .settings-content .setting-name { float: none; width: 100%; padding: 0; }
+        .settings-content, .settings-content .setting-value { margin: 0; padding: 0; }
+        .settings-content .setting-name, .settings-footer input { margin-bottom: 10px; }
+        .settings-sidebar .settings-commercial { display: none; }
+        .settings-footer .continue { display: inline-block; }
+    }
+</style>
+
+<div id="yourshop-settings">
+    <div class="settings-header">
+        <a href="javascript:void(0)" class="settings-icon" title="[`Settings`]"><i class="fa fa-wrench"></i></a>
+    </div>
+    <div class='settings-container' style='display: none;'>
+        <div class="settings-sidebar">
+            <ul class="settings-list">
+                <li class='selected'><a href="javascript:void(0)" data-id="design" title='{translate message="Design"}'>{translate message="Design"}</a></li>
+                <li><a href="javascript:void(0)" data-id="layout" title='{translate message="Layout"}'>{translate message="Layout"}</a></li>
+                <li><a href="javascript:void(0)" data-id="menu" title='{translate message="Horizontal menu of categories"}'>{translate message="Horizontal menu of categories"}</a></li>
+                {if $active_app == 'shop'}
+                    <li><a href="javascript:void(0)" data-id="home" title='{translate message="Home page"}'>{translate message="Home page"}</a></li>
+                    <li><a href="javascript:void(0)" data-id="catalog" title='{translate message="Catalog page"}'>{translate message="Catalog page"}</a></li>
+                    <li><a href="javascript:void(0)" data-id="product" title='{translate message="Product page"}'>{translate message="Product page"}</a></li>
+                {/if}
+            </ul>
+            <div class="settings-commercial">
+                <div class="settings-info">
+                    <p><i class="fa fa-lightbulb-o"></i> {translate message="Available more than 600 theme settings!"}</p>
+                </div>
+                <a href="{translate message='https://www.webasyst.com/store/theme/your_shop/'}" target='_blank' title='{translate message="Buy theme"}' class='button red'>{translate message="Buy theme"}</a>
+                <a href="{translate message='http://yourshop-en.igaponov.ru/hub/documentation/'}" target='_blank' title='{translate message="Read docs"}' class='button'>{translate message="Read docs"}</a>
+                <a href="{translate message='https://www.webasyst.com/store/vendor/969712/'}" target='_blank' title='{translate message="Other products"}' class='button' style='background-color: #80E3FD;'>{translate message="Other products"}</a>
+            </div>
+        </div>
+        <div class="settings-content">
+            <form action="{$wa->currentUrl(0,1)}" method="post">
+                <div class="settings-body">
+                    <div class="settings-tab-design selected">
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Color scheme"}:</div>
+                            {$color_scheme = ['turquoise' => '[`Turquoise`]', 'darkred'=>'[`Dark red`]', 'lightred'=>'[`Light red`]', 'blue' => '[`Blue`]',
+                            'darkblue' => '[`Dark blue`]', 'lightblue' => '[`Light blue`]', 'green'=>'[`Green`]', 'lightpurple'=>'[`Light purple`]', 'pink' => '[`Pink`]',
+                            'yellow' => '[`Yellow`]', 'darkyellow' => '[`Dark yellow`]', 'cranberry' => '[`Cranberry`]', 'emerald' => '[`Emerald`]', 'orange' => '[`Orange`]',
+                            'blueberry' => '[`Blueberry`]', 'peach' => '[`Peach`]', 'eco' => '[`Eco style`]', 'lilac' => '[`Lilac`]', 'mint' => '[`Mint`]',
+                            'lemon' => '[`Lemon`]', 'black' => '[`Black`]', 'black2' => '[`Black 2`]', 'brown' => '[`Brown`]']}
+                            <div class="setting-value">
+                                {$selected_color = ''}
+                                <ul class="menu-h settings-color settings-set-img">
+                                    {foreach $color_scheme as $ck => $cv}
+                                    <li{if $theme_settings.color == $ck} class="selected"{$selected_color = $ck}{/if}><a href="javascript:void(0)" data-id="{$ck}" title="{$cv}"><img src="{$wa_theme_url}img/colors/{$ck}/color.png" alt="" /></a></li>
+                                    {/foreach}
+                                </ul>
+                                <input type="hidden" name="settings-color" value="{$selected_color}" />
+                            </div>
+                            <div class="settings-info">
+                                <p><i class="fa fa-lightbulb-o"></i> {translate message="Available more than 170 color settings for theme elements"}</p>
+                            </div>
+                        </div>
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Texture"}:</div>
+                            {$background_pattern = ['img/patterns/no-pattern.jpg' => '[`No pattern`]', 'img/patterns/pattern1.png' => '[`Pattern`]1', 'img/patterns/pattern2.png'=>'[`Pattern`]2', 'img/patterns/pattern3.png'=>'[`Pattern`]3',
+                            'img/patterns/pattern4.png'=>'[`Pattern`]4', 'img/patterns/pattern5.png'=>'[`Pattern`]5', 'img/patterns/pattern6.jpg'=>'[`Pattern`]6', 'img/patterns/pattern7.png'=>'[`Pattern`]7',
+                            'img/patterns/pattern8.png'=>'[`Pattern`]8', 'img/patterns/pattern9.png'=>'[`Pattern`]9', 'img/patterns/pattern10.png'=>'[`Pattern`]10', 'img/patterns/pattern11.png'=>'[`Pattern`]11',
+                            'img/patterns/pattern12.png'=>'[`Pattern`]12', 'img/patterns/pattern13.png'=>'[`Pattern`]13', 'img/patterns/pattern14.png'=>'[`Pattern`]14', 'img/patterns/pattern15.png'=>'[`Pattern`]15',
+                            'img/patterns/pattern16.png'=>'[`Pattern`]16', 'img/patterns/pattern17.png'=>'[`Pattern`]17', 'img/patterns/pattern18.jpg'=>'[`Pattern`]18', 'img/patterns/pattern19.png'=>'[`Pattern`]19',
+                            'img/patterns/pattern20.png'=>'[`Pattern`]20', 'img/patterns/pattern21.png'=>'[`Pattern`]21', 'img/patterns/pattern22.jpg'=>'[`Pattern`]22', 'img/patterns/pattern23.jpg'=>'[`Pattern`]23',
+                            'img/patterns/pattern24.jpg'=>'[`Pattern`]24', 'img/patterns/pattern25.jpg'=>'[`Pattern`]25', 'img/patterns/pattern26.jpg'=>'[`Pattern`]26', 'img/patterns/pattern27.jpg'=>'[`Pattern`]27',
+                            'img/patterns/pattern28.jpg'=>'[`Pattern`]28', 'img/patterns/pattern29.jpg'=>'[`Pattern`]29', 'img/patterns/pattern30.jpg'=>'[`Pattern`]30', 'img/patterns/pattern31.jpg'=>'[`Pattern`]31',
+                            'img/patterns/pattern32.png'=>'[`Pattern`]32', 'img/patterns/pattern33.jpg'=>'[`Pattern`]33', 'img/patterns/pattern34.jpg'=>'[`Pattern`]34', 'img/patterns/pattern35.jpg'=>'[`Pattern`]35',
+                            'img/patterns/pattern36.jpg'=>'[`Pattern`]36', 'img/patterns/pattern37.jpg'=>'[`Pattern`]37', 'img/patterns/pattern38.jpg'=>'[`Pattern`]38', 'img/patterns/pattern39.jpg'=>'[`Pattern`]39',
+                            'img/patterns/pattern40.jpg'=>'[`Pattern`]40', 'img/patterns/pattern41.jpg'=>'[`Pattern`]41', 'img/patterns/pattern42.jpg'=>'[`Pattern`]42']}
+                            <div class="setting-value">
+                                {$selected_pattern = ''}
+                                <ul class="menu-h settings-pattern settings-set-img">
+                                    {foreach $background_pattern as $bk => $bv}
+                                    <li{if $theme_settings.pattern == $bk} class="selected"{$selected_pattern = $bk}{/if}><a href="javascript:void(0)" data-id="{$bk}" title="{$bv}"><img src="{$wa_theme_url}{$bk|replace:'patterns/':'patterns/thumbs/'}" alt="" /></a></li>
+                                    {/foreach}
+                                </ul>
+                                <input type="hidden" name="settings-pattern" value="{$selected_pattern}" />
+                            </div>
+                            <div class="settings-info">
+                                <p><i class="fa fa-lightbulb-o"></i> {translate message="You can upload any texture to the site and configure it as you want"}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-tab-layout">
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Layout width"}:</div>
+                            <div class="setting-value">
+                                <label for="setting-layout-limited"><input type="radio" id="setting-layout-limited" name="settings-layout" value="limited" {if $wa->globals('settings_layout') == 'limited'}checked{/if} /> [`Limited`]</label>
+                                <label for="setting-layout-wide"><input type="radio" id="setting-layout-wide" name="settings-layout" value="wide" {if $wa->globals('settings_layout') == 'wide' || !$wa->globals('settings_layout')}checked{/if} /> [`Wide`]</label>
+                            </div>
+                            <div class="settings-info">
+                                <p><i class="fa fa-lightbulb-o"></i> {translate message="Width can be specified for several elements separately"}</p>
+                            </div>
+                        </div>
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Header layout"}:</div>
+                            <div class="setting-value">
+                                {$selected_header_type = ''}
+                                <ul class="menu-h settings-set-img">
+                                    {for $step=1 to 18}
+                                        <li{if $theme_settings.header_type == $step} class="selected"{$selected_header_type = $step}{/if}><a href="javascript:void(0)" data-id="{$step}" title='{translate message="Layout"} {$step}'><img src="{$wa_theme_url}img/settings/header-type-{$step}.jpg" alt="" /></a></li>
+                                    {/for}
+                                </ul>
+                                <input type="hidden" name="settings-header-type" value="{$selected_header_type}" />
+                            </div>
+                            <div class="settings-info">
+                                <p><i class="fa fa-lightbulb-o"></i> {translate message="Contents of blocks 1 and 2 can be changed in theme settings and the alignment also."}</p>
+                            </div>
+                        </div>
+                        {if $active_app == 'shop'}
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Sidebar on home page"}:</div>
+                                <div class="setting-value">
+                                    <label for="settings-home-sidebar-1"><input type="radio" id="settings-home-sidebar-1" name="settings-home-sidebar" value="1" {if !empty($theme_settings.home_catalog)}checked{/if} /> [`Show`]</label>
+                                    <label for="settings-home-sidebar-0"><input type="radio" id="settings-home-sidebar-0" name="settings-home-sidebar" value="0" {if empty($theme_settings.home_catalog)}checked{/if} /> [`Hide`]</label>
+                                </div>
+                            </div>
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Sidebar on product page"}:</div>
+                                <div class="setting-value">
+                                    <label for="settings-product-sidebar-1"><input type="radio" id="settings-product-sidebar-1" name="settings-product-sidebar" value="1" {if !empty($theme_settings.product_catalog)}checked{/if} /> [`Show`]</label>
+                                    <label for="settings-product-sidebar-0"><input type="radio" id="settings-product-sidebar-0" name="settings-product-sidebar" value="0" {if empty($theme_settings.product_catalog)}checked{/if} /> [`Hide`]</label>
+                                </div>
+                            </div>
+                        {/if}
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Position of sidebar"}:</div>
+                            <div class="setting-value">
+                                <label for="settings-sidebar-pos-left"><input type="radio" id="settings-sidebar-pos-left" name="settings-sidebar-pos" value="left" {if isset($theme_settings.catalog_sidebar) && $theme_settings.catalog_sidebar == 'left'}checked{/if} /> [`Left side`]</label>
+                                <label for="settings-sidebar-pos-right"><input type="radio" id="settings-sidebar-pos-right" name="settings-sidebar-pos" value="right" {if isset($theme_settings.catalog_sidebar) && $theme_settings.catalog_sidebar == 'right'}checked{/if} /> [`Right side`]</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-tab-menu">
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Type of menu"}:</div>
+                            <div class="setting-value">
+                                <div><label for="settings-menu-category-dropdown"><input type="radio" class="settings-menu-category" id="settings-menu-category-dropdown" name="settings-menu-category" value="dropdown" {if $theme_settings.category_type == 'dropdown'}checked{/if} /> [`Dropdown menu`]</label></div>
+                                <div><label for="settings-menu-category-vertical_dropdown_list"><input type="radio" class="settings-menu-category" id="settings-menu-category-vertical_dropdown_list" name="settings-menu-category" value="vertical_dropdown_list" {if $theme_settings.category_type == 'vertical_dropdown_list'}checked{/if} /> [`Vertical menu with dropdown categories list`]</label></div>
+                                <div><label for="settings-menu-category-vertical_dropdown"><input type="radio" class="settings-menu-category" id="settings-menu-category-vertical_dropdown" name="settings-menu-category" value="vertical_dropdown" {if $theme_settings.category_type == 'vertical_dropdown'}checked{/if} /> [`Vertical menu with dropdown menu categories`]</label></div>
+                            </div>
+                        </div>
+                        <div class="setting-block setting-js-vertical"{if $theme_settings.category_type == 'dropdown'} style="display: none"{/if}>
+                            <div class="setting-name">{translate message="State of inside categories"}:</div>
+                            <div class="setting-value">
+                                <div><label for="settings-category-list-inside-collapsed"><input type="radio" id="settings-category-list-inside-collapsed" name="settings-category-list-inside" value="collapsed" {if $theme_settings.category_list_inside == 'collapsed'}checked{/if} /> {translate message="All categories collapsed"}</label></div>
+                                <div><label for="settings-category-list-inside-expanded"><input type="radio" id="settings-category-list-inside-expanded" name="settings-category-list-inside" value="expanded" {if $theme_settings.category_list_inside == 'expanded'}checked{/if} /> {translate message="All categories expanded"}</label></div>
+                                <div><label for="settings-category-list-inside-third"><input type="radio" id="settings-category-list-inside-third" name="settings-category-list-inside" value="third" {if $theme_settings.category_list_inside == 'third'}checked{/if} /> {translate message="Third level categories collapsed"}</label></div>
+                                <div><label for="settings-category-list-inside-fourth"><input type="radio" id="settings-category-list-inside-fourth" name="settings-category-list-inside" value="fourth" {if $theme_settings.category_list_inside == 'fourth'}checked{/if} /> {translate message="Fourth level categories collapsed"}</label></div>
+                                <div><label for="settings-category-list-inside-fifth"><input type="radio" id="settings-category-list-inside-fifth" name="settings-category-list-inside" value="fifth" {if $theme_settings.category_list_inside == 'fifth'}checked{/if} /> {translate message="Fifth level and upper categories collapsed"}</label></div>
+                            </div>
+                        </div>
+                        <div class="setting-block setting-js-vertical"{if $theme_settings.category_type == 'dropdown'} style="display: none"{/if}>
+                            <div class="setting-name">{translate message="Visibility of inside categories"}:</div>
+                            <div class="setting-value">
+                                <div><label for="settings-category-list-visibility-all"><input type="radio" id="settings-category-list-visibility-all" name="settings-category-list-visibility" value="all" {if $theme_settings.category_list_visibility == 'all'}checked{/if} /> {translate message="All categories visible"}</label></div>
+                                <div><label for="settings-category-list-visibility-second"><input type="radio" id="settings-category-list-visibility-second" name="settings-category-list-visibility" value="second" {if $theme_settings.category_list_visibility == 'second'}checked{/if} /> {translate message="Up to second level"}</label></div>
+                                <div><label for="settings-category-list-visibility-third"><input type="radio" id="settings-category-list-visibility-third" name="settings-category-list-visibility" value="third" {if $theme_settings.category_list_visibility == 'third'}checked{/if} /> {translate message="Up to third level"}</label></div>
+                                <div><label for="settings-category-list-visibility-fourth"><input type="radio" id="settings-category-list-visibility-fourth" name="settings-category-list-visibility" value="fourth" {if $theme_settings.category_list_visibility == 'fourth'}checked{/if} /> {translate message="Up to fourth level"}</label></div>
+                                <div><label for="settings-category-list-visibility-fifth"><input type="radio" id="settings-category-list-visibility-fifth" name="settings-category-list-visibility" value="fifth" {if $theme_settings.category_list_visibility == 'fifth'}checked{/if} /> {translate message="Up to fifth level"}</label></div>
+                            </div>
+                        </div>
+                        <div class="setting-block">
+                            <div class="setting-name">{translate message="Content"}:</div>
+                            <div class="setting-value">
+                                <div><label for="settings-horiz-cats"><input type="checkbox" id="settings-horiz-cats" class="settings-horiz" name="settings-horiz[]" value="cats" {if !empty($theme_settings.horiz_show_cats)}checked{/if} /> [`Categories`]</label></div>
+                                <div><label for="settings-horiz-apps"><input type="checkbox" id="settings-horiz-apps" class="settings-horiz" name="settings-horiz[]" value="apps" {if !empty($theme_settings.horiz_show_apps)}checked{/if} /> [`Applications`]</label></div>
+                                {if $active_app == 'shop'}<div><label for="settings-horiz-brands"><input type="checkbox" id="settings-horiz-brands" class="settings-horiz" name="settings-horiz[]" value="brands" {if !empty($theme_settings.horiz_show_brands)}checked{/if} /> [`"Brands" tab`]</label></div>{/if}
+                                <div><label for="settings-horiz-pages_shop"><input type="checkbox" id="settings-horiz-pages_shop" class="settings-horiz" name="settings-horiz[]" value="pages_shop" {if !empty($theme_settings.horiz_show_pages_shop)}checked{/if} /> [`Pages`]</label></div>
+                            </div>
+                        </div>
+                        {if $active_app == 'shop'}
+                            <div class="setting-block setting-js-brands"{if empty($theme_settings.horiz_show_brands)} style="display: none"{/if}>
+                                <div class="setting-name">{translate message="Maximum number of brands column in dropdown menu"}:</div>
+                                <div class="setting-value">
+                                    <label for="settings-horiz-brands-col-1"><input type="radio" id="settings-horiz-brands-col-1" name="settings-horiz-brands-col" value="1" {if $theme_settings.horiz_brands_col == '1'}checked{/if} /> 1</label>
+                                    <label for="settings-horiz-brands-col-2"><input type="radio" id="settings-horiz-brands-col-2" name="settings-horiz-brands-col" value="2" {if $theme_settings.horiz_brands_col == '2'}checked{/if} /> 2</label>
+                                    <label for="settings-horiz-brands-col-3"><input type="radio" id="settings-horiz-brands-col-3" name="settings-horiz-brands-col" value="3" {if $theme_settings.horiz_brands_col == '3'}checked{/if} /> 3</label>
+                                    <label for="settings-horiz-brands-col-4"><input type="radio" id="settings-horiz-brands-col-4" name="settings-horiz-brands-col" value="4" {if $theme_settings.horiz_brands_col == '4'}checked{/if} /> 4</label>
+                                    <label for="settings-horiz-brands-col-5"><input type="radio" id="settings-horiz-brands-col-5" name="settings-horiz-brands-col" value="5" {if $theme_settings.horiz_brands_col == '5'}checked{/if} /> 5</label>
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+                    {if $active_app == 'shop'}
+                        <div class="settings-tab-home">
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Slider"}:</div>
+                                <div class="setting-value">
+                                    <label for="setting-slider-big"><input type="radio" id="setting-slider-big" class="settings-slider" name="settings-slider" value="big" {if  !empty($theme_settings.html_slider)}checked{/if} /> {translate message="Big products slider"}</label>
+                                    <label for="setting-slider-photos"><input type="radio" id="setting-slider-photos" class="settings-slider" name="settings-slider" value="photos" {if !empty($theme_settings.photos_slider)}checked{/if} /> {translate message="Photos slider"}</label>
+                                </div>
+                                <div class="settings-info">
+                                    <p><i class="fa fa-lightbulb-o"></i> {translate message="Sliders have much more settings in your admin page"}</p>
+                                </div>
+                            </div>
+                            <div class="setting-block setting-js-slider"{if empty($theme_settings.html_slider)} style="display: none;"{/if}>
+                                <div class="setting-name">{translate message="Background image of <br>slider"}:</div>
+                                {$selected_sl_pat = ''}
+                                <div class="setting-value">
+                                    <ul class="menu-h settings-set-img">
+                                        {$scc = 1}
+                                        {for $sc=43 to 97}
+                                            <li{if $theme_settings.html_slider_pattern == "img/patterns/pattern`$sc`.jpg"} class="selected"{$selected_sl_pat="img/patterns/pattern`$sc`.jpg"}{/if}><a href="javascript:void(0)" title='{translate message="Pattern"} {$scc}' data-id="img/patterns/pattern{$sc}.jpg"><img src="{$wa_active_theme_url}img/patterns/thumbs/pattern{$sc}.jpg" alt="" /></a></li>
+                                            {$scc = $scc + 1}
+                                        {/for}
+                                    </ul>
+                                    <input type="hidden" name="settings-home-big-slider" value="{$selected_sl_pat}" />
+                                </div>
+                            </div>
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Banners"}:</div>
+                                <div class="setting-value">
+                                    <label for="setting-banners-1"><input type="radio" id="setting-banners-1" name="settings-banners" value="1" {if $wa->globals('settings_banners')}checked{/if} /> [`Show`]</label>
+                                    <label for="setting-banners-0"><input type="radio" id="setting-banners-0" name="settings-banners" value="0" {if !$wa->globals('settings_banners')}checked{/if} /> [`Hide`]</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-tab-catalog">
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="View of big amount of products"}:</div>
+                                <div class="setting-value">
+                                    <label for="settings-lazyloading-lazyloading"><input type="radio" name="settings-lazyloading" id="settings-lazyloading-lazyloading" value="lazyloading" {if isset($theme_settings.lazyloading) && $theme_settings.lazyloading == 'lazyloading'}checked{/if} /> [`Lazyloading`]</label>
+                                    <label for="settings-lazyloading-productsperpage"><input type="radio" name="settings-lazyloading" id="settings-lazyloading-productsperpage" value="productsperpage" {if isset($theme_settings.lazyloading) && $theme_settings.lazyloading == 'productsperpage'}checked{/if} /> [`Products per page`]</label>
+                                </div>
+                            </div>
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="AJAX filters"}:</div>
+                                <div class="setting-value">
+                                    <label for="setting-ajax-filters-1"><input type="radio" id="setting-ajax-filters-1" name="settings-ajax-filters" value="1" {if !empty($theme_settings.ajax_filters)}checked{/if} /> {translate message="Enable"}</label>
+                                    <label for="setting-ajax-filters-0"><input type="radio" id="setting-ajax-filters-0" name="settings-ajax-filters" value="0" {if empty($theme_settings.ajax_filters)}checked{/if} /> {translate message="Disable"}</label>
+                                </div>
+                            </div>
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Subcategories view (after description)"}:</div>
+                                <div class="setting-value">
+                                    <div><label for="settings-subcat-view-slider"><input type="radio" id="settings-subcat-view-slider" name="settings-subcat-view" value="slider" {if $theme_settings.subcat_view == 'slider'}checked{/if} /> {translate message="In slider"}</label></div>
+                                    <div><label for="settings-subcat-view-list"><input type="radio" id="settings-subcat-view-list" name="settings-subcat-view" value="list" {if $theme_settings.subcat_view == 'list'}checked{/if} /> {translate message="List"}</label></div>
+                                    <div><label for="settings-subcat-view-list_images"><input type="radio" id="settings-subcat-view-list_images" name="settings-subcat-view" value="list_images" {if $theme_settings.subcat_view == 'list_images'}checked{/if} /> {translate message="List with images"}</label></div>
+                                    <div><label for="settings-subcat-view-hide"><input type="radio" id="settings-subcat-view-hide" name="settings-subcat-view" value="hide" {if $theme_settings.subcat_view == 'hide'}checked{/if} /> {translate message="Don't show"}</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-tab-product">
+                            <div class="setting-block">
+                                <div class="setting-name">[`Product photo onclick enlarge`]:</div>
+                                <div class="setting-value">
+                                    <div><label for="settings-zoom-zoom"><input type="radio" name="settings-zoom" id="settings-zoom-zoom" value="zoom" {if isset($theme_settings.enlarge_type) && $theme_settings.enlarge_type == 'zoom'}checked{/if} /> [`Hover zoom`]</label></div>
+                                    <div><label for="settings-zoom-fancybox"><input type="radio" name="settings-zoom" id="settings-zoom-fancybox" value="fancybox" {if isset($theme_settings.enlarge_type) && $theme_settings.enlarge_type == 'fancybox'}checked{/if} /> [`Popup window`]</label></div>
+                                    <div><label for="settings-zoom-zoomfancybox"><input type="radio" name="settings-zoom" id="settings-zoom-zoomfancybox" value="zoomfancybox" {if isset($theme_settings.enlarge_type) && $theme_settings.enlarge_type == 'zoomfancybox'}checked{/if} /> [`Hover zoom`] + [`Popup window`]</label></div>
+                                </div>
+                            </div>
+                            <div class="setting-block">
+                                <div class="setting-name">{translate message="Show product features"}:</div>
+                                <div class="setting-value">
+                                    <div><label for="settings-product-features-tabs"><input type="radio" name="settings-product-features" id="settings-product-features-tabs" value="tabs" {if isset($theme_settings.product_features) && $theme_settings.product_features == 'tabs'}checked{/if} /> {translate message="In product tabs"}</label></div>
+                                    <div><label for="settings-product-features-under_thumbs"><input type="radio" name="settings-product-features" id="settings-product-features-under_thumbs" value="under_thumbs" {if isset($theme_settings.product_features) && $theme_settings.product_features == 'under_thumbs'}checked{/if} /> {translate message="Under the thumbs"}</label></div>
+                                    <div><label for="settings-product-features-before_skus"><input type="radio" name="settings-product-features" id="settings-product-features-before_skus" value="before_skus" {if isset($theme_settings.product_features) && $theme_settings.product_features == 'before_skus'}checked{/if} /> {translate message="Before skus"}</label></div>
+                                    <div><label for="settings-product-features-after_skus"><input type="radio" name="settings-product-features" id="settings-product-features-after_skus" value="after_skus" {if isset($theme_settings.product_features) && $theme_settings.product_features == 'after_skus'}checked{/if} /> {translate message="After skus"}</label></div>
+                                    <div><label for="settings-product-features-hide"><input type="radio" name="settings-product-features" id="settings-product-features-hide" value="hide" {if isset($theme_settings.product_features) && $theme_settings.product_features == 'hide'}checked{/if} /> {translate message="Don't show"}</label></div>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+                <div class="settings-footer">
+                    <input type="submit" class="cancel button grey" name='settings-cancel' value='[`Reset`]' />
+                    <input type="submit" class="button theme apply" value='[`Apply`]' />
+                    <a class="button continue" title='{translate message="Continue editing"}' href="javascript:void(0)">{translate message="Continue editing"}</a>
+                </div>
+                <div class="settings-commercial mobile-block">
+                    <div class="settings-info">
+                        <p><i class="fa fa-lightbulb-o"></i> {translate message="Available more than 600 theme settings!"}</p>
+                    </div>
+                    <a href="{translate message='https://www.webasyst.com/store/theme/your_shop/'}" target='_blank' title='{translate message="Buy theme"}' class='button red'>{translate message="Buy theme"}</a>
+                    <a href="{translate message='http://yourshop-en.igaponov.ru/hub/documentation/'}" target='_blank' title='{translate message="Read docs"}' class='button'>{translate message="Read docs"}</a>
+                    <a href="{translate message='https://www.webasyst.com/store/vendor/969712/'}" target='_blank' title='{translate message="Other products"}' class='button' style='background-color: #80E3FD;'>{translate message="Other products"}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        {if !empty($theme_settings.optimize)}
+            window.js_onload_inline.push("$(function () { $(document).on('click', '.settings-sidebar .settings-list a', function() { var that = $(this); that.closest('li').addClass('selected').siblings().removeClass('selected'); that.closest('.content').find('.settings-content .settings-body > div').removeClass('selected'); that.closest('.content').find('.settings-content .settings-tab-'+that.data('id')).addClass('selected'); }); $(document).on('click', '.settings-content .settings-set-img a', function() { var that = $(this); that.closest('li').addClass('selected').siblings().removeClass('selected'); that.closest('.settings-set-img').next().val(that.data('id')); }); $(document).on('change', '.settings-menu-category', function() { var that = $(this); if (that.attr('id') == 'settings-menu-category-vertical_dropdown_list' || that.attr('id') == 'settings-menu-category-vertical_dropdown') { that.closest('.settings-tab-menu').find('.setting-js-vertical').show(); } else { that.closest('.settings-tab-menu').find('.setting-js-vertical').hide(); } }); $(document).on('change', '.settings-horiz', function() { var that = $(this); if (that.prop('checked') && that.attr('id') == 'settings-horiz-brands') { that.closest('.settings-tab-menu').find('.setting-js-brands').show(); } else if (!that.closest('.settings-tab-menu').find('#settings-horiz-brands').prop('checked')) { that.closest('.settings-tab-menu').find('.setting-js-brands').hide(); } }); $(document).on('change', '.settings-slider', function() { var that = $(this); if (that.attr('id') == 'setting-slider-big') { that.closest('.settings-tab-home').find('.setting-js-slider').show(); } else { that.closest('.settings-tab-home').find('.setting-js-slider').hide(); } }); $(document).on('click', '.settings-footer .continue', function() { $('.dialog-window').scrollTop(0); }); $('#yourshop-settings .settings-icon').click(function () { var btn = $(this); openDialog(function(dialog) { dialog.removeClass('is-loading').addClass('demo-dial').find('.temp-loader').remove(); dialog.find('.content').removeClass('align-center').append($('#yourshop-settings .settings-container').html()); }); return false; }); setTimeout(function () { $('#yourshop-settings').animate({ marginRight: '0' }, 500); }, 1000); });");
+        {else}
+            $(function () {
+                // Выбор раздела
+                $(document).on('click', '.settings-sidebar .settings-list a', function() {
+                    var that = $(this);
+                    that.closest('li').addClass('selected').siblings().removeClass('selected');
+                    that.closest('.content').find('.settings-content .settings-body > div').removeClass('selected');
+                    that.closest('.content').find('.settings-content .settings-tab-'+that.data('id')).addClass('selected');
+                });
+
+               // Выбор настройки в виде изображения
+               $(document).on('click', '.settings-content .settings-set-img a', function() {
+                   var that = $(this);
+                   that.closest('li').addClass('selected').siblings().removeClass('selected');
+                   that.closest('.settings-set-img').next().val(that.data('id'));
+               });
+
+                // Появление скрытых настроек
+                $(document).on('change', '.settings-menu-category', function() {
+                    var that = $(this);
+                    if (that.attr('id') == 'settings-menu-category-vertical_dropdown_list' || that.attr('id') == 'settings-menu-category-vertical_dropdown') {
+                        that.closest('.settings-tab-menu').find('.setting-js-vertical').show();
+                    } else {
+                        that.closest('.settings-tab-menu').find('.setting-js-vertical').hide();
+                    }
+                });
+                $(document).on('change', '.settings-horiz', function() {
+                    var that = $(this);
+                    if (that.prop('checked') && that.attr('id') == 'settings-horiz-brands') {
+                        that.closest('.settings-tab-menu').find('.setting-js-brands').show();
+                    } else if (!that.closest('.settings-tab-menu').find('#settings-horiz-brands').prop('checked')) {
+                        that.closest('.settings-tab-menu').find('.setting-js-brands').hide();
+                    }
+                });
+                $(document).on('change', '.settings-slider', function() {
+                    var that = $(this);
+                    if (that.attr('id') == 'setting-slider-big') {
+                        that.closest('.settings-tab-home').find('.setting-js-slider').show();
+                    } else {
+                        that.closest('.settings-tab-home').find('.setting-js-slider').hide();
+                    }
+                });
+
+                $(document).on('click', '.settings-footer .continue', function() {
+                    $('.dialog-window').scrollTop(0);
+                });
+
+                $('#yourshop-settings .settings-icon').click(function () {
+                    var btn = $(this);
+                    openDialog(function(dialog) {
+                        dialog.removeClass('is-loading').addClass('demo-dial').find('.temp-loader').remove();
+                        dialog.find('.content').removeClass('align-center').append($('#yourshop-settings .settings-container').html());
+                    });
+                    return false;
+                });
+                setTimeout(function () {
+                    $('#yourshop-settings').animate({
+                        marginRight: '0'
+                    }, 500);
+                }, 1000);
+            });
+        {/if}
+    </script>
+</div>

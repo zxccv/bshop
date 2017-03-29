@@ -1,0 +1,44 @@
+{if !empty($ajax_append)}<li data-id={$review.id} data-parent-id="{$review.parent_id}">{/if}
+<div class="review" itemprop="review" itemscope itemtype="http://schema.org/Review">
+    <div class="summary">
+        [`By`]
+        {if !empty($review.author.photo_url_50)}
+            {if !empty($review.site)}
+            <a href="{$review.site}" title="{$review.author.name}">
+            {/if}
+            <img src="{$review.author.photo_url_50}" alt="{$review.author.name}" class="userpic" />
+            {if !empty($review.site)}
+            </a>
+            {/if}
+        {/if}
+        {if empty($review.site)}
+            <span class="username" itemprop="author">{$review.author.name}</span>
+        {else}
+            <a href="{$review.site}" class="username" itemprop="author" title="{$review.author.name}">{$review.author.name}</a>
+        {/if}
+        <meta itemprop="datePublished" content="{$review.datetime|date_format:'Y-m-d'}">
+        <meta itemprop="itemReviewed" content="{$product.name|escape}">
+        <span class="grey" title="{$review.datetime|wa_datetime}">({$review.datetime|wa_datetime:"humandatetime"})</span>
+        {if !$review.parent_id && !empty($review.rate)}
+            <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                {$rate = round($review.rate)}
+                <meta itemprop="worstRating" content = "1">
+                <meta itemprop="ratingValue" content="{$rate}">
+                <meta itemprop="bestRating" content = "5">
+                {$wa->shop->ratingHtml($rate, 16)}
+            </span>
+        {/if}
+        <h6>
+            <span itemprop="name">{if $review.title}{$review.title}{/if}</span>
+        </h6>
+        </div>
+        {if $review.text}
+            <p itemprop="description">{$review.text}</p>
+        {/if}
+        {if $reply_allowed && ((!empty($require_authorization) && $wa->isAuthEnabled()) || empty($require_authorization))}
+            <div class="actions">
+                <a href="{if isset($reply_link)}{$reply_link}{else}javascript:void(0){/if}" rel="nofollow" class="review-reply" title="[`reply`]">[`reply`]</a>
+            </div>
+        {/if}
+    </div>
+    {if !empty($ajax_append)}<ul class="menu-v with-icons reviews-branch"></ul></li>{/if}

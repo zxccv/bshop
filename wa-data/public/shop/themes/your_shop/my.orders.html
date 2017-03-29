@@ -1,0 +1,97 @@
+<style type="text/css">
+    #yourshop-settings { display: none; }
+</style>
+
+{$orders_total = 0}
+{foreach $orders as $o}
+    {if !empty($o.items)}
+        {foreach $o.items as $i}
+            {if $i.type == 'product'}
+                {$products_ids[$i.product_id] = $i.product_id}
+            {/if}
+        {/foreach}
+    {/if}
+    {$orders_total = $orders_total + $o.total}
+{/foreach}
+{if !empty($products_ids)}
+    {$products = $wa->shop->products($products_ids)}
+{/if}
+
+<div class="wrap my-page">
+    <div class="content padded">
+        
+        <h1>[`My orders`]</h1>
+        
+        {$wa->myNav('menu-h bottom-padded my-nav')}
+        
+        <div class="highlighted">
+            [`Total sum of orders`]: <span class="price colored">{if $theme_settings.ruble == 'html'}{shop_currency_html($orders_total)}{else}{shop_currency($orders_total)}{/if}</span>
+        </div>
+        
+        <div class="table orders">
+            {foreach $orders as $o}
+                <div class="row{if $o@last} last{/if}">
+                    <div class="cell nowrap bold id">
+                        <a href="{$o.url}" title="{$o.id_str}">
+                            {$o.id_str}
+                        </a>
+                        <div class="gray">{$o.create_datetime|wa_date:'humandate'}</div>
+                    </div>
+                    <div class="cell nowrap state">
+                        <span class="order-status" style="{$o.state->getStyle(1)}">
+                            {$o.state->getName()}
+                        </span>
+                    </div>
+                    <div class="cell name">
+                        {if !empty($o.items)}
+                            {foreach $o.items as $i}
+                                <div class="{if $i.type == 'service'}service{else}product{/if}">
+                                    {if $i.type == 'product' && !empty($products[$i.product_id])}
+                                        <a href="{$wa->shop->productUrl($products[$i.product_id])}" class='name' title='{$i.name|escape}'>{$i.name|escape}</a>
+                                    {else}
+                                        <span class='name'>{$i.name|escape}</span> 
+                                    {/if}
+                                    <span class="gray">x {$i.quantity}</span>
+                                </div>
+                            {/foreach}
+                        {/if}
+                    </div>
+                    <div class="cell shipping{if !$o.shipping_name} hide-if-empty{/if}">
+                        <span class="mobile-block heading">
+                            [`Shipping`]:
+                        </span>
+                        {if $o.shipping_name}
+                            {$o.shipping_name|escape}
+                        {else}
+                            &nbsp;
+                        {/if}
+                    </div>
+                    <div class="cell payment{if !$o.payment_name} hide-if-empty{/if}">
+                        <span class="mobile-block heading">
+                            [`Payment`]:
+                        </span>
+                        {if $o.payment_name}
+                            {$o.payment_name|escape}
+                        {else}
+                            &nbsp;
+                        {/if}
+                    </div>
+                    <div class='cell'>
+                        <span class="mobile-block heading bold">
+                            [`Total`]:
+                        </span>
+                        <span class="price colored">{if $theme_settings.ruble == 'html'}{shop_currency_html($o.total)}{else}{shop_currency($o.total)}{/if}</span>
+                    </div>
+                </div>
+            {foreachelse}
+                <div class="last">
+                    [`You have no order history yet.`]
+                </div>
+            {/foreach}
+        </div>
+        
+        <!-- plugin hook: 'frontend_my_orders' -->
+        {* @event frontend_my_orders.%plugin_id% *}
+        {foreach $frontend_my_orders as $_}{$_}{/foreach}
+    </div>
+</div>

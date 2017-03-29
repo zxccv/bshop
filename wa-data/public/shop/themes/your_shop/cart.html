@@ -1,0 +1,211 @@
+{$flexdiscount = 0}
+{if shopDiscounts::isEnabled('flexdiscount')}
+    {$fl_settings = shopFlexdiscountHelper::getSettings()}
+    {$flexdiscount = 1}
+{/if}
+
+<div class="wrap cart-page stylish-form">
+    <script type="text/javascript" src="{$wa_theme_url}cart.js"></script>
+
+    {if !$cart.count}
+        <div class="content">
+            <h1>[`Shopping cart`]</h1>
+            <p>[`Your shopping cart is empty.`]</p>
+        </div>
+    {else}
+        {if $theme_settings.cart_related !== 'hide'}
+            {$crossselling = $wa->shop->crossSelling($cart.items, 'product_id')}
+        {/if}
+        {if $theme_settings.cart_related == 'right' && $crossselling}
+            <div class="sidebar">
+                {if !empty($theme_settings.cart_related_title)}<h4>{$theme_settings.cart_related_title}</h4>{/if}
+                <div class="related">
+                    {include file="slider.html" slider_id="2" products=$crossselling speed="5000" mode="vertical" hide_buttons=1}
+                </div>
+            </div>
+        {/if}
+
+    <div class="content{if $theme_settings.cart_related == 'right' && $crossselling} float-left with-sidebar{/if}">
+
+        {* Минимальная сумма заказа. / Minimal sum of order *}
+        {if !empty($theme_settings.minorder_sum) || !empty($theme_settings.minorder_count)}
+            {$minorder_error = 0}
+            {if !empty($theme_settings.minorder_sum)}
+                {$minorder_sum = shop_currency($theme_settings.minorder_sum, null, null, false)}
+                {if $cart.total < $minorder_sum}{$minorder_error = 1}{/if}
+                {if $theme_settings.ruble == "html"}{$minorder_sum_cur = shop_currency_html($minorder_sum, true)}{else}{$minorder_sum_cur = shop_currency($minorder_sum, true)}{/if}
+                {$minorder_sum_error = $theme_settings.minorder_error_sum|replace:"%s":$minorder_sum_cur}
+            {/if}
+            {if !empty($theme_settings.minorder_count)}
+                {if $cart.count < $theme_settings.minorder_count}{$minorder_error = 1}{/if}
+                {$minorder_count_error = $theme_settings.minorder_error_count|replace:"%d":$theme_settings.minorder_count}
+            {/if}
+            <div class="block align-center error cart-error"{if !$minorder_error} style="display:none"{/if}>
+                {if !empty($theme_settings.minorder_sum)}<div class="cart-sum-error"{if $cart.total > $minorder_sum} style="display: none"{/if}>{$minorder_sum_error}</div>{/if}
+                {if !empty($theme_settings.minorder_count)}<div class="cart-count-error"{if $cart.count > $theme_settings.minorder_count} style="display: none"{/if}>{$minorder_count_error}</div>{/if}
+            </div>
+        {/if}
+
+        <h1>[`Shopping cart`]</h1>
+
+        <form method="post">
+
+            {foreach $cart.items as $item}
+                <div class="cart-row" data-id="{$item.id}">
+                    <div class="cart-cell"><a href="{$wa->shop->productUrl($item.product)}" class="image" title="{$item.product.name|escape}">{$wa->shop->productImgHtml($item.product, '96x0', ['default' => "`$wa_theme_url`img/dummy96.jpg"])}</a></div>
+                    <div class="cart-cell cart-item">
+                        <a href="{$wa->shop->productUrl($item.product)}" class="product-name" title="{$item.product.name|escape}">{$item.product.name|escape}</a><br>
+                        {if $item.sku_name && $item.sku_name != $item.product.name}<span class="sku-name">{$item.sku_name|escape}</span>{/if}
+                        <br /><br />
+                        {if !empty($item.services)}
+                            <div class="services">
+                                {foreach $item.services as $service_id => $s}
+                                    <div {if !empty($s.id)}data-id="{$s.id}"{/if}>
+                                        <input {if !empty($s.id)}checked{/if} type="checkbox" name="services[{$item.id}][]" value="{$service_id}" id="serv-{$item.id}-{$service_id}">
+                                        <label for="serv-{$item.id}-{$service_id}">
+                                            <span class="stylish-wrap"></span>{$s.name|escape} {if $s.price && !isset($s.variants)}{if $s.price}(<span class="price colored">+{if $theme_settings.ruble == 'html'}{shop_currency_html($s.price, $s.currency)}{else}{shop_currency($s.price, $s.currency)}{/if}</span>){/if}{/if}
+                                        </label>
+                                        {if isset($s.variants)}
+                                            <select name="service_variant[{$item.id}][{$service_id}]" {if empty($s.id)}disabled{/if}>
+                                                {foreach $s.variants as $variant_id => $v}
+                                                    <option {if $s.variant_id == $variant_id}selected{/if} value="{$variant_id}">{$v.name|escape}{if $v.price !== '0.0000'} (+{shop_currency($v.price, $s.currency)}){/if}</option>
+                                                {/foreach}
+                                            </select>
+                                        {/if}
+                                    </div>
+                                {/foreach}
+                            </div>
+                        {/if}
+                        {if !empty($item.error)}<script>alert('{$item.error|escape}');</script>{/if}
+                    </div>
+                    <div class="align-center cart-cell quantity">[`Qty`]: <br><a href="javascript:void(0)" class="f-quantity-minus" title="[`decrease`]"><i class="fa fa-caret-left"></i></a><input type="text" name="quantity[{$item.id}]" value="{$item.quantity}" class="qty{if !empty($item.error)} error{/if}"><a href="javascript:void(0)" class="f-quantity-plus" title="[`increase`]"><i class="fa fa-caret-right"></i></a></div>
+                    <div class="align-center cart-cell price colored">
+                        {if !$flexdiscount || ($flexdiscount && $theme_settings.cart_price_discount !== 'replace')}
+                        <div class='item-total'>{if $theme_settings.ruble == 'html'}{shop_currency_html($item.full_price, true)}{else}{shop_currency($item.full_price, true)}{/if}</div>
+                        {/if}
+                        {if $flexdiscount && $theme_settings.cart_price_discount == 'replace'}
+                            {shopFlexdiscountPluginHelper::cartPrice($item, true, $theme_settings.ruble == 'html')}
+                        {/if}
+                    </div>
+                    <div class="cart-cell"><a class="delete" href="javascript:void(0)" title="[`Remove from cart`]">x</a></div>
+                </div>
+            {/foreach}
+
+            <!-- Flexdiscount-plugin -->
+            {* Плагин "Гибкие скидки"
+             * Ссылка: http://www.webasyst.ru/store/plugin/shop/flexdiscount/
+             * Plugin "Flexdiscount"
+             *}
+            {if $flexdiscount}
+                {if !empty($fl_settings['enable_flexdiscount_discounts'])}
+                    {shopFlexdiscountPluginHelper::getUserDiscounts()}
+                {/if}
+            {/if}
+
+            <div class="cart-result">
+                <div class="clearfix">
+                    {if shopDiscounts::isEnabled('coupons')}
+                        <div class="coupon">
+                            {if empty($theme_settings.cart_coupon) || (!empty($theme_settings.cart_coupon) && !$flexdiscount)}
+                                [`Coupon code`]:
+                                <input type="text" name="coupon_code" value="{$coupon_code|escape}" class="coupon-code" />
+                                <input type="submit" value="[`Apply`]" />
+                                {if $coupon_code && empty($coupon_discount)}
+                                    <div class="errormsg">[`Invalid coupon code`]</div>
+                                {/if}
+                            {/if}
+
+                            <!-- Flexdiscount-plugin -->
+                            {* Плагин "Гибкие скидки"
+                             * Ссылка: http://www.webasyst.ru/store/plugin/shop/flexdiscount/
+                             * Plugin "Flexdiscount"
+                             *}
+                            {if $flexdiscount}
+                                {if !empty($fl_settings['enable_frontend_cart_hook'])}
+                                    <div class='yourshop-fl-coupon'>
+                                        {shopFlexdiscountHelper::getBlock('flexdiscount.form')}
+                                    </div>
+                                {/if}
+                            {/if}
+
+                        </div>
+                    {/if}
+                    <div class="total">
+                        <div>[`Total`]: <span class="cart-total price colored nowrap">{if $theme_settings.ruble == 'html'}{shop_currency_html($cart.total, true)}{else}{shop_currency($cart.total, true)}{/if}</span></div>
+                        <div class="discount" {if !$discount}style='display: none'{/if}>% [`Discount`]: <span class="cart-discount price colored nowrap">&minus; {if $theme_settings.ruble == 'html'}{shop_currency_html($discount, true)}{else}{shop_currency($discount, true)}{/if}</span></div>
+                    </div>
+                </div>
+                <!-- affiliate bonus -->
+                {if shopAffiliate::isEnabled() && $affiliate_bonus > 0}
+                    <div class="cart-affiliate">
+                        {if $theme_settings.ruble == 'html'}
+                            {$aff_bonus = shop_currency_html(shopAffiliate::convertBonus($affiliate_bonus))}
+                        {else}
+                            {$aff_bonus = shop_currency(shopAffiliate::convertBonus($affiliate_bonus))}
+                        {/if}
+                        {sprintf('[`Your current affiliate bonus of <span class="points">%s points</span> allows you to get an additonal discount of up to <span class="points">%s</span>`]', $affiliate_bonus, $aff_bonus)}
+                        {if $use_affiliate}
+                            <br>
+                            <a id="cancel-affiliate" title="[`Don’t use bonus discount`]" href="javascript:void(0)">[`Don’t use bonus discount`]</a>
+                        {else}
+                            <br><input type="submit" name="use_affiliate" value="[`Use bonus`]" />
+                        {/if}
+                    </div>
+                {/if}
+                {if shopAffiliate::isEnabled() && !empty($add_affiliate_bonus)}
+                    <span class="affiliate float-right">{sprintf('[`This order will add <span class="points">+%s</span> points to your affiliate bonus.`]', $add_affiliate_bonus)}</span>
+                {/if}
+            </div>
+            <!-- checkout -->
+            <div class="checkout">
+                <a href="{$wa_app_url}" class="button white float-left" title='[`Continue shopping`]'>[`Continue shopping`]</a>
+                <div class="float-right"{if !empty($minorder_error)} style="display: none"{/if}>
+
+                    <!-- Quickorder-plugin -->
+                    {* Плагин "Купить в 1 клик"
+                     * Ссылка: http://www.webasyst.ru/store/plugin/shop/quickorder/
+                     * Plugin "1-Click Ordering"
+                     * Link: http://www.webasyst.com/store/plugin/shop/quickorder/
+                     *}
+                    {if !empty($frontend_cart['quickorder-plugin'])}
+                        {$quickorder_settings = shopQuickorderPlugin::getQuickorderSettings()}
+                        {if !empty($quickorder_settings['enable_frontend_cart_hook'])}
+                            {$frontend_cart['quickorder-plugin']}
+                        {/if}
+                    {/if}
+
+                    <input name="checkout" type="submit"{if !empty($minorder_error)} disabled{/if} value="[`Proceed to checkout`]" />
+                </div>
+            </div>
+
+        </form>
+
+        {if $theme_settings.cart_related == 'after_price' && $crossselling}
+            {include file="slider.html" slider_id="2" name="{$theme_settings.cart_related_title}" products=$crossselling speed="5000"}
+        {/if}
+
+        {if $theme_settings.cart_related == 'right' && $crossselling}
+            <div class="cart-mobile">
+                {include file="slider.html" slider_id="3" name="{$theme_settings.cart_related_title}" products=$crossselling speed="5000"}
+            </div>
+        {/if}
+
+        <!-- plugin hook: 'frontend_cart' -->
+        {* @event frontend_cart.%plugin_id% *}
+        {foreach $frontend_cart as $plugin_name => $_}
+            {if $plugin_name !== 'quickorder-plugin' && $plugin_name !== 'flexdiscount-plugin'}
+                {$_}
+            {/if}
+        {/foreach}
+
+        {if $theme_settings.cart_related == 'bottom' && $crossselling}
+            {include file="slider.html" slider_id="2" name="{$theme_settings.cart_related_title}" products=$crossselling speed="5000"}
+        {/if}
+    </div>
+    {/if}
+</div>
+{if $flexdiscount}<script type="text/javascript">(function($) { $.flexdiscountFrontend.isCartPage = 1; })(jQuery)</script>{/if}
+{* Минимальная сумма заказа. / Minimal sum of order *}
+{if !empty($theme_settings.minorder_sum) || !empty($theme_settings.minorder_count)}
+<script type="text/javascript">$(function() { $.yourshop.minorderSum={if !empty($theme_settings.minorder_sum)}{shop_currency($theme_settings.minorder_sum, null, null, false)}{else}0{/if} });</script>
+{/if}

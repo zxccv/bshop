@@ -1,0 +1,3014 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
+<theme id="your_shop" system="0" vendor="969712" author="Igor Gaponov" app="shop" parent_theme_id="site:your_shop" version="1.3.1">
+  <name locale="en_US">Yourshop</name>
+  <name locale="ru_RU">Yourshop</name>
+  <files>
+    <file path="breadcrumbs.html" parent="1"/>
+    <file path="error.html" parent="1"/>
+    <file path="fly-cart.html" parent="1"/>
+    <file path="footer.html" parent="1"/>
+    <file path="header.html" parent="1"/>
+    <file path="index.html" parent="1"/>
+    <file path="navigation.html" parent="1"/>
+    <file path="navigation_pages.html" parent="1"/>
+    <file path="popup_form.html" parent="1"/>
+    <file path="scripts.js" parent="1"/>
+    <file path="sidebar.html" parent="1"/>
+    <file path="yourshop.css" parent="1"/>
+    <file path="yourshop.js" parent="1"/>
+    <file path="yourshop.min.css" parent="1"/>
+    <file path="yourshop.min.js" parent="1"/>
+    <file path="app_sidebar.html">
+      <description locale="en_US">Application sidebar</description>
+      <description locale="ru_RU">Сайдбар приложения</description>
+    </file>
+    <file path="cart.html" custom="0">
+      <description locale="en_US">Shopping cart page</description>
+      <description locale="ru_RU">Страница с товарами корзины</description>
+    </file>
+    <file path="cart.js" custom="0">
+      <description locale="en_US">Cart JS</description>
+      <description locale="ru_RU">JS-скрипты корзины</description>
+    </file>
+    <file path="catalog.html" custom="0">
+      <description locale="en_US">Catalog</description>
+      <description locale="ru_RU">Каталог товаров</description>
+    </file>
+    <file path="category.html" custom="0">
+      <description locale="en_US">Wrapper for a category page</description>
+      <description locale="ru_RU">Обертка для страницы категории</description>
+    </file>
+    <file path="checkout.html" custom="0">
+      <description locale="en_US">Checkout core wrapper</description>
+      <description locale="ru_RU">Единый шаблон страниц оформления заказа</description>
+    </file>
+    <file path="checkout.shipping.html" custom="0">
+      <description locale="en_US">Checkout: shipping option selection</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="checkout.payment.html" custom="0">
+      <description locale="en_US">Checkout: payment option selection</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="checkout.contactinfo.html" custom="0">
+      <description locale="en_US">Checkout: customer contact information form</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="checkout.confirmation.html" custom="0">
+      <description locale="en_US">Checkout: order confirmation</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="checkout.success.html" custom="0">
+      <description locale="en_US">Checkout: thank you page</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="checkout.error.html" custom="0">
+      <description locale="en_US">Checkout: error page</description>
+      <description locale="ru_RU">Оформление заказа: выбор способа доставки</description>
+    </file>
+    <file path="compare.html">
+      <description locale="en_US">Product comparison</description>
+      <description locale="ru_RU">Сравнение товаров</description>
+    </file>
+    <file path="content.html" custom="0">
+      <description locale="en_US">Main layout and navigation for the Shop app content</description>
+      <description locale="ru_RU">Основное макет вывода содержимого и навигации в приложении «Магазин»</description>
+    </file>
+    <file path="filter.html">
+      <description locale="en_US">Category filter template</description>
+      <description locale="ru_RU">Шаблон фильтра категорий</description>
+    </file>
+    <file path="filter.js">
+      <description locale="en_US">Category filter</description>
+      <description locale="ru_RU">Фильтр в категориях товаров</description>
+    </file>
+    <file path="filter.min.js">
+      <description locale="en_US">Category filter minified</description>
+      <description locale="ru_RU">Фильтр в категориях товаров оптимизированный</description>
+    </file>
+    <file path="forgotpassword.html">
+      <description locale="en_US">Forgot password page</description>
+      <description locale="ru_RU">Страница сброса пароля</description>
+    </file>
+    <file path="head.html" custom="0">
+      <description locale="en_US">Shop-Script's &lt;head&gt; instructions</description>
+      <description locale="ru_RU">Блок &lt;head&gt; приложения Shop-Script</description>
+    </file>
+    <file path="home.html" custom="0">
+      <description locale="en_US">Storefront homepage</description>
+      <description locale="ru_RU">Главная витрина магазина</description>
+    </file>
+    <file path="image-gallery.html" custom="0">
+      <description locale="en_US">Product image gallery scripts</description>
+      <description locale="ru_RU">Скрипты маленьких изображений товара</description>
+    </file>
+    <file path="image-thumbs.html" custom="0">
+      <description locale="en_US">Product image thumbs</description>
+      <description locale="ru_RU">Маленькие изображения товара</description>
+    </file>
+    <file path="lazyloading.js">
+      <description locale="en_US">Lazy loading JS</description>
+      <description locale="ru_RU">Скрипты загрузки контента «на лету»</description>
+    </file>
+    <file path="login.html">
+      <description locale="en_US">Login page</description>
+      <description locale="ru_RU">Страница входа для пользователей</description>
+    </file>
+    <file path="my.nav.html">
+      <description locale="en_US">Customer account navigation menu</description>
+      <description locale="ru_RU">Меню навигации в личном кабинете покупателя</description>
+    </file>
+    <file path="my.affiliate.html">
+      <description locale="en_US">Customer account interface: affiliate program</description>
+      <description locale="ru_RU">Личный кабинет покупателя: партнерская программа</description>
+    </file>
+    <file path="my.profile.html">
+      <description locale="en_US">Customer account interface: contact info editing form</description>
+      <description locale="ru_RU">Личный кабинет покупателя: редактирование контактной информации</description>
+    </file>
+    <file path="my.orders.html">
+      <description locale="en_US">Customer account interface: order list</description>
+      <description locale="ru_RU">Личный кабинет покупателя: список заказов</description>
+    </file>
+    <file path="my.order.html">
+      <description locale="en_US">Customer account interface: single order information</description>
+      <description locale="ru_RU">Личный кабинет покупателя: информация о заказе</description>
+    </file>
+    <file path="onload.js" custom="0">
+      <description locale="en_US">Onload js-scripts in optimize mode</description>
+      <description locale="ru_RU">Скрипты, подгружаемые по событию onload, в оптимизационном режиме</description>
+    </file>
+    <file path="page.html" custom="0">
+      <description locale="en_US">Static page content</description>
+      <description locale="ru_RU">Содержимое информационной страницы</description>
+    </file>
+    <file path="product.cart.html" custom="0">
+      <description locale="en_US">Product add to cart block</description>
+      <description locale="ru_RU">Блок добавления товара в корзину</description>
+    </file>
+    <file path="product.html" custom="0">
+      <description locale="en_US">Dedicated product page</description>
+      <description locale="ru_RU">Шаблон основной страницы товара</description>
+    </file>
+    <file path="product.js" custom="0">
+      <description locale="en_US">Product page JS</description>
+      <description locale="ru_RU">JS-скрипты страницы товара</description>
+    </file>
+    <file path="product.min.js" custom="0">
+      <description locale="en_US">Product page JS-minified</description>
+      <description locale="ru_RU">Оптимизированные JS-скрипты страницы товара</description>
+    </file>
+    <file path="product.page.html" custom="0">
+      <description locale="en_US">Product page template</description>
+      <description locale="ru_RU">Шаблон подстраниц товара</description>
+    </file>
+    <file path="review.html" custom="0">
+      <description locale="en_US">A single product review template</description>
+      <description locale="ru_RU">Шаблон вывода одного отзыва о товаре</description>
+    </file>
+    <file path="reviews.html" custom="0">
+      <description locale="en_US">Product review list</description>
+      <description locale="ru_RU">Список отывов о товаре</description>
+    </file>
+    <file path="reviews.js" custom="0">
+      <description locale="en_US">Product review JS</description>
+      <description locale="ru_RU">JS-скрипты отзывов</description>
+    </file>
+    <file path="reviews.min.js" custom="0">
+      <description locale="en_US">Product review JS-minified</description>
+      <description locale="ru_RU">Оптимизированные JS-скрипты отзывов</description>
+    </file>
+    <file path="search.html" custom="0">
+      <description locale="en_US">Wrapper for product search (filtering) results, e.g. by name, tag, or manufacturer</description>
+      <description locale="ru_RU">Обертка для страницы поиска (фильтрации) товаров, например, по тегу, ключевому слову или производителю</description>
+    </file>
+    <file path="signup.html">
+      <description locale="en_US">Sign up page</description>
+      <description locale="ru_RU">Страница регистрации пользователей</description>
+    </file>
+    <file path="tabs.js">
+      <description locale="en_US">Product tabs</description>
+      <description locale="ru_RU">Вкладки на странице товара</description>
+    </file>
+    <file path="tabs.min.js">
+      <description locale="en_US">Product tabs JS-minified</description>
+      <description locale="ru_RU">Вкладки на странице товара оптимизированные</description>
+    </file>
+    <file path="yourshop.shop.css" custom="0">
+      <description locale="en_US">Core storefront CSS</description>
+      <description locale="ru_RU">Основной CSS интернет-магазина</description>
+    </file>
+    <file path="yourshop.shop.js">
+      <description locale="en_US">Theme JS</description>
+      <description locale="ru_RU">Скрипты темы</description>
+    </file>
+    <file path="yourshop.shop.min.css" custom="0">
+      <description locale="en_US">Core storefront CSS-minified</description>
+      <description locale="ru_RU">Основной CSS интернет-магазина оптимизированный</description>
+    </file>
+    <file path="yourshop.shop.min.js">
+      <description locale="en_US">Theme JS-minified</description>
+      <description locale="ru_RU">Скрипты темы оптимизированные</description>
+    </file>
+  </files>
+  <about locale="ru_RU">
+    &lt;div style="line-height: 150%;"&gt;
+        &lt;p&gt;&lt;strong&gt;Yourshop&lt;/strong&gt; - тема дизайна для основных приложений Webasyst (Сайт, Магазин, Блог, Фото, Поддержка, Хаб, Рассылки).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Поддержка&lt;/strong&gt;&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Skype: gapon2401&lt;/li&gt;
+          &lt;li&gt;Email: gapon2401@gmail.com&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;ВНИМАНИЕ! Если Вы не получили ответ в течение недели, то скорее всего Ваше письмо попало в Спам. Просьба в таком случае использовать Skype.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id="ys-go-top"&gt;&lt;a href="javascript:void(0)" title='Наверх'&gt;&amp;#65514;&lt;/a&gt;&lt;/div&gt;
+    &lt;ol class="yourshop-toc-add" style="display: none"&gt;
+        &lt;li class="yourshop-toc-title"&gt;
+            &lt;a href="#ys-shop-main"&gt;Настройки главной страницы&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-1"&gt;Слайдеры&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-2"&gt;Баннеры&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-3"&gt;Блок описания&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-4"&gt;Круглое меню&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-5"&gt;Блок новостей&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="#ys-shop-cat"&gt;Настройки каталога товаров&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-1"&gt;Количество товаров на странице&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-2"&gt;Логотип категорий&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-3"&gt;Товары&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="#ys-shop-side"&gt;Настройки сайдбара Магазина&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-side-1"&gt;Общие настройки&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-side-2"&gt;Настройки фильтра&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-page"&gt;Настройки страницы товара&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-cart"&gt;Настройки Корзины&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-view"&gt;Быстрый просмотр&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-minorder"&gt;Минимальная сумма заказа&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;style&gt;
+        .yourshop-toc-title { position: relative; border-top: 22px solid #4fa436; }
+        .yourshop-toc-title:after { content: 'Настройки магазина'; position: absolute; top: -22px; left: 10px; color: #fff; font-weight: bold; }
+        .yourshop-col-link { text-decoration: none; border-bottom: 1px dotted; margin-left: 10px; }
+        .yourshop-col-link:hover { border-bottom: 0 none; } 
+        .field .value .image img { max-width: 200px; max-height: 200px; } 
+        .yourshop-toc { counter-reset: list; width: 300px; line-height: 150%; padding: 0; }
+        .yourshop-toc li { list-style-type: none; } 
+        .yourshop-toc li:before { counter-increment: list; color: #000; content: counter(list); margin-right: 5px; }
+        .yourshop-toc ol { counter-reset: list2; margin-bottom: 0; padding-left: 1.5em; } 
+        .yourshop-toc ol li:before { counter-increment: list2; content: counter(list) "." counter(list2); margin-right: 5px; }
+        #ys-go-top { opacity: .8;  filter: alpha(opacity=90); background: #4fa436; width: 40px; height: 40px; position: fixed; right: 50px; bottom: 7px; display: none; z-index: 5; line-height: 300%; text-align: center;}
+        #ys-go-top a { color: #fff; display: block; height: 100%; font-size: 22px; }
+        #ys-go-top a:hover { color: #fff !important; }
+        #ys-go-top:hover { opacity: 1; filter: alpha(opacity=100); }
+    &lt;/style&gt;
+    &lt;script&gt;
+          $(function() {
+              $(".yourshop-col").closest(".field").hide();
+              $(".yourshop-col-half").hide().closest(".field").find(".value").hide();
+              $(".yourshop-col-link").click(function() { 
+                  var that = $(this),
+                      id = that.data('id'),
+                      newText = that.attr('data-toggle'),
+                      oldText = that.text();
+                  if (that.hasClass("collapsed")) {
+                      $('.yourshop-col-' + id).closest('.field').show(); $('.yourshop-col-' + id + '-half').show().closest('.field').find('.value').show();
+                      that.removeClass("collapsed");
+                  } else {
+                      $('.yourshop-col-' + id).closest('.field').hide(); $('.yourshop-col-' + id + '-half').hide().closest('.field').find('.value').hide();
+                      that.addClass("collapsed");
+                  }
+                  that.attr('data-toggle', oldText).text(newText);
+                  return false;
+              });
+              if ($(".yourshop-toc-add").length) {
+                $(".yourshop-toc-loading").replaceWith($(".yourshop-toc-add").html());
+              } else {
+                $(".yourshop-toc-loading").remove();
+              }
+              $(".yourshop-toc a").click(function() {
+                  $("html,body").animate({ scrollTop: $(this.hash).offset().top }, 600);
+                  return false;  
+              });
+              
+                $(window).scroll(function () {
+                    var goTop = $("#ys-go-top");
+                    if ($(this).scrollTop() &gt; 200) {
+                        goTop.fadeIn();
+                    } else {
+                        goTop.fadeOut();
+                    }
+                });
+                $('#ys-go-top a').click(function () {
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500);
+                    return false;
+                });
+          });
+    &lt;/script&gt;
+    
+    </about>
+  <about locale="en_US">
+    &lt;div style="line-height: 150%;"&gt;
+        &lt;p&gt;&lt;strong&gt;Yourshop&lt;/strong&gt; - theme design for major Webasyst applications (Site, Shop, Blog, Photos, Helpdesk, Hub, Mailer).&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Support&lt;/strong&gt;&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;Skype: gapon2401&lt;/li&gt;
+            &lt;li&gt;Email: gapon2401@gmail.com&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;ATTENTION! If You have not received a response within a week, most likely Your email got into Spam. Please, use Skype instead.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id="ys-go-top"&gt;&lt;a href="javascript:void(0)" title='Go top'&gt;&amp;#65514;&lt;/a&gt;&lt;/div&gt;
+    &lt;ol class="yourshop-toc-add" style="display: none"&gt;
+        &lt;li class="yourshop-toc-title"&gt;
+            &lt;a href="#ys-shop-main"&gt;Home page setup&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-1"&gt;Sliders&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-2"&gt;Banners&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-3"&gt;Description block&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-4"&gt;Round menu&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-main-5"&gt;News block&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="#ys-shop-cat"&gt;Catalog setup&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-1"&gt;Products per page&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-2"&gt;Logo of categories&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-cat-3"&gt;Products&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="#ys-shop-side"&gt;Shop sidebar settings&lt;/a&gt;
+            &lt;ol&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-side-1"&gt;Common settings&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#ys-shop-side-2"&gt;Filter settings&lt;/a&gt;&lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-page"&gt;Product page settings&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-cart"&gt;Cart settings&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-view"&gt;Quick view&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#ys-shop-minorder"&gt;Minimal order sum&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;style&gt;
+        .yourshop-toc-title { position: relative; border-top: 22px solid #4fa436; }
+        .yourshop-toc-title:after { content: 'Shop setup'; position: absolute; top: -22px; left: 10px; color: #fff; font-weight: bold; }
+        .yourshop-col-link { text-decoration: none; border-bottom: 1px dotted; margin-left: 10px; }
+        .yourshop-col-link:hover { border-bottom: 0 none; } 
+        .field .value .image img { max-width: 200px; max-height: 200px; } 
+        .yourshop-toc { counter-reset: list; width: 300px; line-height: 150%; padding: 0; }
+        .yourshop-toc li { list-style-type: none; } 
+        .yourshop-toc li:before { counter-increment: list; color: #000; content: counter(list); margin-right: 5px; }
+        .yourshop-toc ol { counter-reset: list2; margin-bottom: 0; padding-left: 1.5em; } 
+        .yourshop-toc ol li:before { counter-increment: list2; content: counter(list) "." counter(list2); margin-right: 5px; }
+        #ys-go-top { opacity: .8;  filter: alpha(opacity=90); background: #4fa436; width: 40px; height: 40px; position: fixed; right: 50px; bottom: 7px; display: none; z-index: 5; line-height: 300%; text-align: center;}
+        #ys-go-top a { color: #fff; display: block; height: 100%; font-size: 22px; }
+        #ys-go-top a:hover { color: #fff !important; }
+        #ys-go-top:hover { opacity: 1; filter: alpha(opacity=100); }
+    &lt;/style&gt;
+    &lt;script&gt;
+          $(function() {
+              $(".yourshop-col").closest(".field").hide();
+              $(".yourshop-col-half").hide().closest(".field").find(".value").hide();
+              $(".yourshop-col-link").click(function() { 
+                  var that = $(this),
+                      id = that.data('id'),
+                      newText = that.attr('data-toggle'),
+                      oldText = that.text();
+                  if (that.hasClass("collapsed")) {
+                      $('.yourshop-col-' + id).closest('.field').show(); $('.yourshop-col-' + id + '-half').show().closest('.field').find('.value').show();
+                      that.removeClass("collapsed");
+                  } else {
+                      $('.yourshop-col-' + id).closest('.field').hide(); $('.yourshop-col-' + id + '-half').hide().closest('.field').find('.value').hide();
+                      that.addClass("collapsed");
+                  }
+                  that.attr('data-toggle', oldText).text(newText);
+                  return false;
+              });
+              if ($(".yourshop-toc-add").length) {
+                $(".yourshop-toc-loading").replaceWith($(".yourshop-toc-add").html());
+              } else {
+                $(".yourshop-toc-loading").remove();
+              }
+              $(".yourshop-toc a").click(function() {
+                  $("html,body").animate({ scrollTop: $(this.hash).offset().top }, 600);
+                  return false;  
+              });
+              
+                $(window).scroll(function () {
+                    var goTop = $("#ys-go-top");
+                    if ($(this).scrollTop() &gt; 200) {
+                        goTop.fadeIn();
+                    } else {
+                        goTop.fadeOut();
+                    }
+                });
+                $('#ys-go-top a').click(function () {
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500);
+                    return false;
+                });
+          });
+    &lt;/script&gt;
+    
+    </about>
+  <settings>
+    <setting var="blank2" control_type="image_select">
+      <value>blank.png</value>
+      <name locale="ru_RU">
+            &lt;p style="color:#fff; font-weight:bold; margin: 20px -500px 10px 0; background: #4fa436; padding: 5px;"&gt;Настройки Магазина&lt;/p&gt;
+            &lt;p id="ys-shop-main" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;12 Настройки главной страницы&lt;/p&gt;
+            &lt;p id="ys-shop-main-1" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;12.1 Слайдеры&lt;/p&gt;
+            &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Слайдер изображений&lt;/p&gt;
+            
+            </name>
+      <name locale="en_US">
+            &lt;p style="color:#fff; font-weight:bold; margin: 20px -500px 10px 0; background: #4fa436; padding: 5px;"&gt;Shop setup&lt;/p&gt;
+            &lt;p id="ys-shop-main" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;12 Home page setup&lt;/p&gt;
+            &lt;p id="ys-shop-main-1" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;12.1 Sliders&lt;/p&gt;
+            &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Images slider&lt;/p&gt;
+                
+            </name>
+      <options>
+        <option value="img/blank.png"/>
+      </options>
+    </setting>
+    <setting var="photos_slider" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Режим отображения
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вы можете использовать два режима для отображения слайдера изображений на домашней странице Магазина:&lt;br&gt;
+                    1) album/1 - все изображения из альбома, идентификатор которого "1"&lt;br&gt;
+                    2) tag/украшения - список изображений, в которых имеется тег "украшения"&lt;br&gt;&lt;br&gt;
+                    Подробнее об использовании слайдера читайте в &lt;a href='http://yourshop.igaponov.ru/hub/3/common/#anchor-slider-images' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display mode
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You can use two modes for displaying photos-slider on main page of Shop:&lt;br&gt;
+                    1) album/1 - all photos from album with ID "1"&lt;br&gt;
+                    2) tag/rings - list of photos with tag "rings"&lt;br&gt;&lt;br&gt;
+                    Reed more about slider in &lt;a href='http://yourshop-en.igaponov.ru/hub/14/common/#anchor-slider-images' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="photos_slider_size_width" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Ширина изображений
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Тема дизайна будет автоматически подбирать максимальную ширину слайдов. &lt;br&gt;
+                    ОБРАТИТЕ ВНИМАНИЕ! Слайды не будут превышать значения, указанного в настройках приложения Фото.&lt;br&gt;&lt;br&gt;
+                    Изменить значение можно в разделе Фото - Настройки
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Photos width
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Theme design will automatically use the maximum width of slides. &lt;br&gt;
+                    ATTENTION! The width of slides is limited by the maximum value specified in application Photos.&lt;br&gt;&lt;br&gt;
+                    You can change this value in Photos - Settings
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="photos_slider_size_height" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Высота изображений
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                   Оставьте поле пустым, если хотите, чтобы высота была подобрана автоматически
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Photos height
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                   Leave the field empty if you want the height is calculated automatically
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="photos_slider_fullwidth" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">
+                Отображать во весь экран
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                   При использовании данной функции рекомендуется отображать изображения не менее 2500px шириной.&lt;br&gt;
+                   ВНИМАНИЕ! Убедитесь, что в разделе Фото - Настройки у Вас разрешено создание произвольных эскизов и максимальное значение эскиза 2500px.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Full width
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Use images at least 2500px wide.&lt;br&gt;
+                    ATTENTION! Make sure that in app Photos - Settings "Allow on demand generation of custom-sized thumbnails" is checked. And the maximum size is 2500px.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="photos_slider_speed" control_type="text">
+      <value>7000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="photos_slider_count" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">
+                Количество изображений, которые будут в слайдере
+                 
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Большой слайдер товаров&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                Общая настройка цветов слайдера осуществляется в разделе "1.2 Пользовательские настройки цветов - Большой слайдер товаров (Магазин)"&lt;br&gt;&lt;br&gt;
+                Для каждого товара доступны Дополнительные параметры, позволяющие задать индивидуальное отображение слайдера. &lt;br&gt;
+                Читайте подробнее в &lt;a href='http://yourshop.igaponov.ru/hub/3/common/#anchor-slider-html' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Number of photos in slider
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;Big products slider&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                You can customize colors of slider in paragraph "1.2 Customize color elements - Big products slider (Shop)"&lt;br&gt;&lt;br&gt;
+                Each product has Additional parameters, which allows you to create individual display of slides. &lt;br&gt;
+                Read more in &lt;a href='http://yourshop-en.igaponov.ru/hub/14/common/#anchor-slider-html' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="html_slider" control_type="text">
+      <value>set/promo</value>
+      <name locale="ru_RU">
+                Режим отображения
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вы можете использовать три режима для отображения HTML слайдера товаров на главной странице Магазина:&lt;br&gt;
+                    1) set/bestsellers - список товаров, идентификатор которых "bestsellers"&lt;br&gt;
+                    2) category/425 - список товаров из категории с идентификатором "425"&lt;br&gt;
+                    3) tag/украшения - список товаров, в которых имеется тег "украшения"&lt;br&gt;&lt;br&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display mode
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You can use three modes for displaying HTML products-slider on main page of Shop:&lt;br&gt;
+                    1) set/bestsellers - set of products with ID "bestsellers"&lt;br&gt;
+                    2) category/425 - list of products from category with ID "425"&lt;br&gt;
+                    3) tag/rings - list of products with tag "rings"&lt;br&gt;&lt;br&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="html_slider_pattern" control_type="image_select">
+      <value>img/patterns/auto-pattern.jpg</value>
+      <name locale="ru_RU">Задний фон слайдера</name>
+      <name locale="en_US">Slider background image</name>
+      <options>
+        <option value="img/patterns/no-pattern.jpg"/>
+        <option value="img/patterns/auto-pattern.jpg"/>
+        <option value="img/patterns/thumbs/pattern1.png"/>
+        <option value="img/patterns/thumbs/pattern2.png"/>
+        <option value="img/patterns/thumbs/pattern3.png"/>
+        <option value="img/patterns/thumbs/pattern4.png"/>
+        <option value="img/patterns/thumbs/pattern5.png"/>
+        <option value="img/patterns/thumbs/pattern6.jpg"/>
+        <option value="img/patterns/thumbs/pattern7.png"/>
+        <option value="img/patterns/thumbs/pattern8.png"/>
+        <option value="img/patterns/thumbs/pattern9.png"/>
+        <option value="img/patterns/thumbs/pattern10.png"/>
+        <option value="img/patterns/thumbs/pattern11.png"/>
+        <option value="img/patterns/thumbs/pattern12.png"/>
+        <option value="img/patterns/thumbs/pattern13.png"/>
+        <option value="img/patterns/thumbs/pattern14.png"/>
+        <option value="img/patterns/thumbs/pattern15.png"/>
+        <option value="img/patterns/thumbs/pattern16.png"/>
+        <option value="img/patterns/thumbs/pattern17.png"/>
+        <option value="img/patterns/thumbs/pattern18.jpg"/>
+        <option value="img/patterns/thumbs/pattern19.png"/>
+        <option value="img/patterns/thumbs/pattern20.png"/>
+        <option value="img/patterns/thumbs/pattern21.png"/>
+        <option value="img/patterns/thumbs/pattern22.jpg"/>
+        <option value="img/patterns/thumbs/pattern23.jpg"/>
+        <option value="img/patterns/thumbs/pattern24.jpg"/>
+        <option value="img/patterns/thumbs/pattern25.jpg"/>
+        <option value="img/patterns/thumbs/pattern26.jpg"/>
+        <option value="img/patterns/thumbs/pattern27.jpg"/>
+        <option value="img/patterns/thumbs/pattern28.jpg"/>
+        <option value="img/patterns/thumbs/pattern29.jpg"/>
+        <option value="img/patterns/thumbs/pattern30.jpg"/>
+        <option value="img/patterns/thumbs/pattern31.jpg"/>
+        <option value="img/patterns/thumbs/pattern32.png"/>
+        <option value="img/patterns/thumbs/pattern33.jpg"/>
+        <option value="img/patterns/thumbs/pattern34.jpg"/>
+        <option value="img/patterns/thumbs/pattern35.jpg"/>
+        <option value="img/patterns/thumbs/pattern36.jpg"/>
+        <option value="img/patterns/thumbs/pattern37.jpg"/>
+        <option value="img/patterns/thumbs/pattern38.jpg"/>
+        <option value="img/patterns/thumbs/pattern39.jpg"/>
+        <option value="img/patterns/thumbs/pattern40.jpg"/>
+        <option value="img/patterns/thumbs/pattern41.jpg"/>
+        <option value="img/patterns/thumbs/pattern42.jpg"/>
+        <option value="img/patterns/thumbs/pattern43.jpg"/>
+        <option value="img/patterns/thumbs/pattern44.jpg"/>
+        <option value="img/patterns/thumbs/pattern45.jpg"/>
+        <option value="img/patterns/thumbs/pattern46.jpg"/>
+        <option value="img/patterns/thumbs/pattern47.jpg"/>
+        <option value="img/patterns/thumbs/pattern48.jpg"/>
+        <option value="img/patterns/thumbs/pattern49.jpg"/>
+        <option value="img/patterns/thumbs/pattern50.jpg"/>
+        <option value="img/patterns/thumbs/pattern51.jpg"/>
+        <option value="img/patterns/thumbs/pattern52.jpg"/>
+        <option value="img/patterns/thumbs/pattern53.jpg"/>
+        <option value="img/patterns/thumbs/pattern54.jpg"/>
+        <option value="img/patterns/thumbs/pattern55.jpg"/>
+        <option value="img/patterns/thumbs/pattern56.jpg"/>
+        <option value="img/patterns/thumbs/pattern57.jpg"/>
+        <option value="img/patterns/thumbs/pattern58.jpg"/>
+        <option value="img/patterns/thumbs/pattern59.jpg"/>
+        <option value="img/patterns/thumbs/pattern60.jpg"/>
+        <option value="img/patterns/thumbs/pattern61.jpg"/>
+        <option value="img/patterns/thumbs/pattern62.jpg"/>
+        <option value="img/patterns/thumbs/pattern63.jpg"/>
+        <option value="img/patterns/thumbs/pattern64.jpg"/>
+        <option value="img/patterns/thumbs/pattern65.jpg"/>
+        <option value="img/patterns/thumbs/pattern66.jpg"/>
+        <option value="img/patterns/thumbs/pattern67.jpg"/>
+        <option value="img/patterns/thumbs/pattern68.jpg"/>
+        <option value="img/patterns/thumbs/pattern69.jpg"/>
+        <option value="img/patterns/thumbs/pattern70.jpg"/>
+        <option value="img/patterns/thumbs/pattern71.jpg"/>
+        <option value="img/patterns/thumbs/pattern72.jpg"/>
+        <option value="img/patterns/thumbs/pattern73.jpg"/>
+        <option value="img/patterns/thumbs/pattern74.jpg"/>
+        <option value="img/patterns/thumbs/pattern75.jpg"/>
+        <option value="img/patterns/thumbs/pattern76.jpg"/>
+        <option value="img/patterns/thumbs/pattern77.jpg"/>
+        <option value="img/patterns/thumbs/pattern78.jpg"/>
+        <option value="img/patterns/thumbs/pattern79.jpg"/>
+        <option value="img/patterns/thumbs/pattern80.jpg"/>
+        <option value="img/patterns/thumbs/pattern81.jpg"/>
+        <option value="img/patterns/thumbs/pattern82.jpg"/>
+        <option value="img/patterns/thumbs/pattern83.jpg"/>
+        <option value="img/patterns/thumbs/pattern84.jpg"/>
+        <option value="img/patterns/thumbs/pattern85.jpg"/>
+        <option value="img/patterns/thumbs/pattern86.jpg"/>
+        <option value="img/patterns/thumbs/pattern87.jpg"/>
+        <option value="img/patterns/thumbs/pattern88.jpg"/>
+        <option value="img/patterns/thumbs/pattern89.jpg"/>
+        <option value="img/patterns/thumbs/pattern90.jpg"/>
+        <option value="img/patterns/thumbs/pattern91.jpg"/>
+        <option value="img/patterns/thumbs/pattern92.jpg"/>
+        <option value="img/patterns/thumbs/pattern93.jpg"/>
+        <option value="img/patterns/thumbs/pattern94.jpg"/>
+        <option value="img/patterns/thumbs/pattern95.jpg"/>
+        <option value="img/patterns/thumbs/pattern96.jpg"/>
+        <option value="img/patterns/thumbs/pattern97.jpg"/>
+      </options>
+    </setting>
+    <setting var="html_slider_user_pattern" control_type="image">
+      <value/>
+      <filename>img/patterns/pattern_html.*</filename>
+      <name locale="ru_RU">Пользовательский задний фон (растягивается по горизонтали и вертикали)</name>
+      <name locale="en_US">Custom background image (horizontal and vertical repeat)</name>
+    </setting>
+    <setting var="html_slider_count" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">Количество товаров в слайдере</name>
+      <name locale="en_US">Products slider count</name>
+    </setting>
+    <setting var="html_slider_speed" control_type="text">
+      <value>5000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="html_slider_text" control_type="text">
+      <value locale="ru_RU">Подробнее</value>
+      <value locale="en_US">Read more</value>
+      <name locale="ru_RU">Текст кнопки</name>
+      <name locale="en_US">Button text</name>
+    </setting>
+    <setting var="html_slider_order" control_type="select">
+      <value>before</value>
+      <name locale="ru_RU">Порядок отображения слайдера</name>
+      <name locale="en_US">The display order of the slider</name>
+      <options>
+        <option value="before">
+          <name locale="ru_RU">Перед слайдером изображений</name>
+          <name locale="en_US">Before Images slider</name>
+        </option>
+        <option value="after">
+          <name locale="ru_RU">После слайдера изображений</name>
+          <name locale="en_US">After Images slider</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="html_slider_fullwidth" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Отображать во весь экран
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    БУДЬТЕ ВНИМАТЕЛЬНЫ! Слайдер будет вынесен за пределы контейнера. Если у слайдера изображений данная функция не активирована, то независимо от настроек отображения 
+                   (предыдущая настройка) слайдер будет располагаться перед слайдером изображений.
+                &lt;/p&gt;
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;Слайдер товаров 1&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Full width
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    ATTENTION! Slider will be placed outside the container. In this function is not activated in the Slider of images, regardless the previous setting 
+                    slider will be placed before the Images slider.
+                &lt;/p&gt;
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;Products slider 1&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="products_slider_name1" control_type="text">
+      <value locale="ru_RU">Хиты продаж</value>
+      <value locale="en_US">Best sellers</value>
+      <name locale="ru_RU">Название</name>
+      <name locale="en_US">Name</name>
+    </setting>
+    <setting var="products_slider1" control_type="text">
+      <value>set/bestsellers</value>
+      <name locale="ru_RU">
+                Режим отображения
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вы можете использовать три режима для отображения слайдера товаров на главной странице Магазина:&lt;br&gt;
+                    1) set/bestsellers - список товаров, идентификатор которых "bestsellers"&lt;br&gt;
+                    2) category/425 - список товаров из категории с идентификатором "425"&lt;br&gt;
+                    3) tag/украшения - список товаров, в которых имеется тег "украшения"&lt;br&gt;&lt;br&gt;
+                    Подробнее об использовании слайдера в других местах магазина читайте в &lt;a href='http://yourshop.igaponov.ru/hub/3/common/#anchor-slider-products' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display mode
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You can use three modes for displaying products-slider on main page of Shop:&lt;br&gt;
+                    1) set/bestsellers - set of products with ID "bestsellers"&lt;br&gt;
+                    2) category/425 - list of products from category with ID "425"&lt;br&gt;
+                    3) tag/rings - list of products with tag "rings"&lt;br&gt;&lt;br&gt;
+                    Read more about using slider in other Shop pages in &lt;a href='http://yourshop-en.igaponov.ru/hub/14/common/#anchor-slider-products' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="ps_slider_speed1" control_type="text">
+      <value>10000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="products_slider_count1" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">
+                Количество товаров в слайдере
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;Слайдер товаров 2&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Products slider count
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1; padding: 5px;"&gt;Products slider 2&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="products_slider_name2" control_type="text">
+      <value locale="ru_RU">Новинки</value>
+      <value locale="en_US">New</value>
+      <name locale="ru_RU">Название</name>
+      <name locale="en_US">Name</name>
+    </setting>
+    <setting var="products_slider2" control_type="text">
+      <value>set/promo</value>
+      <name locale="ru_RU">
+                Режим отображения
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вы можете использовать три режима для отображения слайдера товаров на главной странице Магазина:&lt;br&gt;
+                    1) set/bestsellers - список товаров, идентификатор которых "bestsellers"&lt;br&gt;
+                    2) category/425 - список товаров из категории с идентификатором "425"&lt;br&gt;
+                    3) tag/украшения - список товаров, в которых имеется тег "украшения"&lt;br&gt;&lt;br&gt;
+                    Подробнее об использовании слайдера в других местах магазина читайте в &lt;a href='http://yourshop.igaponov.ru/hub/3/common/#anchor-slider-products' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display mode
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You can use three modes for displaying products-slider on main page of Shop:&lt;br&gt;
+                    1) set/bestsellers - set of products with ID "bestsellers"&lt;br&gt;
+                    2) category/425 - list of products from category with ID "425"&lt;br&gt;
+                    3) tag/rings - list of products with tag "rings"&lt;br&gt;&lt;br&gt;
+                    Read more about using slider in other Shop pages in &lt;a href='http://yourshop-en.igaponov.ru/hub/14/common/#anchor-slider-products' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="ps_slider_speed2" control_type="text">
+      <value>8000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="products_slider_count2" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">
+                Количество товаров в слайдере
+                
+                &lt;p id="ys-shop-main-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.2 Баннеры&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    &lt;a href='http://yourshop.igaponov.ru/hub/3/common/#anchor-banners' target='_blank'&gt;Документация &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Products slider count
+                
+                &lt;p id="ys-shop-main-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.2 Banners&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    &lt;a href='http://yourshop-en.igaponov.ru/hub/14/common/#anchor-banners' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="banner_display" control_type="select">
+      <value>custom</value>
+      <name locale="ru_RU">
+                Отображение
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Баннеры с собственными размерами будут поочередно отображены на сайте в ряд.&lt;br&gt;
+                    Баннеры с рекомендуемыми значениями будут отображены мозайкой.&lt;br&gt;&lt;br&gt;
+                    Рекомендуемые значения:&lt;br&gt;
+                    - Количество баннеров должно равняться 7&lt;br&gt;
+                    - Размеры баннеров:&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 1: Ширина - 310px; Высота - 410px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 2: Ширина - 310px; Высота - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 3: Ширина - 310px; Высота - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 4: Ширина - 310px; Высота - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 5: Ширина - 310px; Высота - 410px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 6: Ширина - 310px; Высота - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Баннер 7: Ширина - 310px; Высота - 200px
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display view
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Banners with custom sizes will be displayed in line.&lt;br&gt;
+                    Banners with recommended values will be displayed mosaic.&lt;br&gt;&lt;br&gt;
+                    Recommended values:&lt;br&gt;
+                    - Number of banners should be 7&lt;br&gt;
+                    - Sizes:&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 1: Width - 310px; Height - 410px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 2: Width - 310px; Height - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 3: Width - 310px; Height - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 4: Width - 310px; Height - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 5: Width - 310px; Height - 410px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 6: Width - 310px; Height - 200px&lt;br&gt;
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Banner 7: Width - 310px; Height - 200px
+                &lt;/p&gt;
+                
+            </name>
+      <options>
+        <option value="custom">
+          <name locale="ru_RU">Баннеры с собственными размерами</name>
+          <name locale="en_US">Banners with custom sizes</name>
+        </option>
+        <option value="recommended">
+          <name locale="ru_RU">Баннеры с рекомендуемыми значениями</name>
+          <name locale="en_US">Banners with recommended values</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="banner_width" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Максимальная ширина баннеров
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Данная ширина будет применима к "Баннерам с собственными размерами". &lt;br&gt;Укажите значение в пикселях. Если оставить поле пустым, то баннеры будут отображены с исходной шириной.&lt;br&gt;
+                    Не беспокойтесь насчет того, что слишком большие изображения вылезут за пределы сайта. Даже, если Вы ничего не укажете, они будут корректно 
+                    вписаны в сайт.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Maximum width of banners
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    This width will be actual for "Banners with custom sizes". &lt;br&gt;Specify value in pixels.&lt;br&gt;
+                    Don't worry about large images, they will be correctly displayed in the site, even if You do not specify the maximum width.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="banner_id" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Идентификатор альбома для баннеров
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    &lt;a href='http://yourshop.igaponov.ru/hub/5/how-to-find-ids/' target='_blank'&gt;Как найти идентификатор? &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                &lt;p id="ys-shop-main-3" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.3 Блок описания&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Для того чтобы полностью изменить вывод описания, заменив на свой собственный, сделайте следующее:&lt;br&gt;&lt;br&gt;
+                    1) Зайдите в раздел Сайт-Блоки&lt;br&gt;
+                    2) Создайте блок &lt;b&gt;yourshop.home.description&lt;/b&gt;&lt;br&gt;
+                    3) Добавьте в блок свое содержимое&lt;br&gt;&lt;br&gt;
+                    Настройки описания в теме дизайна будут заменены на содержимое Вашего блока.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Photos album ID for banners
+                 
+                 &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                &lt;a href='http://yourshop-en.igaponov.ru/hub/16/how-to-find-ids/' target='_blank'&gt;How to find IDs? &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                &lt;p id="ys-shop-main-3" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.3 Description block&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    If you want to change the default output of description to your own, follow the steps:&lt;br&gt;&lt;br&gt;
+                    1) Go to Site - Blocks&lt;br&gt;
+                    2) Create block with ID &lt;b&gt;yourshop.home.description&lt;/b&gt;&lt;br&gt;
+                    3) Add content to your block&lt;br&gt;&lt;br&gt;
+                    Settings of description in theme design will be changed to the created content of your block.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="main_img" control_type="image">
+      <value>img/main_img.jpg</value>
+      <filename>img/main_img.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="main_title" control_type="text">
+      <value locale="ru_RU">Тема дизайна Yourshop</value>
+      <value locale="en_US">Theme design Yourshop</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="main_desc" control_type="text">
+      <value><![CDATA[                
+                <p><strong>Yourshop</strong> - тема дизайна для основных приложений Webasyst (Сайт, Магазин, Блог, Фото, Поддержка, Хаб, Рассылки).</p>
+                <p>Благодаря большому количеству настроек и возможностям шаблона, Вы сможете создать современный сайт абсолютно любой тематики.</p>
+                <p><strong>Особенности:</strong></p>
+                <ul>
+                  <li>В Вашем распоряжении <b>22 цветовые схемы, 42 текстуры для сайта, 97 текстур для слайдера</b>.</li>
+                  <li>Возможность <b>создания любой цветовой схемы самостоятельно</b>, а также загрузки своих текстур.</li>
+                  <li>Доступно <b>более 500 настроек</b> темы дизайна, что позволяет удобно работать как профессионалу, так и новичку.</li>
+                  <li>Адаптивность. Работа на всех мобильных устройствах, во всех современных браузерах.</li>
+                  <li>Уделено внимание всем приложениям, не только Магазину.</li>
+                </ul>
+                <p>Тема дизайна Yourshop имеет множество возможностей, встроенных в шаблон. Благодаря им Вам не придется докупать дополнительные плагины или обращаться за помощью к профессионалам.</p>
+                
+            ]]></value>
+      <name locale="ru_RU">Текст описания</name>
+      <name locale="en_US">Description text</name>
+    </setting>
+    <setting var="main_link_text" control_type="text">
+      <value locale="ru_RU">Подробнее</value>
+      <value locale="en_US">Read more</value>
+      <name locale="ru_RU">Текст ссылки</name>
+      <name locale="en_US">Link text</name>
+    </setting>
+    <setting var="main_link" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Ссылка (если необходима)</name>
+      <name locale="en_US">Link (if necessary)</name>
+    </setting>
+    <setting var="main_background" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Растянуть фон на всю ширину
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Галерея изображений&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Fullwidth background
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Image gallery&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="main_gallery" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать галерею</name>
+      <name locale="en_US">Show gallery</name>
+    </setting>
+    <setting var="main_gallery_title" control_type="text">
+      <value locale="ru_RU">Последние изображения</value>
+      <value locale="en_US">Latest photos</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="main_gallery_count" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">Количество изображений</name>
+      <name locale="en_US">Number of images</name>
+    </setting>
+    <setting var="main_gallery_mode" control_type="text">
+      <value>album/1</value>
+      <name locale="ru_RU">
+                Режим отображения
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вы можете использовать два режима для отображения галереи изображений на домашней странице Магазина:&lt;br&gt;
+                    1) album/1 - все изображения из альбома, идентификатор которого "1"&lt;br&gt;
+                    2) tag/украшения - список изображений, в которых имеется тег "украшения"&lt;br&gt;&lt;br&gt;
+                &lt;/p&gt;
+                &lt;p id="ys-shop-main-4" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.4 Круглое меню&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Темой дизайна предусмотрено 8 кружков, в которых Вы можете разместить картинку с рекламным текстом.&lt;br&gt;
+                    Рекомендуемый размер картинки 200х200px.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Display mode
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You can use two modes for displaying photos gallery on main page of Shop:&lt;br&gt;
+                    1) album/1 - all photos from album with ID "1"&lt;br&gt;
+                    2) tag/rings - list of photos with tag "rings"&lt;br&gt;&lt;br&gt;
+                &lt;/p&gt;
+                &lt;p id="ys-shop-main-4" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.4 Round menu&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Theme design has 8 round blocks, where you can place image with advertise text.&lt;br&gt;
+                    Recommended image size 200x200px.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round_menu" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Отображать круглое меню
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 1&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Show round menu
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 1&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round1_text" control_type="text">
+      <value locale="ru_RU">ДЛЯ ТУРИЗМА</value>
+      <value locale="en_US">TOURISM</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round1_image" control_type="image">
+      <value>img/round_menu/image1.jpg</value>
+      <filename>img/round_menu/image1.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round1_link" control_type="text">
+      <value locale="ru_RU">/</value>
+      <value locale="en_US">/</value>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round1_menu_bg" control_type="color">
+      <value>#ffffff</value>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round1_menu_color" control_type="color">
+      <value>#383838</value>
+      <name locale="ru_RU">
+                Цвет текста
+                 
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 2&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 2&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round2_text" control_type="text">
+      <value locale="ru_RU">РАСПРОДАЖА</value>
+      <value locale="en_US">SALE</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round2_image" control_type="image">
+      <value>img/round_menu/image2.jpg</value>
+      <filename>img/round_menu/image2.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round2_link" control_type="text">
+      <value locale="ru_RU">/</value>
+      <value locale="en_US">/</value>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round2_menu_bg" control_type="color">
+      <value>#ffffff</value>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round2_menu_color" control_type="color">
+      <value>#383838</value>
+      <name locale="ru_RU">
+                Цвет текста
+                 
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 3&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 3&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round3_text" control_type="text">
+      <value locale="ru_RU">ЗИМНЯЯ КОЛЛЕКЦИЯ</value>
+      <value locale="en_US">WINTER COLLECTION</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round3_image" control_type="image">
+      <value>img/round_menu/image3.jpg</value>
+      <filename>img/round_menu/image3.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round3_link" control_type="text">
+      <value locale="ru_RU">/</value>
+      <value locale="en_US">/</value>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round3_menu_bg" control_type="color">
+      <value>#ffffff</value>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round3_menu_color" control_type="color">
+      <value>#383838</value>
+      <name locale="ru_RU">
+                Цвет текста
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 4&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 4&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round4_text" control_type="text">
+      <value locale="ru_RU">от 200 руб</value>
+      <value locale="en_US">200 RUB</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round4_image" control_type="image">
+      <value>img/round_menu/image4.jpg</value>
+      <filename>img/round_menu/image4.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round4_link" control_type="text">
+      <value locale="ru_RU">/</value>
+      <value locale="en_US">/</value>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round4_menu_bg" control_type="color">
+      <value>#ffffff</value>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round4_menu_color" control_type="color">
+      <value>#383838</value>
+      <name locale="ru_RU">
+                Цвет текста
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 5&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 5&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round5_text" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round5_image" control_type="image">
+      <value/>
+      <filename>img/round_menu/image5.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round5_link" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round5_menu_bg" control_type="color">
+      <value/>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round5_menu_color" control_type="color">
+      <value/>
+      <name locale="ru_RU">
+                Цвет текста
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 6&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 6&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round6_text" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round6_image" control_type="image">
+      <value/>
+      <filename>img/round_menu/image6.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round6_link" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round6_menu_bg" control_type="color">
+      <value/>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round6_menu_color" control_type="color">
+      <value/>
+      <name locale="ru_RU">
+                Цвет текста
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 7&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 7&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round7_text" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round7_image" control_type="image">
+      <value/>
+      <filename>img/round_menu/image7.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round7_link" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round7_menu_bg" control_type="color">
+      <value/>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round7_menu_color" control_type="color">
+      <value/>
+      <name locale="ru_RU">
+                Цвет текста
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Круг 8&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Round block 8&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="round8_text" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="round8_image" control_type="image">
+      <value/>
+      <filename>img/round_menu/image8.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="round8_link" control_type="text">
+      <value locale="ru_RU"/>
+      <value locale="en_US"/>
+      <name locale="ru_RU">Ссылка</name>
+      <name locale="en_US">Link</name>
+    </setting>
+    <setting var="round8_menu_bg" control_type="color">
+      <value/>
+      <name locale="ru_RU">Задний фон под заголовком</name>
+      <name locale="en_US">Background color under the title</name>
+    </setting>
+    <setting var="round8_menu_color" control_type="color">
+      <value/>
+      <name locale="ru_RU">
+                Цвет текста
+                 
+                &lt;p id="ys-shop-main-5" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.5 Блок новостей&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Text color
+                
+                &lt;p id="ys-shop-main-5" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;12.5 News block&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="news_show" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать новости</name>
+      <name locale="en_US">Show news</name>
+    </setting>
+    <setting var="news_title" control_type="text">
+      <value locale="ru_RU">Новости</value>
+      <value locale="en_US">News</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="news" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Идентификатор блога новостей
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Укажите идентификатор блога новостей, записи которого будут отображены на главной странице магазина&lt;br&gt;
+                    &lt;a href='http://yourshop.igaponov.ru/hub/5/how-to-find-ids/' target='_blank'&gt;Как найти идентификатор? &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                News blog-ID
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Print blog-ID, which posts you want to use at the main Shop page&lt;br&gt;
+                    &lt;a href='http://yourshop-en.igaponov.ru/hub/16/how-to-find-ids/' target='_blank'&gt;How to find IDs? &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="news_count" control_type="text">
+      <value>6</value>
+      <name locale="ru_RU">
+                Количество новостей
+            
+            &lt;p id="ys-shop-cat" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13 Настройки каталога товаров&lt;/p&gt;
+             
+            </name>
+      <name locale="en_US">
+                News quantity
+            
+            &lt;p id="ys-shop-cat" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13 Catalog setup&lt;/p&gt;
+             
+            </name>
+    </setting>
+    <setting var="ajax_filters" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                AJAX-фильтры товаров по характеристикам
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    При выборе данной функции в каталоге товаров фильтрация будет происходить без перезагрузки страницы
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                AJAX-enabled product by-feature filtering
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    If you check this function, filtering will be dynamic, without page reloading.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="lazyloading" control_type="select">
+      <value>productsperpage</value>
+      <name locale="ru_RU">Отображение товаров в каталоге</name>
+      <name locale="en_US">Catalog products view</name>
+      <options>
+        <option value="lazyloading">
+          <name locale="ru_RU">Ленивая загрузка</name>
+          <name locale="en_US">Lazyloading</name>
+        </option>
+        <option value="productsperpage">
+          <name locale="ru_RU">Постраничная навигация</name>
+          <name locale="en_US">Products per page</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="catalog_desc_pos" control_type="select">
+      <value>up</value>
+      <name locale="ru_RU">Расположение описания категорий</name>
+      <name locale="en_US">Position of category description</name>
+      <options>
+        <option value="up">
+          <name locale="ru_RU">Перед товарами</name>
+          <name locale="en_US">Before the products</name>
+        </option>
+        <option value="down">
+          <name locale="ru_RU">После товаров</name>
+          <name locale="en_US">After the products</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="subcat_view" control_type="select">
+      <value>slider</value>
+      <name locale="ru_RU">Отображение подкатегорий в каталоге</name>
+      <name locale="en_US">Catalog subcategories view</name>
+      <options>
+        <option value="slider">
+          <name locale="ru_RU">В слайдере</name>
+          <name locale="en_US">Slider</name>
+        </option>
+        <option value="list">
+          <name locale="ru_RU">Списком</name>
+          <name locale="en_US">List</name>
+        </option>
+        <option value="list_images">
+          <name locale="ru_RU">Списком с картинками</name>
+          <name locale="en_US">List with images</name>
+        </option>
+        <option value="hide">
+          <name locale="ru_RU">Не отображать</name>
+          <name locale="en_US">Don't show</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="discount_badge" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Создавать автоматически наклейку со скидкой при наличии зачеркнутой цены</name>
+      <name locale="en_US">Automatically create badge with discount, if compare price exists.</name>
+    </setting>
+    <setting var="cut_cat_desc" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">
+                Спрятать часть описания категории
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Последующие две настройки необходимы, если Вы решили спрятать часть описания категории.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Hide some part of category description
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    The next two settings are needed if You decided to hide some part of category description.
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="cut_cat_desc_text" control_type="text">
+      <value locale="ru_RU">Показать больше</value>
+      <value locale="en_US">Show full description</value>
+      <name locale="ru_RU">Текст ссылки для раскрытия описания категории</name>
+      <name locale="en_US">Link text for openning category description</name>
+    </setting>
+    <setting var="cut_cat_desc_text_close" control_type="text">
+      <value locale="ru_RU">Скрыть</value>
+      <value locale="en_US">Hide full description</value>
+      <name locale="ru_RU">
+                Текст ссылки для закрытия описания категории
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Типы отображения товаров&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Link text for closing category description
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Product view&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="default_view" control_type="select">
+      <value>thumbs</value>
+      <name locale="ru_RU">
+                Отображение товаров по умолчанию
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Выберите доступные для пользователя типы отображения товаров в каталоге
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Default products view
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Select available types of product view in catalog for user
+                &lt;/p&gt;
+                
+            </name>
+      <options>
+        <option value="thumbs">
+          <name locale="ru_RU">Плиткой</name>
+          <name locale="en_US">Thumbs</name>
+        </option>
+        <option value="thumbs-small">
+          <name locale="ru_RU">Маленькой плиткой</name>
+          <name locale="en_US">Small thumbs</name>
+        </option>
+        <option value="table">
+          <name locale="ru_RU">Списком</name>
+          <name locale="en_US">List</name>
+        </option>
+        <option value="table-small">
+          <name locale="ru_RU">Укороченным списком</name>
+          <name locale="en_US">Small list</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="thumbs_view" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Плитка</name>
+      <name locale="en_US">Thumbs</name>
+    </setting>
+    <setting var="thumbs_small_view" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Маленькая плитка</name>
+      <name locale="en_US">Small thumbs</name>
+    </setting>
+    <setting var="table_view" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Список</name>
+      <name locale="en_US">List</name>
+    </setting>
+    <setting var="table_small_view" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Укороченный список
+                
+                &lt;p id="ys-shop-cat-1" style="color:#000; font-weight:bold; margin: 60px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.1 Количество товаров на странице&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Small list
+                
+                &lt;p id="ys-shop-cat-1" style="color:#000; font-weight:bold; margin: 60px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.1 Products per page&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="products_per_page" control_type="text">
+      <value locale="ru_RU">2, 20, 30, 50, Показать все</value>
+      <value locale="en_US">20, 30, 50, Show all</value>
+      <name locale="ru_RU">
+                Количество товаров на странице
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Указывайте значения через запятую.&lt;br&gt;
+                    Последнее значение может быть любым словом (все, все сразу и др).&lt;br&gt;&lt;br&gt;
+                    1) Если Вы укажете слово, то при выборе этого значения будет запущена "ленивая загрузка" и постраничная навигация исчезнет.&lt;br&gt;
+                    2) Если Вы напишете число, то "ленивая загрузка" запущена не будет и постраничная навигация останется. 
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Products per page
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Use comma to separate values.&lt;br&gt;
+                    Last value can be any word (“show all”, “all” etc.).&lt;br&gt;&lt;br&gt;
+                    1) If You specify the word, when selected, will be launched "lazy loading" and page navigation will disappear.&lt;br&gt;
+                    2) If You write a number, "lazy loading" will not start and page navigation will remain. 
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="products_per_page_text" control_type="text">
+      <value>%productsperpage%</value>
+      <name locale="ru_RU">
+                Текст на витрине
+                 
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Используйте %productsperpage% в качестве маски для встраивания формы с выбором количества товаров.&lt;br&gt;
+                    &lt;i&gt;Пример, "Показывать по %productsperpage% товаров на странице"&lt;/i&gt;
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Storefront text
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Use %productsperpage% as a mask of insertion form.&lt;br&gt;
+                    &lt;i&gt;Example, "Show %productsperpage% products per page"&lt;/i&gt;
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="products_per_page_display" control_type="select">
+      <value>string</value>
+      <name locale="ru_RU">
+                Отображение количества страниц
+                
+                &lt;p id="ys-shop-cat-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.2 Логотип категорий&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Вам доступно 4 типа отображения логотипа для категорий:&lt;br&gt;&lt;br&gt;
+                    1) &lt;a href="https://www.webasyst.ru/store/plugin/shop/categoryimages/?promo_id=gaponov" target="_blank"&gt;Логотип категорий &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    2) &lt;a href="https://www.webasyst.ru/store/plugin/shop/categoryimage/?promo_id=gaponov" target="_blank"&gt;Картинки для категорий &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    3) &lt;a href="https://www.webasyst.ru/store/plugin/shop/wmimageincat/?promo_id=gaponov" target="_blank"&gt;Иконка, изображение и баннер для категории &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    4) Дополнительные параметры категории (бесплатно)
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Displaying of paging
+                
+                &lt;p id="ys-shop-cat-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.2 Logo of categories&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    You can use 4 modes of displaying category image:&lt;br&gt;&lt;br&gt;
+                    1) &lt;a href="https://www.webasyst.com/store/plugin/shop/categoryimages/?promo_id=gaponov" target="_blank"&gt;Category logo &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    2) &lt;a href="https://www.webasyst.com/store/plugin/shop/categoryimage/?promo_id=gaponov" target="_blank"&gt;Category images &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    3) &lt;a href="https://www.webasyst.ru/store/plugin/shop/wmimageincat/?promo_id=gaponov" target="_blank"&gt;Icon, image and banner for category &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;
+                    4) Custom parameters of category (free)
+                &lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="string">
+          <name locale="ru_RU">Показать все значения в ряд</name>
+          <name locale="en_US">Display all values inline</name>
+        </option>
+        <option value="select">
+          <name locale="ru_RU">Выбор из списка &amp;lt;select&amp;gt;</name>
+          <name locale="en_US">&amp;lt;select&amp;gt; HTML control</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="category_img_pl" control_type="select">
+      <value>params</value>
+      <name locale="ru_RU">
+                Логотип категорий
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Для использования встроенной возможности отображения логотипа категорий зайдите в настройки категории и в дополнительных параметрах укажите: &lt;br&gt;
+                    &lt;b&gt;image=http://Ссылка_на_изображение&lt;/b&gt;. &lt;br&gt;
+                    Подробнее в &lt;a href='http://yourshop.igaponov.ru/hub/8/categoryimages/' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Category image
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    If you would like to use params as category image, go to category settings, find "Custom parameters" and write: &lt;br&gt;
+                    &lt;b&gt;image=http://Link_to_your_image&lt;/b&gt;. &lt;br&gt;
+                    More info in Documentation.
+                &lt;/p&gt;
+                
+            </name>
+      <options>
+        <option value="categoryimages">
+          <name locale="ru_RU">Логотип категории</name>
+          <name locale="en_US">Category image</name>
+        </option>
+        <option value="categoryimage">
+          <name locale="ru_RU">Картинки для категорий</name>
+          <name locale="en_US">Category images</name>
+        </option>
+        <option value="wmimageincat">
+          <name locale="ru_RU">Иконка, изображение и баннер для категории</name>
+          <name locale="en_US">Icon, image and banner for category</name>
+        </option>
+        <option value="params">
+          <name locale="ru_RU">Дополнительные параметры категории (бесплатно)</name>
+          <name locale="en_US">Additional parameters of category (free)</name>
+        </option>
+        <option value="not">
+          <name locale="ru_RU">Не отображать</name>
+          <name locale="en_US">Don't show</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="category_img_width" control_type="text">
+      <value>108</value>
+      <name locale="ru_RU">Максимальная ширина изображения</name>
+      <name locale="en_US">Maximum width of image</name>
+    </setting>
+    <setting var="category_img_height" control_type="text">
+      <value>108</value>
+      <name locale="ru_RU">
+                Максимальная высота изображения
+                
+                &lt;p id="ys-shop-cat-3" style="color:#000; font-weight:bold; margin: 60px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.3 Товары&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Maximum height of image
+                
+                &lt;p id="ys-shop-cat-3" style="color:#000; font-weight:bold; margin: 60px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;13.3 Products&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="show_cat_sku_sku" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Отображать артикул</name>
+      <name locale="en_US">Show sku</name>
+    </setting>
+    <setting var="show_cat_sku_name" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Отображать наименование артикула</name>
+      <name locale="en_US">Show sku name</name>
+    </setting>
+    <setting var="cat_fixed_name" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Фиксированная высота названия товара
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Высота блока с названием товара 50px. Если у вас короткие названия, то рекомендуется не использовать данную опцию, чтобы не растягивать карточку товара.
+                &lt;/p&gt;
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Миниатюры артикулов / изображений&lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Fixed height of product name block
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Height of product name block is 50px. If you have short names, it's recommended not to use this option.
+                &lt;/p&gt;
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Sku thumbs / images&lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="cat_main_image" control_type="radio">
+      <value>sku</value>
+      <name locale="ru_RU">Главное изображение товара</name>
+      <name locale="en_US">Main product image</name>
+      <options>
+        <option value="first">
+          <name locale="ru_RU">
+                        Первое в списке изображений
+                        &lt;br&gt;
+                    </name>
+          <name locale="en_US">
+                        First in image list
+                        &lt;br&gt;
+                    </name>
+        </option>
+        <option value="sku">
+          <name locale="ru_RU">Изображение выбранного артикула</name>
+          <name locale="en_US">Image of selected sku</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="show_cat_thumbs" control_type="radio">
+      <value>skus</value>
+      <name locale="ru_RU">Отображать миниатюры</name>
+      <name locale="en_US">Show thumbs</name>
+      <options>
+        <option value="skus">
+          <name locale="ru_RU">
+                        Доступных артикулов товара
+                        &lt;br&gt;
+                    </name>
+          <name locale="en_US">
+                        Of available skus of product
+                        &lt;br&gt;
+                    </name>
+          <description locale="ru_RU">Будут выведены изображения артикулов, которые выбраны в настройках товара во вкладке Основные данные. 
+                        &lt;br&gt;
+                        При смене артикулов будет меняться также и цена товара. Это дает возможность покупателю выбрать требуемый ему артикул и купить его
+                        прямо из каталога</description>
+          <description locale="en_US">Theme design will show sku images, that are selected in the product settings in tab "Basics".
+                        &lt;br&gt;
+                        Price will be changed, when you will change the sku. This gives customer the opportunity to select and buy the sku 
+                        right from the catalog.</description>
+        </option>
+        <option value="images">
+          <name locale="ru_RU">Изображений товара</name>
+          <name locale="en_US">Of product images</name>
+          <description locale="ru_RU">Будут выведены все изображения товара без привязки к артикулам</description>
+          <description locale="en_US">All product images will be displayed without any relations with skus</description>
+        </option>
+        <option value="hide">
+          <name locale="ru_RU">Не отображать</name>
+          <name locale="en_US">Don't show</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="cat_thumbs_unique" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Скрыть повторяющися изображения
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Актуально для "Доступных артикулов товара"
+                &lt;/p&gt;
+                
+            </name>
+      <name locale="en_US">
+                Hide duplicated images
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                True for "Available skus of product"
+                &lt;/p&gt;
+                
+            </name>
+    </setting>
+    <setting var="cat_thumbs_type" control_type="radio">
+      <value>thumbs</value>
+      <name locale="ru_RU">
+                Вариант отображения миниатюр
+                
+                &lt;p id="ys-shop-side" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14 Настройки сайдбара Магазина&lt;/p&gt;
+                &lt;p id="ys-shop-side-1" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14.1 Общие настройки&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Type of display
+                
+                &lt;p id="ys-shop-side" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14 Shop sidebar settings&lt;/p&gt;
+                &lt;p id="ys-shop-side-1" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14.1 Common settings&lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="slider">
+          <name locale="ru_RU">Слайдер в блоке изображения&lt;br&gt;</name>
+          <name locale="en_US">Slider inside image block&lt;br&gt;</name>
+        </option>
+        <option value="thumbs">
+          <name locale="ru_RU">Слева от товара</name>
+          <name locale="en_US">Left from the product</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="categories_title" control_type="text">
+      <value locale="ru_RU">Категории</value>
+      <value locale="en_US">Categories</value>
+      <name locale="ru_RU">Заголовок блока с категориями</name>
+      <name locale="en_US">Categories block title</name>
+    </setting>
+    <setting var="product_catalog" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Сайдбар на странице товара</name>
+      <name locale="en_US">Sidebar in product page</name>
+    </setting>
+    <setting var="product_catalog_mob" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Сайдбар на странице товара в мобильной версии (выезжающее меню)</name>
+      <name locale="en_US">Sidebar in product page in mobile version (slide menu)</name>
+    </setting>
+    <setting var="home_catalog" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Сайдбар на главной</name>
+      <name locale="en_US">Sidebar in home page</name>
+    </setting>
+    <setting var="home_catalog_mob" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Сайдбар на главной в мобильной версии (выезжающее меню)</name>
+      <name locale="en_US">Sidebar in home page in mobile version (mobile menu)</name>
+    </setting>
+    <setting var="sidebar_catalog" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Сайдбар в каталоге</name>
+      <name locale="en_US">Sidebar in catalog</name>
+    </setting>
+    <setting var="sidebar_brands" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Отображать список брендов
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Необходим плагин &lt;a href="https://www.webasyst.ru/store/plugin/shop/brands/"&gt;Бренды&lt;/a&gt; или &lt;a href="https://www.webasyst.ru/store/plugin/shop/productbrands/"&gt;Бренды с картинками и описаниями&lt;/a&gt;
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Show list of brands
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    You need to install plugin &lt;a href="https://www.webasyst.com/store/plugin/shop/brands/"&gt;Brands&lt;/a&gt; or &lt;a href="https://www.webasyst.com/store/plugin/shop/productbrands/"&gt;Brands with images and descriptions&lt;/a&gt;
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="sidebar_brands_hide" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">
+                Скрыть часть брендов
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Если у Вас большой список брендов, то рекомендуется установить эту настройку
+                &lt;/p&gt;
+                &lt;p id="ys-shop-side-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14.2 Настройки фильтра&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Hide part of brands
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    If you have a lot of brands, use this option.
+                &lt;/p&gt;
+                &lt;p id="ys-shop-side-2" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;14.2 Filter settings&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="filter_title" control_type="text">
+      <value/>
+      <name locale="ru_RU">Заголовок блока с фильтрами</name>
+      <name locale="en_US">Filter block title</name>
+    </setting>
+    <setting var="filter_state" control_type="select">
+      <value>closed</value>
+      <name locale="ru_RU">Состояние фильтра в каталоге</name>
+      <name locale="en_US">Filter categories state</name>
+      <options>
+        <option value="closed">
+          <name locale="ru_RU">Закрыт</name>
+          <name locale="en_US">Closed</name>
+        </option>
+        <option value="opened">
+          <name locale="ru_RU">Открыт</name>
+          <name locale="en_US">Opened</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="filter_hide" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Скрыть часть значений фильтра</name>
+      <name locale="en_US">Hide part of filter values</name>
+    </setting>
+    <setting var="filter_position" control_type="select">
+      <value>up</value>
+      <name locale="ru_RU">Расположение фильтра в каталоге</name>
+      <name locale="en_US">Filter categories position</name>
+      <options>
+        <option value="down">
+          <name locale="ru_RU">Под категориями</name>
+          <name locale="en_US">Under categories</name>
+        </option>
+        <option value="up">
+          <name locale="ru_RU">Над категориями</name>
+          <name locale="en_US">Over categories</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="filter_type" control_type="radio">
+      <value>checkbox</value>
+      <name locale="ru_RU">
+                Характеристики товаров в фильтре каталога
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Если у вас множество значений в характеристиках, которые растягивают Вашу страницу, используйте "Выпадающий список select".&lt;br&gt;
+                Правило применится ко всем характеристикам.
+                &lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                Если Вы хотите ограничить список характеристик, которые должны отображаться "Выпадающим списком select", то ниже укажите их символьные коды
+                &lt;b&gt;через запятую без пробелов&lt;/b&gt;.&lt;br&gt;
+                Подробнее в &lt;a href='http://yourshop.igaponov.ru/hub/9/catalog-features/' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Features on catalog's filter
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                If you have a set of features that stretch the page, use "Select".
+                &lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                If you want to limit the list of features, the will be displayed in "Select" field, specify their symbolic codes. &lt;b&gt;Use commas without spaces&lt;/b&gt;.
+                &lt;br&gt;
+                Read more in &lt;a href='http://yourshop-en.igaponov.ru/hub/22/catalog-features/' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="checkbox">
+          <name locale="ru_RU">
+                        Варианты checkbox
+                        
+                        &lt;br&gt;
+                        
+                    </name>
+          <name locale="en_US">
+                        Checkbox
+                        
+                        &lt;br&gt;
+                        
+                    </name>
+        </option>
+        <option value="select">
+          <name locale="ru_RU">Выпадающий список select</name>
+          <name locale="en_US">Select</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="filter_select" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Символьные коды характеристик, которые будут отображены списком select
+                
+                &lt;p id="ys-shop-page" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;15 Настройки страницы товара&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Symbol codes of features, which will be displayed in select field
+                
+                &lt;p id="ys-shop-page" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;15 Product page settings&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="enlarge_type" control_type="select">
+      <value>zoomfancybox</value>
+      <name locale="ru_RU">Увеличение при клике на изображение товара</name>
+      <name locale="en_US">Product photo onclick enlarge</name>
+      <options>
+        <option value="zoom">
+          <name locale="ru_RU">Лупа</name>
+          <name locale="en_US">Hover zoom</name>
+        </option>
+        <option value="fancybox">
+          <name locale="ru_RU">Всплывающее окно</name>
+          <name locale="en_US">Popup window</name>
+        </option>
+        <option value="zoomfancybox">
+          <name locale="ru_RU">Лупа + Всплывающее окно</name>
+          <name locale="en_US">Hover zoom + Popup window</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="image_thumbs" control_type="select">
+      <value>down</value>
+      <name locale="ru_RU">Миниатюры изображений товара</name>
+      <name locale="en_US">Product image thumbs</name>
+      <options>
+        <option value="left">
+          <name locale="ru_RU">Слева от основного изображения</name>
+          <name locale="en_US">Left from main image</name>
+        </option>
+        <option value="down">
+          <name locale="ru_RU">Под основным изображением</name>
+          <name locale="en_US">Under the main image</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="image_thumbs_slider" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Использовать слайдер для миниатюр</name>
+      <name locale="en_US">Use slider for image thumbs</name>
+    </setting>
+    <setting var="image_thumbs_smaller" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Уменьшить размер миниатюр вдвое</name>
+      <name locale="en_US">Decrease the size of thumbs twice</name>
+    </setting>
+    <setting var="price_position" control_type="select">
+      <value>top</value>
+      <name locale="ru_RU">Расположение блока цены товара</name>
+      <name locale="en_US">Product price block position</name>
+      <options>
+        <option value="top">
+          <name locale="ru_RU">Перед артикулами (сверху)</name>
+          <name locale="en_US">Before skus (at the top)</name>
+        </option>
+        <option value="bottom">
+          <name locale="ru_RU">После артикулов (снизу)</name>
+          <name locale="en_US">After skus (at the bottom)</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="product_features" control_type="select">
+      <value>tabs</value>
+      <name locale="ru_RU">Вывести характеристики товара</name>
+      <name locale="en_US">Show product features</name>
+      <options>
+        <option value="tabs">
+          <name locale="ru_RU">Во вкладках товара</name>
+          <name locale="en_US">In product tabs</name>
+        </option>
+        <option value="under_thumbs">
+          <name locale="ru_RU">Под миниатюрами</name>
+          <name locale="en_US">Under the thumbs</name>
+        </option>
+        <option value="before_skus">
+          <name locale="ru_RU">Перед артикулами</name>
+          <name locale="en_US">Before skus</name>
+        </option>
+        <option value="after_skus">
+          <name locale="ru_RU">После артикулов</name>
+          <name locale="en_US">After skus</name>
+        </option>
+        <option value="hide">
+          <name locale="ru_RU">Не выводить</name>
+          <name locale="en_US">Don't show</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="features_hide" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Скрыть часть характеристик</name>
+      <name locale="en_US">Hide part of product features</name>
+    </setting>
+    <setting var="selectable_features_control" control_type="radio">
+      <value>select</value>
+      <name locale="ru_RU">Выбор характеристик</name>
+      <name locale="en_US">Selectable features</name>
+      <options>
+        <option value="inline">
+          <name locale="ru_RU">Показать все значения в ряд</name>
+          <name locale="en_US">Display all values inline</name>
+          <description locale="ru_RU">Для товаров в режиме продажи «Выбор характеристик» значения характеристик будут показаны одной строкой друг за другом. Рекомендуется, если названия значений относительно короткие и по ним однозначно можно определить, о какой характеристике товара идет речь, например, XL, 16 GB, 13”.</description>
+          <description locale="en_US">For products which are sold in selectable features mode, all feature values will be displayed inline. Great if feature value names are self-explanatory and expliciy in context of a product, e.g. XL, 16 GB, 13”.</description>
+        </option>
+        <option value="select">
+          <name locale="ru_RU">Выбор из списка &amp;lt;select&amp;gt;</name>
+          <name locale="en_US">&amp;lt;select&amp;gt; HTML control</name>
+          <description locale="ru_RU">Для товаров в режиме продажи «Выбор характеристик» значения характеристик будут предложены на выбор с помощью стандартного выбора &amp;lt;select&amp;gt;. Рекомендуется, если названия значений характеристик содержат более одного-двух слов или по значениям нельзя однозначно понять, о какой характеристике товара идет речь, например, «до 10 часов», «не предусмотрено».</description>
+          <description locale="en_US">For products which are sold in selectable features mode, feature values will be displayed using a &amp;lt;select&amp;gt; HTML control. Recommended if value names are either too long or ambiguous in context of a product, e.g. “up to 10 hours”, “yes”.</description>
+        </option>
+      </options>
+    </setting>
+    <setting var="inline_feature_major" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Символьные коды характеристик, относительно которых будут скрыты остальные
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Используйте данное поле, если у Вас количество характеристик равно двум.&lt;br&gt;
+                Предположим, что у Вас имеется Цвет (color) и Размер (size). Если Вы хотите, чтобы при выборе, к примеру, красного цвета исчезали размеры, которых
+                нет в наличии, то в данном поле следует указать значение color. &lt;br&gt;
+                Данное поле применимо ко всему сайту, поэтому в случае нескольких символьных кодов &lt;b&gt;используйте запятые без пробелов&lt;/b&gt;.
+                &lt;br&gt;
+                Подробнее в &lt;a href=' http://yourshop.igaponov.ru/hub/32/selectable-features/' target='_blank'&gt;Документации &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Symbol codes of features for which the rest will be hidden
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                Use that field if the number of features is two.&lt;br&gt;
+                For example, you have Color (color_feature) and Size (size_feature). If you want to hide all sizes, which are not available, when you select 
+                some color, than you have to mention "color_feature" in the field. &lt;br&gt;
+                This field is applicable to all website. If you have more then one symbol code, &lt;b&gt;use commas without spaces&lt;/b&gt;.
+                &lt;br&gt;
+                Read more in &lt;a href=' http://yourshop-en.igaponov.ru/hub/33/selectable-features/' target='_blank'&gt;Documentation &lt;i class='icon16 new-window'&gt;&lt;/i&gt;&lt;/a&gt;.
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="active_tab" control_type="select">
+      <value>overview</value>
+      <name locale="ru_RU">Активная вкладка товара</name>
+      <name locale="en_US">Active product tab</name>
+      <options>
+        <option value="overview">
+          <name locale="ru_RU">Обзор</name>
+          <name locale="en_US">Overview</name>
+        </option>
+        <option value="features">
+          <name locale="ru_RU">Характеристики (если выводятся во вкладках)</name>
+          <name locale="en_US">Features (if displayed in tabs)</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="discount_badge2" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Создавать автоматически наклейку со скидкой при наличии зачеркнутой цены</name>
+      <name locale="en_US">Automatically create badge with discount, if compare price exists</name>
+    </setting>
+    <setting var="show_summary" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Отображать краткое описание</name>
+      <name locale="en_US">Show summary</name>
+    </setting>
+    <setting var="show_sku" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать артикулы</name>
+      <name locale="en_US">Show skus</name>
+    </setting>
+    <setting var="show_stocks" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать остатки товаров</name>
+      <name locale="en_US">Show product stocks-quantity</name>
+    </setting>
+    <setting var="show_page_page" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">
+                Отображать подстраницы товара на отдельных страницах
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Слайдер перекрестных продаж&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Show product page on new page
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Cross-selling slider&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="cross_sl" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать слайдер перекрестных продаж</name>
+      <name locale="en_US">Show cross-selling slider</name>
+    </setting>
+    <setting var="cross_sl_priority" control_type="select">
+      <value>before_upselling</value>
+      <name locale="ru_RU">Приоритет</name>
+      <name locale="en_US">Priority</name>
+      <options>
+        <option value="before_upselling">
+          <name locale="ru_RU">Перед слайдером схожих товаров</name>
+          <name locale="en_US">Before upselling slider</name>
+        </option>
+        <option value="after_upselling">
+          <name locale="ru_RU">После слайдера схожих товаров</name>
+          <name locale="en_US">after upselling slider</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="cross_sl_title" control_type="text">
+      <value locale="ru_RU">Покупатели также приобретают</value>
+      <value locale="en_US">Customers also bought</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="cross_sl_speed" control_type="text">
+      <value>5000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="cross_sl_count" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">Количество товаров</name>
+      <name locale="en_US">Number of products</name>
+    </setting>
+    <setting var="cross_sl_position" control_type="select">
+      <value>after_tabs</value>
+      <name locale="ru_RU">
+                Расположение
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Слайдер схожих и альтернативных товаров&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Position
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Upselling slider&lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="before_tabs">
+          <name locale="ru_RU">Перед блоком с вкладками</name>
+          <name locale="en_US">Before block with tabs</name>
+        </option>
+        <option value="after_tabs">
+          <name locale="ru_RU">После блока с вкладками</name>
+          <name locale="en_US">After block with tabs</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="upsell_sl" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Отображать слайдер схожих товаров</name>
+      <name locale="en_US">Show upselling slider</name>
+    </setting>
+    <setting var="upsell_sl_title" control_type="text">
+      <value locale="ru_RU">Рекомендуем</value>
+      <value locale="en_US">See also</value>
+      <name locale="ru_RU">Заголовок</name>
+      <name locale="en_US">Title</name>
+    </setting>
+    <setting var="upsell_sl_speed" control_type="text">
+      <value>5000</value>
+      <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
+      <name locale="en_US">Time between transitions (milliseconds)</name>
+    </setting>
+    <setting var="upsell_sl_count" control_type="text">
+      <value>10</value>
+      <name locale="ru_RU">Количество товаров</name>
+      <name locale="en_US">Number of products</name>
+    </setting>
+    <setting var="upsell_sl_position" control_type="select">
+      <value>after_tabs</value>
+      <name locale="ru_RU">
+                Расположение
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Отзывы о товаре&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    Все отзывы о товаре отображаются во вкладке "Отзывы".&lt;br&gt;
+                    Дополнительно можно вывести последние отзывы в разных местах страницы.
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Position
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Product reviews&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    All reviews are shown in the tab "Reviews".&lt;br&gt;
+                    Also You can display last reviews in different places of the page.
+                &lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="before_tabs">
+          <name locale="ru_RU">Перед блоком с вкладками</name>
+          <name locale="en_US">Before block with tabs</name>
+        </option>
+        <option value="after_tabs">
+          <name locale="ru_RU">После блока с вкладками</name>
+          <name locale="en_US">After block with tabs</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="show_reviews_page" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">
+                Отображать отзывы о товаре на отдельной странице
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Отзывы Вконтакте&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    ВАЖНО! В &lt;a href="#ys-soc-1" onclick="$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 600); return false;"&gt;разделе 7.1&lt;/a&gt; должен быть указан Идентификатор (сайта/приложения).
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Show product reviews on new page
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Vkontakte reviews&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    IMPORTANT! App ID should be mentioned in &lt;a href="#ys-soc-1" onclick="$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 600); return false;"&gt;paragraph 7.1&lt;/a&gt;
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="show_vk_reviews" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Отображать вкладку отзывов Вконтакте</name>
+      <name locale="en_US">Show reviews tab from Vkontakte</name>
+    </setting>
+    <setting var="vk_reviews_text" control_type="text">
+      <value locale="ru_RU">Отзывы &lt;i class="vk-icon"&gt;&lt;/i&gt;</value>
+      <value locale="en_US">Reviews &lt;i class="vk-icon"&gt;&lt;/i&gt;</value>
+      <name locale="ru_RU">
+                Текст вкладки
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Отзывы Facebook&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    ВАЖНО! В &lt;a href="#ys-soc-3" onclick="$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 600); return false;"&gt;разделе 7.3&lt;/a&gt; должен быть указан Идентификатор приложения (App ID).
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Tab title
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Facebook reviews&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                    IMPORTANT! App ID should be mentioned in &lt;a href="#ys-soc-3" onclick="$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 600); return false;"&gt;paragraph 7.3&lt;/a&gt;
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="show_fb_reviews" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Отображать вкладку отзывов Facebook</name>
+      <name locale="en_US">Show reviews tab from Facebook</name>
+    </setting>
+    <setting var="fb_reviews_text" control_type="text">
+      <value locale="ru_RU">Отзывы &lt;i class="fb-icon"&gt;&lt;/i&gt;</value>
+      <value locale="en_US">Reviews &lt;i class="fb-icon"&gt;&lt;/i&gt;</value>
+      <name locale="ru_RU">
+                Текст вкладки
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Последние отзывы&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Tab title
+                
+                &lt;p style="color:#000; margin: 20px -500px 10px 0; padding: 5px;"&gt;Last reviews&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="pr_last_reviews" control_type="select">
+      <value>not_show</value>
+      <name locale="ru_RU">Последние отзывы</name>
+      <name locale="en_US">Last reviews</name>
+      <options>
+        <option value="not_show">
+          <name locale="ru_RU">Не отображать</name>
+          <name locale="en_US">Don't show</name>
+        </option>
+        <option value="top">
+          <name locale="ru_RU">В самом верху</name>
+          <name locale="en_US">At the top</name>
+        </option>
+        <option value="after_price">
+          <name locale="ru_RU">Перед артикулами</name>
+          <name locale="en_US">Before skus</name>
+        </option>
+        <option value="after_skus">
+          <name locale="ru_RU">После артикулов</name>
+          <name locale="en_US">After skus</name>
+        </option>
+        <option value="before_tabs">
+          <name locale="ru_RU">Перед вкладками</name>
+          <name locale="en_US">Before tabs</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="pr_last_rev_count" control_type="select">
+      <value>5</value>
+      <name locale="ru_RU">
+                Количество отзывов
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Блок "Поделиться" от Яндекс&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Reviews count
+                
+                &lt;p style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;Yandex "Share" block&lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="5">
+          <name locale="ru_RU">5</name>
+          <name locale="en_US">5</name>
+        </option>
+        <option value="10">
+          <name locale="ru_RU">10</name>
+          <name locale="en_US">10</name>
+        </option>
+        <option value="15">
+          <name locale="ru_RU">15</name>
+          <name locale="en_US">15</name>
+        </option>
+        <option value="20">
+          <name locale="ru_RU">20</name>
+          <name locale="en_US">20</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="yandex_share" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Использовать блок "Поделиться" от Yandex</name>
+      <name locale="en_US">Use Yandex-share block</name>
+    </setting>
+    <setting var="yandex_share_text" control_type="text">
+      <value locale="ru_RU">Поделиться</value>
+      <value locale="en_US">Share</value>
+      <name locale="ru_RU">Текст блока</name>
+      <name locale="en_US">Block text</name>
+    </setting>
+    <setting var="yandex_share_type" control_type="radio">
+      <value>icon</value>
+      <name locale="ru_RU">Внешний вид блока</name>
+      <name locale="en_US">Block type</name>
+      <options>
+        <option value="button">
+          <name locale="ru_RU">Кнопка</name>
+          <name locale="en_US">Button</name>
+        </option>
+        <option value="link">
+          <name locale="ru_RU">Ссылка</name>
+          <name locale="en_US">Link</name>
+        </option>
+        <option value="icon">
+          <name locale="ru_RU">Иконки и меню</name>
+          <name locale="en_US">Icon and menu</name>
+        </option>
+        <option value="none">
+          <name locale="ru_RU">Только иконки</name>
+          <name locale="en_US">Only icons</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="yandex_share_theme" control_type="radio">
+      <value>default</value>
+      <name locale="ru_RU">
+                Тема оформления блока
+                
+                &lt;p style="padding: 10px; margin: 120px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                Выберите социальные сети, которые будут отображены.
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Block theme
+                
+                &lt;p style="padding: 10px; margin: 120px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                Check social networks that will be displayed.
+                &lt;/p&gt;
+                 
+            </name>
+      <options>
+        <option value="dark">
+          <name locale="ru_RU">Блок в темных тонах</name>
+          <name locale="en_US">Dark</name>
+          <description locale="ru_RU">Поддерживаются значки для следующих сервисов: Facebook; Живой Журнал; Одноклассники.ru; Twitter; ВКонтакте.</description>
+          <description locale="en_US">Available icons for services: Facebook; Livejournal; Odnoklassniki; Twitter; Vkontakte.</description>
+        </option>
+        <option value="counter">
+          <name locale="ru_RU">Кнопки со счетчиками</name>
+          <name locale="en_US">Buttons with counter</name>
+          <description locale="ru_RU"> Счетчики есть у следующих сервисов: Facebook; Google+; Мой Мир; Одноклассники.ru; Twitter; ВКонтакте.</description>
+          <description locale="en_US">Available counters for services: Facebook; Google+; Moi mir; Odnoklassniki; Twitter; Vkontakte.</description>
+        </option>
+        <option value="default">
+          <name locale="ru_RU">Блок в обычном виде</name>
+          <name locale="en_US">Default block</name>
+        </option>
+        <option value="icon">
+          <name locale="ru_RU">Иконки и меню</name>
+          <name locale="en_US">Icon and menu</name>
+        </option>
+        <option value="none">
+          <name locale="ru_RU">Только иконки</name>
+          <name locale="en_US">Only icons</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="yandex_share_vkontakte" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Вконтакте</name>
+      <name locale="en_US">Vkontakte</name>
+    </setting>
+    <setting var="yandex_share_blogger" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Blogger</name>
+      <name locale="en_US">Blogger</name>
+    </setting>
+    <setting var="yandex_share_delicious" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Delicious</name>
+      <name locale="en_US">Delicious</name>
+    </setting>
+    <setting var="yandex_share_diary" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Дневники</name>
+      <name locale="en_US">Diary</name>
+    </setting>
+    <setting var="yandex_share_digg" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Digg</name>
+      <name locale="en_US">Digg</name>
+    </setting>
+    <setting var="yandex_share_evernote" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Evernote</name>
+      <name locale="en_US">Evernote</name>
+    </setting>
+    <setting var="yandex_share_facebook" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Facebook</name>
+      <name locale="en_US">Facebook</name>
+    </setting>
+    <setting var="yandex_share_friendfeed" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">FriendFeed</name>
+      <name locale="en_US">FriendFeed</name>
+    </setting>
+    <setting var="yandex_share_gplus" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Google+</name>
+      <name locale="en_US">Google+</name>
+    </setting>
+    <setting var="yandex_share_juick" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Juick</name>
+      <name locale="en_US">Juick</name>
+    </setting>
+    <setting var="yandex_share_liveinternet" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">LiveInternet</name>
+      <name locale="en_US">LiveInternet</name>
+    </setting>
+    <setting var="yandex_share_linkedin" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">LinkedIn</name>
+      <name locale="en_US">LinkedIn</name>
+    </setting>
+    <setting var="yandex_share_lj" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Живой Журнал</name>
+      <name locale="en_US">Livejournal</name>
+    </setting>
+    <setting var="yandex_share_moikrug" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Мой круг</name>
+      <name locale="en_US">Moi krug</name>
+    </setting>
+    <setting var="yandex_share_moimir" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Мой Мир</name>
+      <name locale="en_US">Moi mir</name>
+    </setting>
+    <setting var="yandex_share_myspace" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Myspace</name>
+      <name locale="en_US">Myspace</name>
+    </setting>
+    <setting var="yandex_share_odnoklassniki" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Одноклассники</name>
+      <name locale="en_US">Odnoklassniki</name>
+    </setting>
+    <setting var="yandex_share_pinterest" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Pinterest</name>
+      <name locale="en_US">Pinterest</name>
+    </setting>
+    <setting var="yandex_share_surfingbird" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Surfingbird</name>
+      <name locale="en_US">Surfingbird</name>
+    </setting>
+    <setting var="yandex_share_tutby" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Я тут!</name>
+      <name locale="en_US">I tut</name>
+    </setting>
+    <setting var="yandex_share_twitter" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Twitter</name>
+      <name locale="en_US">Twitter</name>
+    </setting>
+    <setting var="yandex_share_yazakladki" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">
+                Яндекс.Закладки
+                
+                &lt;p id="ys-shop-cart" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;16 Настройки Корзины&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Yandex zakladki
+                
+                &lt;p id="ys-shop-cart" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;16 Cart settings&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="cart_related" control_type="select">
+      <value>after_price</value>
+      <name locale="ru_RU">Блок рекомендуемых товаров</name>
+      <name locale="en_US">Recommended products</name>
+      <options>
+        <option value="hide">
+          <name locale="ru_RU">Не отображать</name>
+          <name locale="en_US">Hide</name>
+        </option>
+        <option value="right">
+          <name locale="ru_RU">Справа в колонке</name>
+          <name locale="en_US">Right sidebar</name>
+        </option>
+        <option value="after_price">
+          <name locale="ru_RU">После блока с ценой</name>
+          <name locale="en_US">After price block</name>
+        </option>
+        <option value="bottom">
+          <name locale="ru_RU">В самом низу страницы</name>
+          <name locale="en_US">At the bottom of the page</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="cart_related_title" control_type="text">
+      <value locale="ru_RU">Рекомендуем</value>
+      <value locale="en_US">Better together</value>
+      <name locale="ru_RU">
+                Заголовок блока
+                
+                &lt;p id="ys-shop-view" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;17 Быстрый просмотр&lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Block title
+                
+                &lt;p id="ys-shop-view" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;17 Quick view&lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="quick_view" control_type="checkbox">
+      <value>1</value>
+      <name locale="ru_RU">Включить возможность быстрого просмотра товара</name>
+      <name locale="en_US">Enable product quick mode</name>
+    </setting>
+    <setting var="quick_view_mob_hide" control_type="checkbox">
+      <value/>
+      <name locale="ru_RU">Скрыть кнопку быстрого просмотра в мобильной версии</name>
+      <name locale="en_US">Hide button in mobile version</name>
+    </setting>
+    <setting var="quick_view_type" control_type="select">
+      <value>image</value>
+      <name locale="ru_RU">Отображать на Витрине</name>
+      <name locale="en_US">Show on Storefront</name>
+      <options>
+        <option value="text">
+          <name locale="ru_RU">Текст</name>
+          <name locale="en_US">Text</name>
+        </option>
+        <option value="button">
+          <name locale="ru_RU">Кнопку</name>
+          <name locale="en_US">Button</name>
+        </option>
+        <option value="image">
+          <name locale="ru_RU">Изображение</name>
+          <name locale="en_US">Image</name>
+        </option>
+      </options>
+    </setting>
+    <setting var="quick_view_image" control_type="image">
+      <value>img/quick_view.png</value>
+      <filename>img/quick_view.*</filename>
+      <name locale="ru_RU">Изображение</name>
+      <name locale="en_US">Image</name>
+    </setting>
+    <setting var="quick_view_text" control_type="text">
+      <value locale="ru_RU">Быстрый просмотр</value>
+      <value locale="en_US">Quick view</value>
+      <name locale="ru_RU">
+                Текст
+                
+                &lt;p id="ys-shop-minorder" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;18 Минимальная сумма заказа&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                Если не хотите использовать ограничения, оставьте поля для минимальных значений пустыми.
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Text
+                 
+                &lt;p id="ys-shop-minorder" style="color:#000; font-weight:bold; margin: 20px -500px 10px 0; background: #ECF0F1;padding: 5px;"&gt;18 Minimal order sum&lt;/p&gt;
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 1px;"&gt;
+                If you do not want to use limitations, leave the fields for minimum values empty.
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="minorder_sum" control_type="text">
+      <value/>
+      <name locale="ru_RU">
+                Минимальная сумма
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Укажите только число. Используйте основную валюту
+                &lt;/p&gt;
+                 
+            </name>
+      <name locale="en_US">
+                Minimal sum
+                
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Specify only digits. Use primary currency
+                &lt;/p&gt;
+                 
+            </name>
+    </setting>
+    <setting var="minorder_error_sum" control_type="text">
+      <value locale="ru_RU">Минимальная сумма заказа %s</value>
+      <value locale="en_US">Minimal sum of order %s</value>
+      <name locale="ru_RU">Текст ошибки для суммы</name>
+      <name locale="en_US">Minimal sum error message</name>
+    </setting>
+    <setting var="blank3" control_type="image_select">
+      <value>blank.png</value>
+      <name locale="ru_RU">
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вместо символов '%s' тема дизайна использует вашу минимальную сумму для заказа.
+                &lt;/p&gt;
+                 </name>
+      <name locale="en_US">
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Instead of '%s' theme will use your minimal sum. Don't forget to mention it.
+                &lt;/p&gt;
+                 </name>
+      <options>
+        <option value="img/blank.png"/>
+      </options>
+    </setting>
+    <setting var="minorder_count" control_type="text">
+      <value/>
+      <name locale="ru_RU">Минимальное количество товаров в заказе</name>
+      <name locale="en_US">Minimal number of products in order</name>
+    </setting>
+    <setting var="minorder_error_count" control_type="text">
+      <value locale="ru_RU">Минимальное количество товаров в заказе: %d</value>
+      <value locale="en_US">Minimal number of products in order is %s</value>
+      <name locale="ru_RU">Текст ошибки для количества</name>
+      <name locale="en_US">Minimal number error message</name>
+    </setting>
+    <setting var="blank4" control_type="image_select">
+      <value>blank.png</value>
+      <name locale="ru_RU">
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Вместо символов '%d' тема дизайна использует ваше минимальное количество товаров.
+                &lt;/p&gt;
+                 </name>
+      <name locale="en_US">
+                &lt;p style="padding: 10px; margin: 20px -500px 10px 0; background: #FBFBFB; border-color: #ccc; border-style: solid; border-width: 0 1px 1px;"&gt;
+                    Instead of '%d' theme will use your minimal number of products. Don't forget to mention it.
+                &lt;/p&gt;
+                 </name>
+      <options>
+        <option value="img/blank.png"/>
+      </options>
+    </setting>
+  </settings>
+  <thumbs>
+    <thumb>80x80</thumb>
+    <thumb>96x96</thumb>
+    <thumb>96xАвто</thumb>
+    <thumb>200xАвто</thumb>
+    <thumb>750xАвто</thumb>
+    <thumb>970xАвто</thumb>
+  </thumbs>
+  <locales>
+    <locale>
+      <msgid>Enter coupon code</msgid>
+      <msgstr locale="ru_RU">Введите купон на скидку</msgstr>
+      <msgstr locale="uk_UA">Введіть купон на знижку</msgstr>
+    </locale>
+    <locale>
+      <msgid>Your current affiliate bonus of &lt;span class="points"&gt;%s points&lt;/span&gt; allows you to get an additonal discount of up to &lt;span class="points"&gt;%s&lt;/span&gt;</msgid>
+      <msgstr locale="ru_RU">Используйте Ваш партнерский бонус в &lt;span class="points"&gt;%s баллов&lt;/span&gt; для получения дополнительной скидки в размере &lt;span class="points"&gt;%s&lt;/span&gt;</msgstr>
+      <msgstr locale="uk_UA">Використайте ваш партнерський бонус в &lt;span class="points"&gt;%s балів&lt;/span&gt; для отримання додаткової знижки в розмірі &lt;span class="points"&gt;%s&lt;/span&gt;</msgstr>
+    </locale>
+    <locale>
+      <msgid>This order will add &lt;span class="points"&gt;+%s&lt;/span&gt; points to your affiliate bonus.</msgid>
+      <msgstr locale="ru_RU">Этот заказ добавит &lt;span class="points"&gt;+%s&lt;/span&gt; баллов к вашему партнерскому бонусу.</msgstr>
+      <msgstr locale="uk_UA">Це замовлення добавить &lt;span class="points"&gt;+%s&lt;/span&gt; балів до вашого партнерського бонусу.</msgstr>
+    </locale>
+    <locale>
+      <msgid>Continue shopping</msgid>
+      <msgstr locale="ru_RU">Продолжить покупки</msgstr>
+      <msgstr locale="uk_UA">Продоавжити покупки</msgstr>
+    </locale>
+    <locale>
+      <msgid>Qty</msgid>
+      <msgstr locale="ru_RU">Кол-во</msgstr>
+      <msgstr locale="uk_UA">Кількість</msgstr>
+    </locale>
+    <locale>
+      <msgid>found</msgid>
+      <msgstr locale="ru_RU">найдено товаров</msgstr>
+      <msgstr locale="uk_UA">знайдено товарів</msgstr>
+    </locale>
+    <locale>
+      <msgid>Small thumbs</msgid>
+      <msgstr locale="ru_RU">Маленькая плитка</msgstr>
+      <msgstr locale="uk_UA">Маленька плитка</msgstr>
+    </locale>
+    <locale>
+      <msgid>Next</msgid>
+      <msgstr locale="ru_RU">Далее</msgstr>
+      <msgstr locale="uk_UA">Дальше</msgstr>
+    </locale>
+    <locale>
+      <msgid>reviews</msgid>
+      <msgstr locale="ru_RU">отзывов</msgstr>
+      <msgstr locale="uk_UA">Відгуків</msgstr>
+    </locale>
+    <locale>
+      <msgid>Leave a review</msgid>
+      <msgstr locale="ru_RU">Оставить отзыв</msgstr>
+      <msgstr locale="uk_UA">Залишити відгук</msgstr>
+    </locale>
+    <locale>
+      <msgid>Average rating</msgid>
+      <msgstr locale="ru_RU">Средний рейтинг</msgstr>
+      <msgstr locale="uk_UA">Середній рейтинг</msgstr>
+    </locale>
+    <locale>
+      <msgid>rating</msgid>
+      <msgstr locale="ru_RU">рейтинг</msgstr>
+      <msgstr locale="uk_UA">рейтинг</msgstr>
+    </locale>
+    <locale>
+      <msgid>items</msgid>
+      <msgstr locale="ru_RU">шт</msgstr>
+      <msgstr locale="uk_UA">шт</msgstr>
+    </locale>
+    <locale>
+      <msgid>No description</msgid>
+      <msgstr locale="ru_RU">Описание отсутствует</msgstr>
+      <msgstr locale="uk_UA">Опис відсутній</msgstr>
+    </locale>
+    <locale>
+      <msgid>To add a review please &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;sign up&lt;/a&gt; or &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;login&lt;/a&gt;</msgid>
+      <msgstr locale="ru_RU">Для того, чтобы оставить комментарий, пожалуйста, &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;зарегистрируйтесь&lt;/a&gt; или &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;авторизуйтесь&lt;/a&gt;</msgstr>
+      <msgstr locale="uk_UA">Щоб залишити коментарій, будь ласка, &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;зареєстрируйтесь&lt;/a&gt; або &lt;a href="%s" rel="nofollow" class="fly-auth"&gt;авторизуйтесь&lt;/a&gt;</msgstr>
+    </locale>
+    <locale>
+      <msgid>Total sum of orders</msgid>
+      <msgstr locale="ru_RU">Общая сумма заказов</msgstr>
+      <msgstr locale="uk_UA">Загальна сума замовлень</msgstr>
+    </locale>
+    <locale>
+      <msgid>Choose option</msgid>
+      <msgstr locale="ru_RU">Выберите вариант</msgstr>
+      <msgstr locale="uk_UA">Виберіть варіант</msgstr>
+    </locale>
+    <locale>
+      <msgid>All reviews</msgid>
+      <msgstr locale="ru_RU">Все отзывы</msgstr>
+      <msgstr locale="uk_UA">Всі відгуки</msgstr>
+    </locale>
+    <locale>
+      <msgid>next</msgid>
+      <msgstr locale="ru_RU">вперед</msgstr>
+      <msgstr locale="uk_UA">вперед</msgstr>
+    </locale>
+    <locale>
+      <msgid>previous</msgid>
+      <msgstr locale="ru_RU">назад</msgstr>
+      <msgstr locale="uk_UA">назад</msgstr>
+    </locale>
+    <locale>
+      <msgid>List</msgid>
+      <msgstr locale="ru_RU">Список</msgstr>
+      <msgstr locale="uk_UA">Список</msgstr>
+    </locale>
+    <locale>
+      <msgid>Small list</msgid>
+      <msgstr locale="ru_RU">Укороченный список</msgstr>
+      <msgstr locale="uk_UA">Укорочений список</msgstr>
+    </locale>
+    <locale>
+      <msgid>Video</msgid>
+      <msgstr locale="ru_RU">Видео</msgstr>
+      <msgstr locale="uk_UA">Видео</msgstr>
+    </locale>
+  </locales>
+</theme>

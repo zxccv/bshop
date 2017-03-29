@@ -1,0 +1,35 @@
+{if empty($slider_id)}{$slider_id = ''}{/if}
+{if empty($search)}{$search = ''}{/if}
+{if empty($search_count)}{$search_count = ''}{/if}
+{if empty($name)}{$name = ''}{/if}
+{if empty($speed)}{$speed = ''}{/if}
+{if empty($photos)}{$photos = ''}{/if}
+{if empty($images)}{$images = ''}{/if}
+{if empty($list)}{$list = ''}{/if}
+{if empty($products)}{$products = ''}{/if}
+{if empty($mode)}{$mode = ''}{/if}
+{if empty($width)}{$width = ''}{/if}
+{if empty($height)}{$height = ''}{/if}
+{if empty($fullwidth)}{$fullwidth = ''}{/if}
+{if empty($auto)}{$auto = ''}{/if}
+{if empty($lazyload)}{$lazyload = 0}{/if}
+{if empty($hide_buttons)}{$hide_buttons = ''}{/if}
+
+{include file="`$wa_parent_theme_path`/slider.html" 
+         slider_id=$slider_id 
+         search=$search
+         search_count=$search_count 
+         name=$name
+         speed=$speed 
+         photos=$photos
+         list=$list
+         products=$products
+         mode=$mode
+         width=$width
+         height=$height
+         images=$images
+         fullwidth=$fullwidth
+         auto=$auto
+         lazyload=$lazyload
+         hide_buttons=$hide_buttons
+         }

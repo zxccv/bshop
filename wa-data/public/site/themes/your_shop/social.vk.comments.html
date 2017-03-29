@@ -1,0 +1,12 @@
+{if !empty($theme_settings.vk_com_id)}
+    <div id="vk_comments"></div>
+    <script type="text/javascript">
+        {if !empty($theme_settings.optimize)}
+            window.js_onload_inline.push("VK.Widgets.Comments('vk_comments', { limit: {$theme_settings.vk_com_number}, attach: {if !empty($theme_settings.vk_com_attach)}'{$theme_settings.vk_com_attach}'{else}'*'{/if} });");
+        {else}
+            VK.Widgets.Comments('vk_comments', {
+                limit: {$theme_settings.vk_com_number}, attach: {if !empty($theme_settings.vk_com_attach)}'{$theme_settings.vk_com_attach}'{else}'*'{/if}
+            });
+        {/if}
+    </script>
+{/if}

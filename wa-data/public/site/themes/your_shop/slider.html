@@ -1,0 +1,306 @@
+{if !empty($photos)}
+
+    {if empty($search_count) || (!empty($search_count) && $search_count < 0)}
+        {$search_count = 10}
+    {/if}
+    {if $wa->photos}
+
+        {$slider_photos = $wa->photos->photos($photos, null, null, $search_count)}
+
+        {if !empty($slider_photos)}
+            {$max_size = $wa->photos->option('max_size')}
+            <div class="slider">
+                <div class='default-loader'><img src="{$wa_parent_theme_url}bxslider/images/bx_loader.gif" alt="[`Loading`]" /> [`Loading`]</div>
+                <ul class="bxslider{if !empty($lazyload)} lazy-slider{/if}">
+                    {foreach $slider_photos as $photo}
+                    <li>
+                        {if $photo.description}<a href="{$photo.description}" title='{$photo.name}'>{/if}
+                            {$slide_width = $photo.width}
+                            {if !empty($width) && $slide_width > $width}
+                                {$slide_width = $width}
+                            {/if}
+                            {$slide_height = $photo.height}
+                            {if !empty($height) && $slide_height > $height}
+                                {$slide_height = $height}
+                            {/if}
+                            {if $slide_width > $max_size}
+                                {$slide_width = $max_size}
+                                {$slide_height = 0}
+                            {/if}
+                            {$size = "`$slide_width`x`$slide_height`"}
+                            <!--[if lte IE 8]><img src="{photosPhoto::getPhotoUrl($photo, $size)}" alt="{$photo.name}" /><![endif]-->
+                            <!--[if !(lte IE 8)]> --><img src='{$wa_parent_theme_url}bxslider/images/bx_loader.gif' class='lazyload' data-src="{photosPhoto::getPhotoUrl($photo, $size)}" alt="{$photo.name}" /><!-- <![endif]-->
+                        {if $photo.description}</a>{/if}
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        {/if}
+    {/if}
+{elseif (!empty($list) || !empty($products) || !empty($search) || !empty($images)) && !empty($slider_id)}
+    {* Slider settings *}
+    {if empty($mode)}{$mode = 'horizontal'}{/if}
+    {if empty($width)}{$width = 200}{/if}
+    {if empty($auto)}{$auto = true}{/if}
+    {if empty($speed)}{$speed = 4000}{/if}
+    {if $mode == 'vertical'}
+        {$width = 150}{$small = 1}{$margin=5}
+    {else}
+        {$small = 0}
+    {/if}
+
+    <div class="slider-{$slider_id} slider-custom list relative">
+        {if !empty($products)}
+            {$slides = $products}
+        {elseif (!empty($search))}
+            {if empty($search_count) || (!empty($search_count) && $search_count < 0)}
+                {$search_count = 10}
+            {/if}
+            {$slides = $wa->shop->products($search, $search_count)}
+        {elseif !empty($list)}
+            {$slides = $wa->shop->productSet($list)}
+        {elseif !empty($images)}
+            {$slides = $images}
+        {/if}
+
+        {if !empty($slides) && count($slides)}
+
+            {$compare = $wa->shop->compare()}
+            {$favourite = waRequest::cookie('shop_yourshop_favourite', [], waRequest::TYPE_ARRAY_INT)}
+
+            {if ($mode == 'vertical' && !empty($name)) || $mode == 'horizontal'}<div class="h3 align-center">{if !empty($name)}{$name|escape}: {/if}</div>{/if}
+
+            {if $mode == 'horizontal'}
+                <div class="slider-controls"></div>
+            {/if}
+
+            <div class="relative">
+                <div class="slider-thumbs-{$slider_id} thumbs {$mode} hide-before-init {if empty($images)}product-list{else}images-slider{/if}">
+                    {if !empty($images)}
+                        {foreach $slides as $s}
+                            <div>{$s}</div>
+                        {/foreach}
+                    {else}
+                    {$ignore_stock_count = $wa->shop->settings('ignore_stock_count')}
+                    {if $theme_settings.show_cat_thumbs !== 'hide' || !empty($theme_settings.show_cat_sku_sku) || !empty($theme_settings.show_cat_sku_name) || $theme_settings.cat_main_image == 'sku'}
+                        {$skus_sl = $wa->shop->skus($slides|array_keys)}
+                        {$product_skus_sl = []}
+                        {$common_skus_sl = []}
+                        {foreach $skus_sl as $sk}
+                            {foreach $sk as $s1}
+                                {if $theme_settings.show_cat_thumbs == 'skus' && $sk|count > 1}
+                                    {if $slides[$s1.product_id].status && $s1.available && ($ignore_stock_count || $s1.count === null || $s1.count > 0) && $s1.image_id}
+                                        {if !empty($theme_settings.cat_thumbs_unique)}
+                                            {$product_skus_sl[$s1.product_id][$s1.image_id] = $s1}
+                                        {else}
+                                            {$product_skus_sl[$s1.product_id][] = $s1}
+                                        {/if}
+                                    {/if}
+                                {/if}
+                                {$common_skus_sl[$s1.product_id][$s1.id] = $s1}
+                            {/foreach}
+                        {/foreach}
+                        {$product_images_sl = $wa->shop->images($slides|array_keys)}
+                    {/if}
+
+                    {$isMobile = 0}
+                    {if $wa->isMobile() || $wa->userAgent('device')}
+                        {$isMobile = 1}
+                    {/if}
+
+                    {foreach $slides as $s}
+                    {$available = $ignore_stock_count || $s.count === null || $s.count > 0}
+                    {if (!empty($product_skus_sl[$s.id]) && ($product_skus_sl[$s.id]|count > 1 || ($product_skus_sl[$s.id]|count == 1 && !isset($product_skus_sl[$s.id][$common_skus_sl[$s.id][$s.sku_id].image_id])))) || (empty($product_skus_sl[$s.id]) && $theme_settings.show_cat_thumbs == 'images' && !empty($product_images_sl[$s.id]) && $product_images_sl[$s.id]|count > 1)}
+                        {$has_images = 1}
+                        {if $wa->shop->config('enable_2x')}
+                            {$small_size = '48x48@2x'}
+                            {$large_size = '200x0@2x'}
+                        {else}
+                            {$small_size = '48x48'}
+                            {$large_size = '200x0'}
+                        {/if}
+                    {else}
+                        {$has_images = 0}
+                    {/if}
+                    <div>
+                        <div itemscope itemtype ="http://schema.org/Product" data-id="{$s.id}" class="product-item{if !$isMobile} not-mobile{/if}{if $has_images} has-images type-slider{/if}">
+                            <form class="addtocart" method="post" {if $s.sku_count > 1}data-url="{$s.frontend_url}{if strpos($s.frontend_url, '?')}&{else}?{/if}cart=1"{/if} action="{$wa->getUrl('/frontendCart/add')}">
+                                {if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus_sl[$s.id][$s.sku_id].sku)}<div class="sku">[`SKU`]: {$common_skus_sl[$s.id][$s.sku_id].sku|escape}</div>{/if}
+                                <div class="image{if $has_images} swipeable{/if}" data-small="{$wa->shop->productImgHtml($s, '96x96', ['itemprop' => 'image', 'alt' => $s.name|escape, 'default' => "`$wa_theme_url`img/dummy96.jpg"])|escape}">
+                                    {* Отображение миниатюр в моб версии или для типа отображения "слайдер" *}
+                                    {if $has_images}
+                                        <a href="javascript:void(0)" class="image-thumbs-nav s-prev" title="[`previous`]"><i class="fa fa-chevron-left"></i></a>
+                                        <a href="javascript:void(0)" class="image-thumbs-nav s-next" title="[`next`]"><i class="fa fa-chevron-right"></i></a>
+                                    {/if}
+
+                                    {if !empty($theme_settings.discount_badge) && $s.compare_price > 0}
+                                        {$discount_badge = (100*(1 - $s.price/$s.compare_price))}
+                                        {if $discount_badge > 0}
+                                            {if $discount_badge > 99 || $discount_badge < 1}{$discount_badge = $discount_badge|round:2}{else}{$discount_badge = $discount_badge|round}{/if}
+                                            <div class="badge discount-badge crimson"><span>- {$discount_badge}%</span></div>
+                                        {/if}
+                                    {/if}
+                                    {$badge_html = $wa->shop->badgeHtml($s.badge)}
+                                    {if $badge_html}
+                                        {$badge_html}
+                                    {/if}
+
+                                    {* Отображение миниатюр в моб версии или для типа отображения "слайдер" *}
+                                    {if $has_images}
+                                        {if $theme_settings.show_cat_thumbs == 'skus'}
+                                            <a href="{$s.frontend_url}" title="{$s.name}" data-sku-id="{$s.sku_id}s" class="product-image" data-images-keys='{$s.sku_id}s{foreach $product_skus_sl[$s.id] as $psi}{if !empty($product_images_sl[$s.id][$psi.image_id]) && $psi.id !== $s.sku_id},{$psi.id}s{/if}{/foreach}' data-images='{ "{$s.sku_id}s":{ "id": "{$s.sku_id}", "largeImg": "{$wa->shop->productImgUrl(["image_id" => $common_skus_sl[$s.id][$s.sku_id].image_id, "id" => $s.id, "ext" => $product_images_sl[$s.id][$common_skus_sl[$s.id][$s.sku_id].image_id].ext, "image_filename" => $product_images_sl[$s.id][$common_skus_sl[$s.id][$s.sku_id].image_id].filename], "200x0", ["itemprop" => "image", "alt" => $s.name, "default" => "`$wa_theme_url`img/dummy200.jpg"])|escape}", "price": "{if $s.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($s.price)|replace:'"':'\"'}{else}{shop_currency($s.price)}{/if}{else}0{/if}", "comparepr": "{if $s.compare_price > 0 && $s.compare_price > $s.price}{if $theme_settings.ruble == 'html'}{shop_currency_html($s.compare_price)|replace:'"':'\"'}{else}{shop_currency($s.compare_price)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus_sl[$s.id][$s.sku_id].sku)}, "sku": "{$common_skus_sl[$s.id][$s.sku_id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus_sl[$s.id][$s.sku_id].name)}, "skuName": "{$common_skus_sl[$s.id][$s.sku_id].name|replace:'"':'\"'|escape}"{/if} }{foreach $product_skus_sl[$s.id] as $psi}{if $psi.id !== $s.sku_id}{if !empty($product_images_sl[$s.id][$psi.image_id]) && $psi.id !== $s.sku_id},"{$psi.id}s": { "id": "{$psi.id}", "img": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images_sl[$s.id][$psi.image_id].ext, "filename" => $product_images_sl[$s.id][$psi.image_id].filename], "48x48")|escape}", "largeImg": "{$wa->shop->imgUrl(["id" => $psi.image_id, "product_id" => $psi.product_id, "ext" => $product_images_sl[$s.id][$psi.image_id].ext, "filename" => $product_images_sl[$s.id][$psi.image_id].filename], "200x0")|escape}", "comparepr": "{if $psi.compare_price > 0 && $psi.compare_price > $psi.price}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.compare_price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.compare_price, $psi.currency)}{/if}{else}0{/if}", "price": "{if $psi.price > 0}{if $theme_settings.ruble == "html"}{shop_currency_html($psi.price, $psi.currency)|replace:'"':'\"'}{else}{shop_currency($psi.price, $psi.currency)}{/if}{else}0{/if}"{if !empty($theme_settings.show_cat_sku_sku) && !empty($common_skus_sl[$psi.product_id][$psi.id].sku)}, "sku": "{$common_skus_sl[$psi.product_id][$psi.id].sku|replace:'"':'\"'|escape}"{/if}{if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus_sl[$psi.product_id][$psi.id].name)}, "skuName": "{$common_skus_sl[$psi.product_id][$psi.id].name|replace:'"':'\"'|escape}"{/if} }{/if}{/if}{/foreach} }'>
+                                        {else}
+                                            <a href="{$s.frontend_url}" title="{$s.name}" class="product-image" data-sku-id="{$s.image_id}s" data-images-keys='{foreach $product_images_sl[$s.id] as $psi}{if !$s.image_id && $psi@first}0{else}{$psi.id}{/if}s{if !$psi@last},{/if}{/foreach}' data-images='{ {foreach $product_images_sl[$s.id] as $psi}"{if !$s.image_id && $psi@first}0{else}{$psi.id}{/if}s": { "id": "{$psi.id}", "largeImg": "{$wa->shop->productImgUrl(["image_id" => $psi.id, "id" => $s.id, "ext" => $psi.ext, "image_filename" => $psi.filename], $large_size, ["itemprop" => "image", "alt" => $s.name, "default" => "`$wa_theme_url`img/dummy200.jpg"])|escape}" }{if !$psi@last},{/if}{/foreach} }'>
+                                        {/if}
+                                    {else}
+                                        <a href="{$s.frontend_url}" title="{$s.name}" class="product-image">
+                                    {/if}
+
+                                       {if !empty($common_skus_sl[$s.id][$s.sku_id].image_id) && $theme_settings.cat_main_image == 'sku'}
+                                            {$wa->shop->productImgHtml(["image_id" => $common_skus_sl[$s.id][$s.sku_id].image_id, "id" => $s.id, "ext" => $product_images_sl[$s.id][$common_skus_sl[$s.id][$s.sku_id].image_id].ext, "image_filename" => $product_images_sl[$s.id][$common_skus_sl[$s.id][$s.sku_id].image_id].filename], '200x0', ['itemprop' => 'image', 'alt' => $s.name,  'class'=> 'adaptive-img', 'default' => "`$wa_theme_url`img/dummy200.jpg"])}
+                                        {else}
+                                            {$wa->shop->productImgHtml($s, '200x0', ['itemprop' => 'image', 'alt' => $s.name,  'class'=> 'adaptive-img', 'default' => "`$wa_theme_url`img/dummy200.jpg"])}
+                                        {/if}
+                                    </a>
+
+                                    {$quickorder = 0}
+                                    {if $wa->shop && $wa->app() == 'shop' && $wa->setting('update_time','','shop.quickorder') && $theme_settings.quickorder_plugin_cat && $mode !== 'vertical'}
+                                        {$quickorder = 1}
+                                    {/if}
+
+                                    {$quick_view = 0}
+                                    {if !empty($theme_settings.quick_view) && (!$isMobile || ($isMobile && empty($theme_settings.quick_view_mob_hide)))}
+                                        {$quick_view = 1}
+                                        <a href="{$s.frontend_url}" class="quick-view{if $theme_settings.quick_view_type !== 'image'} text{/if}{if $theme_settings.quick_view_type == 'button'} no-underline{/if}{if $quickorder} has-quickorder{/if}"{if !empty($theme_settings.quick_view_text)} title="{$theme_settings.quick_view_text}"{/if}>
+                                            {if $theme_settings.quick_view_type == 'image'}
+                                                <img src="{$wa_theme_url}{$theme_settings.quick_view_image}" alt="{if !empty($theme_settings.quick_view_text)}{$theme_settings.quick_view_text}{/if}" />
+                                            {else}
+                                                <span{if $theme_settings.quick_view_type == 'button'} class='button'{/if}>
+                                                    {$theme_settings.quick_view_text}
+                                                </span>
+                                            {/if}
+                                        </a>
+                                    {/if}
+
+                                    {* Плагин "Купить в 1 клик"
+                                     * Ссылка: http://www.webasyst.ru/store/plugin/shop/quickorder/
+                                     * Plugin "1-Click Ordering"
+                                     * Link: http://www.webasyst.com/store/plugin/shop/quickorder/
+                                     *}
+                                    {if $quickorder && (!$isMobile || ($isMobile && empty($theme_settings.quickorder_plugin_cat_hide)))}
+                                        <div{if $quick_view} class="has-quickview"{/if}>{shopQuickorderPlugin::quickorderForm($s, 0)}</div>
+                                    {/if}
+                                </div>
+                                <h5 itemprop="name"{if empty($theme_settings.cat_fixed_name)} class="not-fixed"{/if}>
+                                    <a href="{$s.frontend_url}" title="{$s.name|escape}">
+                                        {$s.name|truncate:90}
+                                        {if !empty($theme_settings.show_cat_sku_name) && !empty($common_skus_sl[$s.id][$s.sku_id].name)}<span class="sku-name">{$common_skus_sl[$s.id][$s.sku_id].name|escape}</span>{/if}
+                                    </a>
+                                </h5>
+                                {if $s.summary}<meta itemprop="description" content="{$s.summary|strip_tags|escape}">{/if}
+                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                    <div class="prices">
+                                        {if $s.compare_price > 0}<span class="compare-price">{if $theme_settings.ruble == 'html'}{shop_currency_html($s.compare_price)}{else}{shop_currency($s.compare_price)}{/if}</span>{/if}
+                                        <span class="price{if $s.compare_price > 0} colored{/if}" itemprop="price">{if $theme_settings.ruble == 'html'}{shop_currency_html($s.price)}{else}{shop_currency($s.price)}{/if}</span>
+                                    </div>
+                                    {if empty($hide_buttons)}
+                                        <div class="addtocart-form{if !$available} disabled{/if}">
+                                            {if !empty($theme_settings.show_compare)}
+                                                <a href="javascript:void(0)" class="action-icon compare-link{if $compare && isset($compare[$s.id])} active{/if}" data-product="{$s.id}" title="{if $compare && isset($compare[$s.id])}[`Remove from compare list?`]{else}[`Add to compare list?`]{/if}"><i class="ys ys-compare"></i></a>
+                                            {/if}
+                                            {if $available}
+                                                <input type="hidden" name="product_id" value="{$s.id}">
+                                                <input type="submit" value="[`Buy`]">
+                                                <link itemprop="availability" href="http://schema.org/InStock" />
+                                            {else}
+                                                <input type="submit" value="{if $ignore_stock_count}[`Pre-order only`]{else}[`Out of stock`]{/if}" class="disabled" disabled="disabled" title="{if $ignore_stock_count}[`Pre-order only`]{else}[`Out of stock`]{/if}">
+                                                <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                                            {/if}
+                                            <meta itemprop="price" content="{$s.price}">
+                                            <meta itemprop="priceCurrency" content="{$wa->shop->primaryCurrency()}">
+                                            {if !empty($theme_settings.show_favourite)}
+                                                <a href="javascript:void(0)" class="action-icon favourite-link{if in_array($s.id, $favourite)} active{/if}" data-product="{$s.id}" title="{if in_array($s.id, $favourite)}[`Remove from Wish list?`]{else}[`Add to Wish list?`]{/if}"><i class="ys ys-heart"></i></a>
+                                            {/if}
+                                        </div>
+                                    {/if}
+                                    <div class="rating">{if $s.rating > 0}{$wa->shop->ratingHtml($s.rating, 16)}{/if}</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {/foreach}
+                    {/if}
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                {if !empty($theme_settings.optimize)}
+                    window.js_onload_inline.push("$(function() { {if empty($images)} var slider = $('.slider-thumbs-{$slider_id}.product-list').slick({ infinite: false, autoplaySpeed: '{$speed}', draggable: false, autoplay: {$auto} === 1, respondTo: 'slider', {if $mode == 'horizontal'} prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>', nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>', appendArrows: $('.slider-thumbs-{$slider_id}.product-list').closest('.slider-custom').find('.slider-controls'), responsive: [{ breakpoint: 1285, settings: { slidesToScroll: 5, slidesToShow: 5 } }, { breakpoint: 1200, settings: { slidesToScroll: 4, slidesToShow: 4 } }, { breakpoint: 930, settings: { slidesToScroll: 3, slidesToShow: 3 } }, { breakpoint: 639, settings: { slidesToScroll: 2, slidesToShow: 2 } }, { breakpoint: 420, settings: { slidesToScroll: 1, slidesToShow: 1 } }] {else} prevArrow: '<i class=\"fa fa-chevron-up\"></i>', nextArrow: '<i class=\"fa fa-chevron-down\"></i>', vertical: true, slidesToShow: 2, slidesToScroll: 1, {/if} }); {else} var slider = $('.slider-thumbs-{$slider_id}.images-slider').slick({ infinite: false, autoplaySpeed: '{$speed}', prevArrow: '<span class=\"slider-prev\"><i class=\"fa fa-caret-left\"></i></span>', nextArrow: '<span class=\"slider-next\"><i class=\"fa fa-caret-right\"></i></span>', appendArrows: $('.slider-thumbs-{$slider_id}.images-slider').closest('.slider-custom').find('.slider-controls'), draggable: false, autoplay: true, lazyLoad: 'ondemand', slidesToShow: 1, slidesToScroll: 1, fade: true, cssEase: 'linear' }); {/if} });");
+                {else}
+                    $(function() {
+                        {if empty($images)}
+                            var slider = $('.slider-thumbs-{$slider_id}.product-list').slick({
+                                infinite: false,
+                                autoplaySpeed: "{$speed}",
+                                draggable: false,
+                                autoplay: {$auto} === 1,
+                                respondTo: 'slider',
+                                {if $mode == 'horizontal'}
+                                    prevArrow: '<span class="slider-prev"><i class="fa fa-caret-left"></i></span>',
+                                    nextArrow: '<span class="slider-next"><i class="fa fa-caret-right"></i></span>',
+                                    appendArrows: $('.slider-thumbs-{$slider_id}.product-list').closest(".slider-custom").find(".slider-controls"),
+                                    responsive: [{
+                                        breakpoint: 1285,
+                                        settings: { slidesToScroll: 5, slidesToShow: 5 }
+                                    },
+                                    {
+                                        breakpoint: 1200,
+                                        settings: { slidesToScroll: 4, slidesToShow: 4 }
+                                    }, {
+                                        breakpoint: 930,
+                                        settings:  { slidesToScroll: 3, slidesToShow: 3 }
+                                    }, {
+                                        breakpoint: 639,
+                                        settings: { slidesToScroll: 2, slidesToShow: 2 }
+                                    }, {
+                                        breakpoint: 420,
+                                        settings: { slidesToScroll: 1, slidesToShow: 1 }
+                                    }]
+                                {else}
+                                prevArrow: '<i class="fa fa-chevron-up"></i>',
+                                nextArrow: '<i class="fa fa-chevron-down"></i>',
+                                vertical: true,
+                                slidesToShow: 2,
+                                slidesToScroll: 1,
+                                {/if}
+                            });
+                        {else}
+                            var slider = $('.slider-thumbs-{$slider_id}.images-slider').slick({
+                                infinite: false,
+                                autoplaySpeed: "{$speed}",
+                                prevArrow: '<span class="slider-prev"><i class="fa fa-caret-left"></i></span>',
+                                nextArrow: '<span class="slider-next"><i class="fa fa-caret-right"></i></span>',
+                                appendArrows: $('.slider-thumbs-{$slider_id}.images-slider').closest(".slider-custom").find(".slider-controls"),
+                                draggable: false,
+                                autoplay: true,
+                                lazyLoad: 'ondemand',
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                fade: true,
+                                cssEase: 'linear'
+                            });
+                        {/if}
+                    });
+                {/if}
+            </script>
+        {else}
+            {$sl_set = ""}
+            {if !empty($search)}
+                {$sl_set = $search|regex_replace:["/(set\/)/", "/(category\/)/", "/(tag\/)/"]:""}
+            {elseif !empty($list)}
+                {$sl_set = $list}
+            {/if}
+            <p class="hint align-center">{sprintf('[`Products with the ID <strong>%s</strong> either does not exist or does not contain any product. Add some products into a product set/category/tag`]',{$sl_set})}</p>
+        {/if}
+    </div>
+{/if}

@@ -1,0 +1,23 @@
+{if $wa->currentUrl() !== $wa->getUrl('/frontend/myOrders')}
+    <li class="shop {if $my_nav_selected == 'orders'}selected{/if}">
+        <a href="{$wa->getUrl('/frontend/myOrders')}" title='[`My orders`]'>[`My orders`]</a>
+    </li>
+{/if}
+
+{if $my_app == $wa->app() && $wa->currentUrl() !== $wa->getUrl('/frontend/myProfile')}
+    <li class="shop {if $my_nav_selected == 'profile'}selected{/if}">
+        <a href="{$wa->getUrl('/frontend/myProfile')}" title='[`My profile`]'>[`My profile`]</a>
+    </li>
+{/if}
+
+{if shopAffiliate::isEnabled() && $wa->currentUrl() !== $wa->getUrl('/frontend/myAffiliate')}
+    <li class="shop {if $my_nav_selected == 'affiliate'}selected{/if}">
+        <a href="{$wa->getUrl('/frontend/myAffiliate')}" title='[`Affiliate program`]'>[`Affiliate program`]</a>
+    </li>
+{/if}
+
+<!-- plugin hook: 'frontend_my_nav' -->
+{* @event frontend_my_nav.%plugin_id% *}
+{foreach $frontend_my_nav as $_plugin => $_}
+<li class="shop {if waRequest::param('plugin') == str_replace('-plugin', '', $_plugin)}selected{/if}">{$_}</li>
+{/foreach}

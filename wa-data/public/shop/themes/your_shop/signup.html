@@ -1,0 +1,21 @@
+<div class="wrap page-page">
+   <div class="content">
+
+        {include file="`$wa_parent_theme_path`/sidebar.html"}
+
+        <div class="content-sidebar{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+            <div class="yourshop-form auth-form">
+                <div role="main">
+                    {if !empty($contact)}
+                        <h1>[`Thank you!`]</h1>
+                        <p class="success-signed">[`You have successfully signed up.`]</p>
+                    {else}
+                        <h1>[`Sign up`]</h1>
+                        {$wa->authAdapters()}
+                        {$wa->signupForm($errors)}
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

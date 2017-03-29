@@ -1,0 +1,58 @@
+{if $wa->get('query')}
+    {$wa->globals('last_crumb', $wa->get('query'))}
+{/if}
+
+<div class="wrap category-content">
+
+    {if !empty($theme_settings.sidebar_catalog)}
+        {include file="`$wa_parent_theme_path`/sidebar.html"}
+    {/if}
+
+    <div class="content-sidebar{if !empty($theme_settings.sidebar_catalog)}{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}{else} without-sidebar{/if}">
+
+        {$favourite = $wa->get('favourite')}
+        {$viewed_products = $wa->get('viewed_products')}
+
+        {if $favourite}
+            {$favourite_cookie = waRequest::cookie('shop_yourshop_favourite', '', waRequest::TYPE_STRING)}
+            {$products = $wa->shop->products('id/'|cat:$favourite_cookie)}
+            {$sorting=null}
+            {$pages_count = 1}
+        {/if}
+
+        {if $viewed_products}
+            {$viewed = waRequest::cookie('shop_yourshop_viewed', '', waRequest::TYPE_STRING)}
+            {$products = $wa->shop->products('id/'|cat:$viewed)}
+            {$sorting=null}
+            {$pages_count = 1}
+        {/if}
+
+        <h1 class="category-name">
+            {if $favourite || $viewed_products}
+                {$wa->title($wa->get('title'))}
+                {$wa->get('title')} {if $viewed_products && $viewed} <a href="javascript:void(0)" title="[`Reset`]" class="cancel-viewed">([`Reset`])</a> {/if}
+                {if $favourite && $favourite_cookie} <a href="javascript:void(0)" title="[`Reset`]" class="cancel-favourite">([`Reset`])</a> {/if}
+                {$products_count = count($products)}
+                {$theme_settings.products_per_page = 0}
+            {else}
+                {$title}
+            {/if}
+        </h1>
+
+        <!-- plugin hook: 'frontend_search' -->
+        {* @event frontend_search.%plugin_id% *}
+        {foreach $frontend_search as $plugin_name => $_}
+            {$_}
+        {/foreach}
+
+        <div id="product-list">
+            {if !$products}
+                <p class="align-center double-padded">[`No products were found.`]</p>
+            {else}
+                {include file='catalog.html' is_category=1}
+            {/if}
+        </div>
+    </div>
+    <div class="clear-both"></div>
+</div>
+{if !empty($theme_settings.sidebar_catalog)}{$wa->globals('hasSidebar', 1)}{/if}

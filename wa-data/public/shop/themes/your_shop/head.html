@@ -1,0 +1,78 @@
+{$is_homepage = $wa->globals('home_page')}
+{if $is_homepage}
+    {if $wa->photos && !empty($theme_settings.photos_slider)}
+        <link href="{$wa_theme_url}bxslider/jquery.bxslider.css?{$wa_theme_version}" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="{$wa_theme_url}bxslider/jquery.bxslider.min.js"></script>
+    {/if}
+    {if !empty($theme_settings.html_slider)}
+        <link href="{$wa_active_theme_url}igaponov/jquery_cslider/css/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="{$wa_active_theme_url}igaponov/jquery_cslider/js/jquery.cslider.js"></script>
+    {/if}
+    {$wa_promos = $wa->shop->promos()}
+    {if $wa_promos}
+        <script type="text/javascript" src="{$wa_active_theme_url}igaponov/jquerycountdowntimer/jquery.countdownTimer.min.js?v={$wa->version(true)}"></script>
+    {/if}
+{/if}
+
+{if !empty($theme_settings.optimize)}
+    <link href="{$wa_active_theme_url}yourshop.shop.min.css?{$wa_theme_version}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{$wa_active_theme_url}yourshop.shop.min.js?v={$wa_theme_version}"></script>
+    <script type="text/javascript">
+        window.js_onload.push("{$wa_active_theme_url}onload.js");
+        {if !empty($filters)}
+            window.js_onload.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js");
+            window.js_onload.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js");
+            window.js_onload.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js");
+            window.js_onload.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js");
+            window.js_onload.push("{$wa_active_theme_url}filter.min.js");
+        {/if}
+        {if !empty($theme_settings.yandex_share) && $wa->globals('product_page')}
+            window.js_onload.push("//yastatic.net/share/share.js");
+        {/if}
+
+        {if $is_homepage}
+            {if !empty($theme_settings.html_slider)}
+                window.js_onload_inline.push("WebFontConfig = { google: { families: [ 'Noto+Sans:400,700:latin,cyrillic' ] } }; (function() { var wf = document.createElement('script'); wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'; wf.type = 'text/javascript'; wf.async = 'true'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wf, s); })();");
+            {/if}
+        {/if}
+        {if $wa->shop->config('enable_2x')}
+            window.js_onload.push("{$wa_static_url}wa-content/js/jquery-plugins/jquery.retina.min.js?v{$wa->version(true)}");
+            window.js_onload_inline.push("$('.bxslider img:not(\".lazy-slide\"),.product-list img,.related img, .thumbs-container img, #zoom, .cart img').retina();");
+        {/if}
+        window.js_onload.push("{$wa_app_static_url}js/lazy.load.js?v={$wa_theme_version}");
+        window.js_onload.push("{$wa_active_theme_url}lazyloading.min.js");
+    </script>
+{else}
+    <link href="{$wa_active_theme_url}yourshop.shop.css?{$wa_theme_version}" rel="stylesheet" type="text/css">
+    {if !empty($filters)}
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js"></script>
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js"></script>
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js"></script>
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js"></script>
+        <script type="text/javascript" src="{$wa_active_theme_url}filter.js"></script>
+    {/if}
+    {if !empty($theme_settings.yandex_share) && $wa->globals('product_page')}
+        <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+    {/if}
+    {if $is_homepage}
+        {if !empty($theme_settings.html_slider)}
+            <script type="text/javascript">WebFontConfig = { google: { families: [ 'Noto+Sans:400,700:latin,cyrillic' ] } }; (function() { var wf = document.createElement('script'); wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'; wf.type = 'text/javascript'; wf.async = 'true'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wf, s); })(); </script>
+        {/if}
+    {/if}
+    {if $wa->shop->config('enable_2x')}
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.retina.min.js?v{$wa->version(true)}"></script>
+        <script type="text/javascript">$(window).load(function(){ $('.bxslider img:not(".lazyload"),.product-list img,.related img, .thumbs-container img, #zoom, .cart img').retina(); });</script>
+    {/if}
+    <script type="text/javascript" src="{$wa_app_static_url}js/lazy.load.js?v={$wa_theme_version}"></script>
+    <script type="text/javascript" src="{$wa_active_theme_url}yourshop.shop.js?v={$wa_theme_version}"></script>
+    <script type="text/javascript" src="{$wa_active_theme_url}lazyloading.js"></script>
+{/if}
+
+{if !empty($nofollow)}
+    <!-- "nofollow" for pages not to be indexed, e.g. customer account -->
+    <meta name="robots" content="noindex,nofollow" />
+{/if}
+
+<!-- plugin hook: 'frontend_head' -->
+{* @event frontend_head.%plugin_id% *}
+{foreach $frontend_head as $_}{$_}{/foreach}

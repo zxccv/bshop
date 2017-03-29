@@ -1,0 +1,65 @@
+{if $wa->shop}{$shop_pages=$wa->shop->pages()}{/if}
+{if $wa->photos}{$photos_pages=$wa->photos->pages()}{/if}
+{if $wa->blog}{$blog_pages=$wa->blog->pages()}{/if}
+{if $wa->hub}{$hub_pages=$wa->hub->pages()}{/if}
+{if $wa->helpdesk}{$helpdesk_pages=$wa->helpdesk->pages()}{/if}
+{$pages=$wa->site->pages()}
+
+{function name=build_pages}
+    {if !empty($pages)}
+        {foreach $pages as $p}
+            <li>
+                {if $level == 1 && $p@first}
+                    <a href="javascript:void(0)" class="mobile-close" title='[`close`]'>X</a>
+                {/if}
+                <a href="{$p.url}" {if $wa->currentUrl() == $p.url}class="selected"{/if} title="{$p.name|escape}">
+                    {$p.name|escape}
+                    {if isset($p.childs) && empty($p.hide_childs)}
+                        {if $level == 0}
+                            <i class="fa fa-chevron-down"></i>
+                        {elseif $level > 0}
+                            <i class="fa fa-chevron-right"></i>
+                        {/if}
+                    {/if}
+                </a>
+                {if isset($p.childs) && empty($p.hide_childs)}
+                <ul class="menu-v dropdown">
+                    {build_pages pages=$p.childs level=$level+1}
+                </ul>
+                {/if}
+            </li>
+        {/foreach}
+    {/if}
+{/function}
+
+{capture name=horiz_menu_pages}
+    {if $wa->shop && !empty($theme_settings.show_pages_shop)}{build_pages pages=$shop_pages level=0}{/if}
+    {if $wa->photos && !empty($theme_settings.show_pages_photos)}{build_pages pages=$photos_pages level=0}{/if}
+    {if $wa->blog && !empty($theme_settings.show_pages_blog)}{build_pages pages=$blog_pages level=0}{/if}
+    {if $wa->hub && !empty($theme_settings.show_pages_hub)}{build_pages pages=$hub_pages level=0}{/if}
+    {if $wa->helpdesk && !empty($theme_settings.show_pages_helpdesk)}{build_pages pages=$helpdesk_pages level=0}{/if}
+    {if !empty($theme_settings.show_pages_site)}{build_pages pages=$pages level=0}{/if}
+{/capture}
+
+<div class="pages-block float-left">
+    <ul class="menu-h">
+        {if $theme_settings.horizontal_menu_pages == 'before'}
+            {$smarty.capture.horiz_menu_pages}
+        {/if}
+        {if !empty($theme_settings.show_pages_apps)}
+            {foreach $wa->apps() as $a}
+                {if !empty($a.url)}
+                    <li>
+                        <a href="{$a.url}" {if $wa_app_url == $a.url}class="selected"{/if} title="{$a.name|escape}">
+                            {$a.name|escape}
+                        </a>
+                    </li>
+                {/if}
+            {/foreach}
+        {/if}
+        {if $theme_settings.horizontal_menu_pages == 'after'}
+            {$smarty.capture.horiz_menu_pages}
+        {/if}
+    </ul>
+   
+</div>

@@ -1,0 +1,215 @@
+<script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
+<script type="text/javascript" src="{$wa_theme_url}reviews.min.js"></script>
+
+<!-- DON'T REMOVE AND CHANGE THIS LINES -->
+<div class='add-js hidden' data-js="{$wa_app_static_url}js/rate.widget.js"></div>
+<div class='add-js hidden' data-js="{$wa_theme_url}reviews.min.js"></div>
+<!---------------------------------------->
+
+{$wa->globals('last_crumb', '[`Reviews`]')}
+
+{capture name=product_name}
+    {$wa->title(sprintf('[`%s reviews`]', $product.name))}
+    <h1>{sprintf('[`%s reviews`]', $product.name|escape)}</h1>
+{/capture}
+
+<div class="wrap product-page{if $theme_settings.image_thumbs == 'down'} thumbs-down{else} thumbs-left{/if}{if (count($product.images) == 1 || !$product.images) && $theme_settings.image_thumbs == 'left'} no-thumbs{/if}{if !empty($theme_settings.product_catalog) && $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.product_catalog)} has-sidebar{/if}" itemscope itemtype="http://schema.org/Product">
+
+    {if !empty($theme_settings.product_catalog) || !empty($theme_settings.product_catalog_mob)}
+        {include file="`$wa_parent_theme_path`/sidebar.html" normal_sidebar=!empty($theme_settings.product_catalog) mobile_sidebar=!empty($theme_settings.product_catalog_mob)}
+    {/if}
+    {if !empty($theme_settings.product_catalog)}
+    <div class="content-sidebar{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}">
+        {$smarty.capture.product_name}
+    {/if}
+
+    <div class="product-info">
+        {if empty($theme_settings.product_catalog)}
+            {$smarty.capture.product_name}
+        {/if}
+    </div>
+    <div class="product-full">
+        <ul class="menu-h" id="product-tabs">
+            <li><a href="{$wa->shop->productUrl($product)}" title="[`Overview`]">[`Overview`]</a></li>
+            <li class="selected">
+                <a href="{$wa->shop->productUrl($product, 'reviews')}" title="[`Reviews`]">[`Reviews`] <span class="hint count">{$reviews_total_count}</span></a>
+            </li>
+            {if $product.features && $theme_settings.product_features == 'tabs'}
+                <li>
+                    <a href="{$wa->shop->productUrl($product)}#/features/" rel="nofollow" title="[`Features`]">[`Features`]</a>
+                </li>
+            {/if}
+            {foreach $product.pages as $page}
+                <li><a href="{if !empty($theme_settings.show_page_page)}{$wa->shop->productUrl($product, 'page', ['page_url' => $page.url|escape])}{else}{$wa->shop->productUrl($product)}#/page-{$page.url|regex_replace:'/[\s]/':'_'}{/if}"{if empty($theme_settings.show_page_page)} rel="nofollow"{/if} title="{$page.name|escape}">{$page.name|escape}</a></li>
+            {/foreach}
+
+            <!-- plugin hook: 'frontend_product.menu' -->
+            {* @event frontend_product.%plugin_id%.menu *}
+            {foreach $frontend_product as $_}{$_.menu}{/foreach}
+
+        </ul>
+        <div id="tab-content">
+            <div id="reviews" style="display: block">
+                <div class="align-center">
+                    <div class="average-rating">
+                        [`Average rating`]: <b>{$product.rating}</b>
+                        <div>{$wa->shop->ratingHtml($product.rating, 16)}</div>
+                        {$req_auth = $wa->shop->settings('require_authorization')}
+                        {if ($wa->isAuthEnabled() && $req_auth) || !$req_auth}
+                            <a href="javascript:void(0)" class="button write-review" title="[`Write a review`]">[`Write a review`]</a>
+                        {/if}
+                    </div>
+                </div>
+                <!-- reviews begin -->
+                {function review_reviews}
+                    {$depth=-1}
+                    {foreach $reviews as $review}
+                      {if $review.depth < $depth}
+
+                        {$loop=($depth-$review.depth)}
+                        {section name="end-review" loop=$loop}
+                            <ul class="menu-v with-icons reviews-branch"></ul>
+                            </li>
+                          </ul>
+                        {/section}
+
+                        {$depth=$review.depth}
+                      {/if}
+
+                      {if $review.depth == $depth}
+                        </li>
+                        <li data-id="{$review.id}" data-parent-id="{$review.parent_id}">
+                      {/if}
+
+                      {if $review.depth > $depth}
+                        <ul class="menu-v with-icons reviews-branch">
+                          <li data-id={$review.id} data-parent-id="{$review.parent_id}">
+                          {$depth=$review.depth}
+                      {/if}
+                        {include file="review.html" inline reply_allowed=$reply_allowed single_view=true review=$review}
+                        <!-- sub review placeholder -->
+                    {/foreach}
+
+                    {section name="end-review" loop=$depth}
+                          <ul class="menu-v with-icons reviews-branch"></ul>
+                          </li>
+                        </ul>
+                    {/section}
+                {/function}
+                <div class="reviews">
+
+                    <a name="reviewheader"></a>
+
+                    <div class="review-form" id="product-review-form" {if $reviews_count > 0}style="display:none;"{/if}>
+
+                        {$current_user_id = $wa->userId()}
+
+                        <form method="post">
+                            <div class="review-form-fields">
+
+                                {if empty($current_user_id) && $require_authorization && $wa->isAuthEnabled()}
+                                    <p class="review-field">{sprintf(
+                                        '[`To add a review please <a href="%s" rel="nofollow" class="fly-auth">sign up</a> or <a href="%s" rel="nofollow" class="fly-auth">login</a>`]',
+                                        $wa->signupUrl(),
+                                        $wa->loginUrl())
+                                    }</p>
+                                {else}
+
+                                    {if !empty($current_user_id)}
+                                        <p class="review-field">
+                                            <strong><img src="{$wa->user()->getPhoto(20)}" class="userpic" alt="">{$wa->user('name')}</strong>
+                                            <a href="?logout" rel="nofollow">[`log out`]</a>
+                                        </p>
+                                    {else}
+                                        {if $auth_adapters && $wa->isAuthEnabled()}
+                                            <ul id="user-auth-provider" class="menu-h">
+                                                <li data-provider="guest"  {if $current_auth_source == shopProductReviewsModel::AUTH_GUEST}class="selected"{/if}><a href="#">[`Guest`]</a></li>
+                                                {foreach $auth_adapters as $adapter}
+                                                    {$adapter_id = $adapter->getId()}
+                                                    <li data-provider="{$adapter_id}" {if $current_auth_source == $adapter_id}class="selected"{/if}>
+                                                        <a href="{$adapter->getCallbackUrl(0)}&app=shop{if !$require_authorization}&guest=1{/if}">
+                                                        <img src="{$adapter->getIcon()}" alt="">{$adapter->getName()}</a>
+                                                    </li>
+                                                {/foreach}
+                                            </ul>
+                                        {/if}
+
+                                        <div class="provider-fields" data-provider="{shopProductReviewsModel::AUTH_GUEST}" {if $current_auth_source != shopProductReviewsModel::AUTH_GUEST}style="display:none"{/if}>
+                                            <p class="review-field">
+                                                <input type="text" name="name" id="review-name" value="" placeholder="[`Your name`]">
+                                            </p>
+                                            <p class="review-field">
+                                                <input type="text" name="email" id="review-email" placeholder="[`Email`]">
+                                            </p>
+                                            <p class="review-field">
+                                                <input type="text" name="site" id="review-site" placeholder="[`Website`]">
+                                            </p>
+                                        </div>
+
+                                        {if !empty($auth_adapters[$current_auth_source])}
+                                            {$adapter = $auth_adapters[$current_auth_source]}
+                                            <div class="provider-fields" data-provider="{$adapter->getId()}">
+                                                <p class="review-field">S
+                                                    <strong><img src="{$adapter->getIcon()}" class="userpic" />{$current_auth.name|escape}</strong>
+                                                    <a href="?logout" rel="nofollow">[`log out`]</a>
+                                                </p>
+                                            </div>
+                                        {/if}
+                                    {/if}
+                                <p class="review-field">
+                                    <input type="text" name="title" id="review-title" class="bold" placeholder="[`Title`]">
+                                </p>
+                                <p class="review-field">
+                                    <label>[`Rate product`]</label>
+                                    <a href="#" class="no-underline rate" data-rate="0" id="review-rate">
+                                        {for $i = 1 to 5}<i class="icon16 star-empty"></i>{/for}
+                                    </a>
+                                    <a href="javascript:void(0);" class="rate-clear" id="clear-review-rate" style="display: none;">[`clear`]</a>
+                                    <input name="rate" type="hidden" value="0">
+                                </p>
+                                <p class="review-field">
+                                    <textarea id="review-text" name="text" rows="10" cols="45" placeholder="[`Review`]"></textarea>
+                                </p>
+                                <div class="review-submit">
+                                    {if $request_captcha && empty($current_user_id)}
+                                        {$wa->captcha()}
+                                    {/if}
+                                    <input type="submit" class="save button" value="[`Add review`]">
+                                    <span class="review-add-form-status ajax-status" style="display: none;">
+                                        <i class="ajax-statuloading icon16 loading"><!--icon --></i>
+                                    </span>
+                                    <em class="hint">Ctrl+Enter</em>
+                                    <input type="hidden" name="parent_id" value="0">
+                                    <input type="hidden" name="product_id" value="{if isset($product.id)}{$product.id}{else}0{/if}">
+                                    <input type="hidden" name="auth_provider" value="{$current_auth_source|default:shopProductReviewsModel::AUTH_GUEST}">
+                                    <input type="hidden" name="count" value="{$reviews_count}">
+                                </div>
+                            {/if}
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- existing reviews list -->
+                    <ul class="menu-v with-icons reviews-branch">
+                    {foreach $reviews as $review}
+                        <li data-id={$review.id} data-parent-id="0">
+                            {include file="review.html" reply_allowed=$reply_allowed inline}
+                            {if !empty($review.comments)}
+                                {review_reviews reviews=$review.comments}
+                            {else}
+                                <ul class="menu-v with-icons reviews-branch"></ul>
+                            {/if}
+                        </li>
+                    {/foreach}
+                    </ul>
+                </div>
+                <!-- reviews end -->
+            </div>
+        </div>
+    </div>
+
+    {if !empty($theme_settings.product_catalog)}
+    </div>
+    {/if}
+</div>
+{$wa->globals('product_page', 1)}

@@ -1,0 +1,14 @@
+<div role="main">
+    <h1>{$page.name}</h1>
+    {if !empty($theme_settings.pages_show_subcats)}
+        {$subpages = $wa->site->pages($page.id)}
+        {if $subpages}
+            <ul class="menu-h subpages">
+                {foreach $subpages as $p}
+                    <li><a href="{$p.url}" title="{$p.name}">{$p.name}</a></li>
+                {/foreach}
+            </ul>
+        {/if}
+    {/if}
+    {$page.content}
+</div>

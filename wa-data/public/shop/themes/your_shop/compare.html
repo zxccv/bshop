@@ -1,0 +1,118 @@
+{$wa->title('[`Compare products`]')}
+<div class="wrap compare-page stylish-form">
+    <div class="padded">
+        <h1>[`Compare products`]</h1>
+        {if count($products)}
+            <a id="compare-clear" href="javascript:void(0)" class="button" title="[`Clear comparison list`]">[`Clear comparison list`]</a>
+            {$td_width = round((100-25)/max(1,count($products)))}
+            <div class="compare-container product-list">
+                <table id="compare-table" class="compare">
+                    <tr class="images">
+                        <td>
+                            <ul class="menu-v" style="margin: 0;">
+                                <li><input type="radio" value="all" checked class="compare-type" id="compare-all" name="compare-type"><label for="compare-all"><span class="stylish-wrap"></span> [`All features`]</label></li>
+                                <li><input type="radio" value="diff" id="compare-diff" name="compare-type" class="compare-type"><label for="compare-diff"><span class="stylish-wrap"></span> [`Different`]</label></li>
+                            </ul>
+                        </td>
+                    {foreach $products as $p}
+                        {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+                        <td width="{$td_width}%" class="product-item">
+                            <a data-product="{$p.id}" class="compare-remove" href="{$p.delete_url}" title="[`Remove from comparison list`]">Х</a>
+                            <a href="{$wa->getUrl('/frontend/product/', ['product_url' => $p.url])}" title="{$p.name}" data-small="{$wa->shop->productImgHtml($p, '96x96', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy96.jpg"])|escape}" class="image">
+                                {$wa->shop->productImgHtml($p, '96x0', ['itemprop' => 'image', 'id' => 'product-image', 'default' => "`$wa_theme_url`img/dummy96.jpg", 'title' => $p.name|cat:' ':strip_tags($p.summary)|escape])}
+                            </a>
+                            <form class="addtocart" method="post" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} action="{$wa->getUrl('/frontendCart/add')}">
+                                <div class="addtocart-form">
+                                    {if $available}
+                                        <input type="hidden" name="product_id" value="{$p.id}" />
+                                        <input type="submit" value="[`Buy`]" />
+                                    {else}
+                                        <input type="submit" value="[`Buy`]" class="disabled" disabled="disabled" title="{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}">
+                                    {/if}
+                                </div>
+                            </form>
+                            <h5>
+                                <a href="{$wa->getUrl('/frontend/product/', ['product_url' => $p.url])}" class="productname" title="{$p.name}">
+                                    {$p.name}
+                                </a>
+                            </h5>
+                            <span class="hidden price">{if $theme_settings.ruble == 'html'}{shop_currency_html($p.price)}{else}{shop_currency($p.price)}{/if}</span>
+                            <div class="rating">{if $p.rating > 0}{$wa->shop->ratingHtml($p.rating, 16)}{/if}</div>
+                        </td>
+                    {/foreach}
+                    </tr>
+                    <tr class="div">
+                        <td class="name">[`Price`]</td>
+                        {foreach $products as $p}
+                            <td width="{$td_width}%">
+                                <span class="price nowrap">{if $theme_settings.ruble == 'html'}{shop_currency_html($p.price)}{else}{shop_currency($p.price)}{/if}</span>
+                            </td>
+                        {/foreach}
+                    </tr>
+                    {foreach $features as $f_id=>$f}
+                        <tr class="{if $f@iteration % 2 == '0'}div{/if}{if $f.same} same{/if}">
+                            <td class="name">{$f.name}</td>
+                            {foreach $products as $p}
+                                <td>
+                                    {if isset($p.features[$f_id])}
+                                        {if is_array($p.features[$f_id])}
+                                            {implode(', ', $p.features[$f_id])}
+                                        {else}
+                                            {$p.features[$f_id]}
+                                        {/if}
+                                    {else}
+                                        <span class="gray">&mdash;</span>
+                                    {/if}
+                                </td>
+                            {/foreach}
+                        </tr>
+                    {/foreach}
+                </table>
+            </div>
+        {else}
+            <p>[`Product comparison list is empty.`]</p>
+        {/if}
+    </div>
+</div>
+
+<script>
+    {if !empty($theme_settings.optimize)}
+        window.js_onload_inline.push("$(function () { $('.compare-type').change(function() { if ($(this).val() == 'diff') { $('#compare-table tr.same').hide(); } else { $('#compare-table tr.same').show(); } }); $('.compare-type:checked').change(); $('.compare-remove').on('click', function () { var compare = $.cookie('shop_compare'); if (compare) { compare = compare.split(','); } else { compare = []; } var i = $.inArray($(this).data('product') + '', compare); if (i != -1) { compare.splice(i, 1) } if (compare.length) { $.cookie('shop_compare', compare.join(','), { expires: 30, path: $.yourshop.siteUrl }); } else { $.cookie('shop_compare', null, { expires: 30, path: $.yourshop.siteUrl }); location.href = location.href.replace(new RegExp(\"compare\/.*\"), 'compare/'); return false; } }); $('#compare-clear').on('click', function () { $.cookie('shop_compare', null, { expires: 30, path: $.yourshop.siteUrl }); location.href = location.href.replace(new RegExp(\"compare\/.*\"), 'compare/'); }); });");
+    {else}
+        $(function () {
+            $('.compare-type').change(function() {
+               if ($(this).val() == 'diff') {
+                   $('#compare-table tr.same').hide();
+               } else {
+                    $('#compare-table tr.same').show();
+               }
+            });
+            $('.compare-type:checked').change();
+
+            $('.compare-remove').on('click', function () {
+                var compare = $.cookie('shop_compare');
+                if (compare) {
+                    compare = compare.split(',');
+                } else {
+                    compare = [];
+                }
+                var i = $.inArray($(this).data('product') + '', compare);
+                if (i != -1) {
+                    compare.splice(i, 1)
+                }
+
+                if (compare.length) {
+                    $.cookie('shop_compare', compare.join(','), { expires: 30, path: $.yourshop.siteUrl });
+                } else {
+                    $.cookie('shop_compare', null, { expires: 30, path: $.yourshop.siteUrl });
+                    location.href = location.href.replace(new RegExp("compare\/.*"), 'compare/');
+                    return false;
+                }
+            });
+            $('#compare-clear').on('click', function () {
+                $.cookie('shop_compare', null, { expires: 30, path: $.yourshop.siteUrl });
+                location.href = location.href.replace(new RegExp("compare\/.*"), 'compare/');
+            });
+        });
+    {/if}
+</script>

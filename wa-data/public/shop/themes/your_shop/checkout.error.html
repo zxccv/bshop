@@ -1,0 +1,20 @@
+<style>
+    .checkout-header { display: none; }
+</style>
+<div class="align-center error">
+    <h1>[`Error!`]</h1>
+    {if !empty($error)}
+        <p>{$error}</p>
+    {else}
+        <p>[`An error occurred while processing your payment.`]</p>
+    {/if}
+    
+    <p class="back">
+        <a href="{$wa_app_url}" title="[`Back to the store`]" class="button">&larr; [`Back to the store`]</a>
+    </p>    
+    
+    <!-- plugin hook: 'frontend_checkout' -->
+    {* @event frontend_checkout.%plugin_id% *}
+    {foreach $frontend_checkout as $_}{$_}{/foreach}
+        
+</div>
