@@ -2,6 +2,31 @@
 
 class helperClass1cit
 {
+    
+    public static function getCityFullNameFromKladr($city,$region)
+    {
+        $api = new KladrApi(KladrApi::OurToken, '');
+        
+        $query = new KladrQuery();	
+	$query->ContentName = $city;
+        $query->ParentType = KladrObjectType::Region;
+        $query->ParentId = $region.'00000000000';
+        $query->ContentType = KladrObjectType::City;        
+	$query->Limit = 1;   
+        $query->WithParent = true;
+        
+        $arResult = $api->QueryToArray($query);
+        
+        if(count($arResult)>0)
+        {
+            return array('name' => $arResult[0]['name'],'type' => $arResult[0]['typeShort']);
+        } 
+        else
+        {
+            return $city;
+        }
+    }
+            
     /**
      * Возвращает код кладр населенного пункта
      * @param type $city Наименование города

@@ -16,7 +16,9 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
     public function execute()
     {                
         $command = waRequest::param('command');
-	
+        $response = $this->getResponse();
+        $response->addHeader('Content-Type', 'application/json; charset=utf-8');
+        $response->sendHeaders();
         try {
             $request_body = file_get_contents('php://input');        
             $request = json_decode($request_body,true);            
@@ -165,6 +167,17 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
         {
             $shop_order_export_model = new shopOrderExportModel();
             $this->response = array('Заказы' => $shop_order_export_model->getRegisteredOrders());
+        }
+        elseif($command == 'RegisterOrderExport')
+        {
+            $order_number = $request['НомерЗаказа'];
+            $error = $request['Ошибка'];
+            
+            $order_id = (int) mb_substr($order_number, 2);
+                     
+            
+            $shop_order_export_model = new shopOrderExportModel();
+            $shop_order_export_model->registerOrderExport($order_id,$error);
         }
         else
         {

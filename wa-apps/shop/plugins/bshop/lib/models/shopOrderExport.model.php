@@ -21,6 +21,38 @@ class shopOrderExportModel extends waModel
         }
     }
     
+    public function getExportStatus($order_id)
+    {
+        $current_line =  $this->query("
+                SELECT * FROM {$this->table} WHERE ".
+                $this->getWhereByField('order_id',$order_id)." ORDER BY add_datetime DESC LIMIT 1")->fetchAssoc();
+                
+        
+        if($current_line !== FALSE)
+        {
+            if($current_line['export_datetime'] === NULL)
+            {
+                $status = '<p style="color: blue;">Зарегистрирован к выгрузке в 1С '.$current_line['add_datetime'].'</p>';
+            }
+            elseif($current_line['error'] === '')
+            {
+                $status = '<p style="color: green;">Загружен в 1С '.$current_line['export_datetime'].'</p>';
+            }
+            else
+            {
+                $status = '<p style="color: red;">Попытка загрузки в 1С '.$current_line['export_datetime'].'</p>';
+                $status .= '<p style="color: red;">При загрузке возникла ошибка '.$current_line['error'].'</p>';
+            }
+        }
+        else
+        {
+            $status = '<p>Не выгружался в 1С</p>';
+        }      
+        
+        return $status;
+    }
+
+
     public function getRegisteredOrders()
     {
         $orders_data = array_map(
@@ -50,22 +82,79 @@ class shopOrderExportModel extends waModel
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
         //$order_data['']
         
-        $order_data['АдресДоставки'] = $order_params['shipping_address.zip'].', ';
         
-        $region_model = new waRegionModel();
+        
+        $address = array();
+        
+        $address['Индекс'] = $order_params['shipping_address.zip'];
+        $address['КодРегиона'] = $order_params['shipping_address.region'];
+        $city_full = helperClass1cit::getCityFullNameFromKladr($order_params['shipping_address.city'], $order_params['shipping_address.region']);
+        if(is_string($city_full))
+        {
+            $address['Город'] = $city_full.' г';
+        }
+        else
+        {
+            if($city_full['type'] == 'г')
+            {
+                $address['Город'] = $city_full['name'].' '.$city_full['type'];
+            } else
+            {
+                $address['НаселенныйПункт'] = $city_full['name'].' '.$city_full['type'];
+            }            
+        }
+        
+        $address_fields = explode(',', $order_params['shipping_address.street']);
+        
+        foreach ($address_fields as $address_field)
+        {
+            $address_field = trim($address_field);
+            
+            if(ctype_digit($address_field) || mb_substr($address_field, 0, 2) == 'кв')
+            {
+                //Квартира
+                $address['Квартира'] = $address_field;
+            }
+            elseif(mb_substr($address_field, 0, 3) == 'д. ')
+            {
+                //Дом
+                $address_field = mb_substr($address_field, 3);
+                
+                $corpus_pos = mb_stripos($address_field, 'к');
+                if($corpus_pos === FALSE)
+                {
+                    $address['Дом'] = $address_field;
+                } else
+                {
+                    $address['Дом'] = mb_substr($address_field, 0, $corpus_pos);
+                    $address['Корпус'] = mb_substr($address_field, $corpus_pos + 1);
+                }
+            }            
+            elseif(trim($address_field) != '-')
+            {
+                $dot_pos = mb_stripos($address_field, '.');
+                $address['Улица'] = mb_substr($address_field, $dot_pos+2).' '.mb_substr($address_field, 0, $dot_pos);
+            }            
+        }
+              
+        $order_data['АдресДоставки'] = $address;
+        //$order_data['АдресДоставки'] = 'Почтовый индекс: '.$order_params['shipping_address.zip'].',';
+        /*$region_model = new waRegionModel();
         
         $region = $region_model->get($order_params['shipping_address.country'],$order_params['shipping_address.region']);
         if(isset($region['name']))
-            $order_data['АдресДоставки'].= $region['name'].', ';
+            $order_data['АдресДоставки'].= $region['name'].', ';*/
         
-        $order_data['АдресДоставки'].= $order_params['shipping_address.city'].', ';
-        $order_data['АдресДоставки'].= $order_params['shipping_address.city'].', ';
-        $order_data['АдресДоставки'].= $order_params['shipping_address.street'];
+        //$order_data['АдресДоставки'].= 'Город: '.$order_params['shipping_address.city'].',';
+        //$order_data['АдресДоставки'].= $order_params['shipping_address.street'];
         
         $order_data['СтоимостьДоставки'] = (float)$order['shipping'];
         
         $order_data['Сумма'] = (float)$order['total'];;
         $order_data['СуммаСкидки'] = (float)$order['discount'];
+        $order_data['СуммаПоТоварам'] = 0.0;
+        
+        $order_data['Комментарий'] = $order['comment'];
                 
         $order_data['Партнер'] = array();
         
@@ -89,6 +178,8 @@ class shopOrderExportModel extends waModel
             $item_data['Количество'] = (float)$item['item']['quantity'];
             $item_data['Цена'] = (float)$item['item']['price'];
             $item_data['Сумма'] = $item_data['Цена'] * $item_data['Количество'];
+            
+            $order_data['СуммаПоТоварам'] += $item_data['Сумма'];
             
             $items_data[]=$item_data;
         }
