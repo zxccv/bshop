@@ -108,6 +108,7 @@
             {foreach $product.skus as $sku}
                 <div {if $sku.id != $product.sku_id}style="display:none"{/if} class="sku-{$sku.id}-stock">
                     {if $sku.stock}
+                        {$max_stock = 0}
                         {foreach $stocks as $stock_id => $stock}
                             <div class="stock-name">
                                 {if isset($sku.stock[$stock_id])}
@@ -115,7 +116,10 @@
                                 {else}
                                     {$stock_count = null}
                                 {/if}
-                                {$stock.name}: {in_stock n=$stock_count low=$stock.low_count critical=$stock.critical_count}
+                                {if $stock_count != null and $stock_count > $max_stock}
+                                    {$stock.name}: {in_stock n=$stock_count low=$stock.low_count critical=$stock.critical_count}                                    
+                                    {$max_stock = $stock_count}
+                                {/if} 
                             </div>
                         {/foreach}
                     {else}
