@@ -80,9 +80,6 @@ class shopOrderExportModel extends waModel
         
         $order_data['ТипОплаты'] = $order_params['payment_plugin'];
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
-        //$order_data['']
-        
-        
         
         $address = array();
         
