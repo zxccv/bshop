@@ -17,6 +17,19 @@ class sberbankPayment extends waPayment implements waIPayment
     const MAX_RETRIES = 5;
     const SSL_VERIFYPEER = false;
 
+    //Самойлов НАЧАЛО 08.04.17 16:21 #252
+    /**
+     * Проверяет доступность метода оплаты в зависимости от параметров заказа
+     * @param type $parameters
+     * @return boolean
+     */
+    public function isMethodAllowed($parameters)
+    {
+        $availablity = true;
+        return $availablity; 
+    }
+    //Самойлов КОНЕЦ 08.04.17 16:21
+    
     public static function getServerOptions()
     {
         return array(

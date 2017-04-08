@@ -2,7 +2,11 @@
 
 class helperClass1cit
 {
-    
+    /**
+     * Возвращает наименование населенного пункта с сокращением
+     * @param type $city Наименование города
+     * @param type $region Код региона
+     */
     public static function getCityFullNameFromKladr($city,$region)
     {
         $api = new KladrApi(KladrApi::OurToken, '');
@@ -327,8 +331,6 @@ class helperClass1cit
         $skus = $product->getSkus();
         $sku = reset($skus);
         $min_purchase_time = 200;
-             
-        
         
         foreach ($sku['stock'] as $stock_key => $stock_remain)        
         {
@@ -342,5 +344,5 @@ class helperClass1cit
         };
         
         return $min_purchase_time;        
-    }
+    } 
 }

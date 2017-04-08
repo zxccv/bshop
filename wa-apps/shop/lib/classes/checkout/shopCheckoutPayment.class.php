@@ -4,6 +4,55 @@ class shopCheckoutPayment extends shopCheckout
 {
     protected $step_id = 'payment';
 
+    //Самойлов НАЧАЛО 08.04.17 9:57 #252
+    private function saveParametersToStorage()
+    {
+        $parameters = array();
+        
+        $region = $this->getContact()->getFirst('address.shipping')['data']['region'];        
+        if(strcasecmp($region, '78') === 0 || strcasecmp($region, '47') === 0)
+        {
+            $parameters['spb'] = true;            
+        }
+        else
+        {
+            $parameters['spb'] = false;
+        }
+                
+        $cart = new shopCart();
+        
+        $parameters['sum'] = $cart->total();
+        $parameters['weight'] = 0.0;
+        $parameters['postcash'] = true;
+        $parameters['available'] = true;
+        
+        
+        foreach ($cart->items() as $item)
+        {
+            $product = new shopProduct($item['product_id']);            
+            $features = $product->getFeatures();
+            if(isset($features['weight']) && is_numeric($features['weight']['value']))
+                $parameters['weight'] = $parameters['weight'] + $features['weight']['value']*$item['quantity'];
+            
+            if($parameters['postcash'])
+            {
+                if(!isset($features['postcash']) || $features['postcash']['value'] !== 1)
+                    $parameters['postcash'] = false;
+            }
+            
+            if($parameters['available'])
+            {
+                $skus_model = new shopProductSkusModel();
+                $sku = $skus_model->getSku($item['sku_id']);
+                if((int)$sku['stock']['1'] <= 0)
+                    $parameters['available'] = false;       
+            }
+        }
+        
+        $this->setSessionData('methods_availablity_parameters', $parameters);       
+    }
+    //Самойлов КОНЕЦ 08.04.17 9:58
+    
     public function display()
     {
         $plugin_model = new shopPluginModel();
@@ -21,6 +70,10 @@ class shopCheckoutPayment extends shopCheckout
             $disabled = array();
         }
 
+        //Самойлов НАЧАЛО 08.04.17 13:14 #252
+        $this->saveParametersToStorage();
+        //Самойлов КОНЕЦ 08.04.17 13:15
+        
         $currencies = wa('shop')->getConfig()->getCurrencies();
         $selected = null;
         foreach ($methods as $key => $m) {
@@ -31,6 +84,13 @@ class shopCheckoutPayment extends shopCheckout
             }
             try {
                 $plugin = shopPayment::getPlugin($m['plugin'], $m['id']);
+                //Самойлов НАЧАЛО 08.04.17 16:20 #252
+                if($plugin->isMethodAllowed($this->getSessionData('methods_availablity_parameters')) !== true)
+                {
+                    unset($methods[$key]);
+                    continue;
+                }
+                //Самойлов КОНЕЦ 08.04.17 16:20                
                 $plugin_info = $plugin->info($m['plugin']);
                 $methods[$key]['icon'] = $plugin_info['icon'];
                 $custom_fields = $this->getCustomFields($method_id, $plugin);
