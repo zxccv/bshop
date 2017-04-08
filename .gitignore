@@ -9,6 +9,8 @@
 !/wa-plugins/shipping/sdekmuslab
 !/wa-plugins/shipping/dlmuslab
 
+!/wa-plugins/payment
+
 !/wa-apps
 /wa-apps/*
 !/wa-apps/shop
