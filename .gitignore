@@ -19,6 +19,12 @@
 /wa-apps/shop/plugins/*
 !/wa-apps/shop/plugins/bshop
 
+!/wa-apps/shop/lib
+/wa-apps/shop/lib/*
+!/wa-apps/shop/lib/classes
+/wa-apps/shop/lib/classes/*
+!/wa-apps/shop/lib/classes/checkout
+
 !/wa-data
 /wa-data/*
 !/wa-data/public
