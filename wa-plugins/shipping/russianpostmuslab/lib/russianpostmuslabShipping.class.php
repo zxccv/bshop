@@ -10,7 +10,7 @@
  * @property-read string $prompt_address
  */
 
-class russianpost1citShipping extends waShipping
+class russianpostmuslabShipping extends waShipping
 {
     protected function calculate()
     {        
