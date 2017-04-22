@@ -118,4 +118,23 @@ class russianpostmuslabShipping extends waShipping
     {
         return $this->prompt_address ? array() : false;
     }
+    
+    //Самойлов НАЧАЛО 22.04.17 13:58 #252
+    /**
+     * Проверяет доступность метода доставки в зависимости от параметров заказа
+     * @param type $parameters
+     * @return boolean
+     */
+    public function isMethodAllowed($parameters)
+    {
+        $availablity = false;
+        
+        if($parameters['spb'] === false && $parameters['is_payment_post'] === false && $parameters['weight'] <= 10)
+        {
+            $availablity = true;                
+        }
+                
+        return $availablity; 
+    }
+    //Самойлов КОНЕЦ 22.04.17 13:58
 }

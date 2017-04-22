@@ -3,10 +3,8 @@
 class shopBshopPluginBackendTestAction extends waViewAction
 {
     public function execute()
-    {
-        
-        
-       
+    {     
+        //Адададалалалататат
         $shop_order_export_model = new shopOrderExportModel();       
         
         $shop_order_export_model->getExportStatus(29);

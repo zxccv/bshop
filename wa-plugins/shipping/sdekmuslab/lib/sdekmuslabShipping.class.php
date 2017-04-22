@@ -16,7 +16,7 @@ class sdekMusLabShipping extends waShipping
         $deliveries[] =
                 array(
                 'name'         => 'Доставка курьером СДЭК',
-                'currency'     => $currency,
+                'currency'     => 'RUB',
                 'rate'         => $calc_result['rate'],
                 'est_delivery' => $calc_result['est_delivery']
             );
@@ -38,4 +38,24 @@ class sdekMusLabShipping extends waShipping
     {
         return false;
     }
+    
+    //Самойлов НАЧАЛО 22.04.17 13:58 #252
+    /**
+     * Проверяет доступность метода доставки в зависимости от параметров заказа
+     * @param type $parameters
+     * @return boolean
+     */
+    public function isMethodAllowed($parameters)
+    {
+        $availablity = false;
+        
+        if($parameters['spb'] === false && $parameters['is_payment_post'] === false && $parameters['weight'] <= 20)
+        {
+            $availablity = true;                
+        }
+                
+        return $availablity;
+    }
+    //Самойлов КОНЕЦ 22.04.17 13:58
+    
 }

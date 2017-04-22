@@ -4,8 +4,28 @@ class shopCheckoutShipping extends shopCheckout
 {
     protected $step_id = 'shipping';
 
+    //Самойлов НАЧАЛО 22.04.17 13:49 #252
+    private function savePaymentParameterToStorage()
+    {
+        $parameters = $this->getSessionData('methods_availablity_parameters');
+        
+        $plugin_model = new shopPluginModel();
+        $payment = $plugin_model->getById($this->getSessionData('payment'));
+        
+        $parameters['payment'] = $payment['plugin'];
+        
+        $parameters['is_payment_post'] = $payment['plugin'] == 'cash' ? true : false;
+        
+        $this->setSessionData('methods_availablity_parameters', $parameters);        
+    }
+    //Самойлов КОНЕЦ 22.04.17 13:49            
+    
     public function display()
     {
+        //Самойлов НАЧАЛО 22.04.17 13:51 #252
+        $this->savePaymentParameterToStorage();
+        //Самойлов КОНЕЦ 22.04.17 13:52
+        
         $plugin_model = new shopPluginModel();
         $methods = $plugin_model->listPlugins('shipping');
         if (waRequest::param('shipping_id') && is_array(waRequest::param('shipping_id'))) {
@@ -92,7 +112,11 @@ class shopCheckoutShipping extends shopCheckout
                 }
                 $m['external'] = ($selected_shipping && $selected_shipping['id'] == $m['id']) ? 0 : $plugin->getProperties('external');
 
-                if ($plugin->isAllowedAddress($shipping_address)) {
+                if ($plugin->isAllowedAddress($shipping_address)
+                        //Самойлов НАЧАЛО 22.04.17 14:33 #252
+                        && $plugin->isMethodAllowed($this->getSessionData('methods_availablity_parameters'))
+                        //Самойлов КОНЕЦ 22.04.17 14:33
+                        ) {
                     if ($m['external']) {
                         $m['rates'] = array();
                     } else {
@@ -102,11 +126,18 @@ class shopCheckoutShipping extends shopCheckout
                             $_total = $total;
                         }
                         $m['rates'] = $plugin->getRates($shipping_items, $shipping_address, array('total_price' => $_total));
+                        //Самойлов НАЧАЛО 22.04.17 14:33 #252
+                        foreach ($m['rates'] as $rate_id => $rate)
+                        {                               
+                            $m['rates'][$rate_id]['rate'] = $rate['rate'] + helperClass1cit::getShippingCostAddition($m['plugin'], $this->getSessionData('methods_availablity_parameters'));
+                            $m['rates'][$rate_id]['est_delivery'] = helperClass1cit::getShippingDateAddition($m['plugin'], $rate['est_delivery']);
+                        }
+                        //Самойлов КОНЕЦ 22.04.17 14:33
                     }
                 } else {
                     $m['rates'] = false;
                 }
-
+                
                 if (is_array($m['rates'])) {
                     if (!isset($currencies[$m['currency']])) {
                         $m['rate'] = 0;
@@ -460,6 +491,9 @@ class shopCheckoutShipping extends shopCheckout
             if (is_array($result['rate'])) {
                 $result['rate'] = max($result['rate']);
             }
+            //Самойлов НАЧАЛО 22.04.17 15:29 #252
+            $result['rate'] += helperClass1cit::getShippingCostAddition($plugin_info['plugin'], $this->getSessionData('methods_availablity_parameters'));
+            //Самойлов КОНЕЦ 22.04.17 15:29
             if ($currency != $current_currency) {
                 $result['rate'] = shop_currency($result['rate'], $currency, $current_currency, false);
             }

@@ -3,12 +3,6 @@
 !/wa-plugins
 /wa-plugins/*
 !/wa-plugins/shipping
-/wa-plugins/shipping/*
-!/wa-plugins/shipping/russianpost1cit
-!/wa-plugins/shipping/pickup
-!/wa-plugins/shipping/sdekmuslab
-!/wa-plugins/shipping/dlmuslab
-
 !/wa-plugins/payment
 
 !/wa-apps

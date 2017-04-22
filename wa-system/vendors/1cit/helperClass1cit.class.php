@@ -152,7 +152,7 @@ class helperClass1cit
         
         $result = json_decode($result_json,true);
         
-        if($result['errors'])
+        if(isset($result['errors']))
         {
             if(is_string($result['errors']))
             {
@@ -259,7 +259,7 @@ class helperClass1cit
         
         $result = json_decode($result_json,true);
         
-        if($result['error'] != NULL)
+        if(isset($result['error']) && $result['error'] != NULL)
         {
             return $result['error'][0]['text'];
         }
@@ -273,7 +273,11 @@ class helperClass1cit
                 $max_date = clone $date_execute;
                 $max_date->add(new DateInterval('P'.number_format($result['result']['deliveryPeriodMax']).'D'));
 
-                $est_delivery = $min_date->format('d.m.Y').' - '.$max_date->format('d.m.Y');
+                //Самойлов НАЧАЛО 22.04.17 14:51 #252
+                //Всё к единому формату
+                //$est_delivery = $min_date->format('d.m.Y').' - '.$max_date->format('d.m.Y');
+                $est_delivery = $max_date->format('d.m.Y');
+                //Самойлов КОНЕЦ 22.04.17 14:52
             }
             else
             {
@@ -344,5 +348,71 @@ class helperClass1cit
         };
         
         return $min_purchase_time;        
-    } 
+    }
+    
+    //Самойлов НАЧАЛО 22.04.17 14:29 #252
+    public static function getShippingCostAddition($shipping_plugin,$parameters)
+    {
+        $cost_addition = 0;
+        switch ($shipping_plugin)
+        {
+        case 'pickupmuslab':
+            break;
+        case 'couriermuslab':
+            break;
+        case 'russianpostmuslab':
+            $cost_addition = $parameters['sum'] * 0.01;
+            break;
+        case 'dlmuslab':
+            $cost_addition = 300;
+            break;
+        case 'sdekmuslab':
+            $cost_addition = 100;
+            break;
+        case 'sdeknpmuslab':
+            $cost_addition = 100;
+            break;
+        }        
+        
+        return ceil($cost_addition);
+    }
+    
+    public static function getShippingDateAddition($shipping_plugin,$est_delivery)
+    {
+        $date_addition = 0;
+        switch ($shipping_plugin)
+        {
+        case 'pickupmuslab':
+            break;
+        case 'couriermuslab':
+            $date_addition = 1;
+            break;
+        case 'russianpostmuslab':
+            $date_addition = 3;
+            break;
+        case 'dlmuslab':
+            $date_addition = 3;
+            break;
+        case 'sdekmuslab':
+            $date_addition = 3;
+            break;
+        case 'sdeknpmuslab':
+            $date_addition = 3;
+            break;
+        }        
+        
+        if($date_addition > 0)
+        {
+            $est_delivery_date = DateTime::createFromFormat('d.m.Y', $est_delivery);
+            date_add($est_delivery_date, new DateInterval('P'.$date_addition.'D'));
+            return $est_delivery_date->format('d.m.Y');
+        }
+        else
+        {
+            return $est_delivery;
+        };
+        
+        
+    }
+    //Самойлов КОНЕЦ 22.04.17 14:29
 }

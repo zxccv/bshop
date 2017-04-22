@@ -9,7 +9,7 @@
  * @property-read string $delivery_time
  * @property-read string $prompt_address
  */
-class pickupShipping extends waShipping
+class pickupmuslabShipping extends waShipping
 {
     /**
      * Example of direct usage HTML templates instead waHtmlControl
@@ -57,7 +57,6 @@ class pickupShipping extends waShipping
 
     protected function calculate()
     {
-        $currency = $this->currency;
         $rates = $this->rate;
 
         //Самойлофф++
@@ -79,7 +78,7 @@ class pickupShipping extends waShipping
         foreach ($rates as $rate) {
             $deliveries[$i++] = array(
                 'name'         => $rate['location'],
-                'currency'     => $currency,
+                'currency'     => 'RUB',
                 'rate'         => $rate['cost'],
                 'est_delivery' => $est_delivery
             );
@@ -105,13 +104,26 @@ class pickupShipping extends waShipping
     
     public function allowedAddress()
     {
-        return array(
-                array(
-                    'region'  => '78',
-                    ),
-                array(
-                    'region'  => '47',
-                    )
-                    );
+        return array();
     }
+    
+    //Самойлов НАЧАЛО 22.04.17 13:58 #252
+    /**
+     * Проверяет доступность метода доставки в зависимости от параметров заказа
+     * @param type $parameters
+     * @return boolean
+     */
+    public function isMethodAllowed($parameters)
+    {
+        $availablity = false;
+        if($parameters['spb'])
+        {
+            $availablity = true;                
+        }
+        
+        return $availablity; 
+    }
+    //Самойлов КОНЕЦ 22.04.17 13:58
+    
+    
 }

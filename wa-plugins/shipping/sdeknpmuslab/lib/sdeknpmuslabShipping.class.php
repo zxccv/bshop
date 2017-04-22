@@ -1,27 +1,26 @@
 <?php
 
-class dlMusLabShipping extends waShipping
+class sdeknpMusLabShipping extends waShipping
 {
     protected function calculate()
     {          
-        $kladr_id = helperClass1cit::getCityIDFromKladr($this->getAddress('city'), $this->getAddress('region'));       
+        if(!$this->getAddress('zip'))
+            return "Не задан точный адрес доставки";
         
         $cart = new shopCart();
-        $calc_result = helperClass1cit::getDLCalculation($kladr_id, $cart->items(),$this->getTotalPrice());
+        $calc_result = helperClass1cit::getSdekCalculation($this->getAddress('zip'), $cart->items(),$this->getTotalPrice());
         if(is_string($calc_result))
             return $calc_result;
-               
+                       
         $deliveries = array();        
-        foreach ($calc_result as $delivery_variant)
-        {
-            $deliveries[] =
+        $deliveries[] =
                 array(
-                'name'         => $delivery_variant['name'],
+                'name'         => 'Доставка курьером СДЭК (наложенный платеж, +4% от стоимости заказа)',
                 'currency'     => 'RUB',
-                'rate'         => $delivery_variant['rate'],
-                'est_delivery' => $delivery_variant['est_delivery']
+                'rate'         => $calc_result['rate'],
+                'est_delivery' => $calc_result['est_delivery']
             );
-        }       
+                
         return $deliveries;
     }
 
@@ -37,7 +36,7 @@ class dlMusLabShipping extends waShipping
 
     public function requestedAddressFields()
     {
-        return array();
+        return false;
     }
     
     //Самойлов НАЧАЛО 22.04.17 13:58 #252
@@ -48,9 +47,9 @@ class dlMusLabShipping extends waShipping
      */
     public function isMethodAllowed($parameters)
     {
-        $availablity = false;
+       $availablity = false;
         
-        if($parameters['spb'] === false && $parameters['is_payment_post'] === false && $parameters['weight'] >= 2)
+        if($parameters['spb'] === false && $parameters['is_payment_post'] === true && $parameters['weight'] <= 20)
         {
             $availablity = true;                
         }
