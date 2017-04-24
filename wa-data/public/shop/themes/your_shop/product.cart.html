@@ -283,7 +283,8 @@
     {/if}
 
     <div class="add2cart">
-        <div class="quantity">
+        <!--Самойлов НАЧАЛО. Убираем ввод количества-->
+        <!--<div class="quantity">
             [`Qty`]:
             <div class="quantity-block">
                 <input type="text" name="quantity" value="1" />
@@ -292,7 +293,9 @@
                     <a href="javascript:void(0)" class="f-quantity-minus" title="[`decrease`]"><i class="fa fa-chevron-down"></i></a>
                 </div>
             </div>
-        </div>
+        </div>-->
+        <input type="hidden" name="quantity" value="1" />
+        <!--Самойлов КОНЕЦ. Убираем ввод количества-->
         <input type="hidden" name="product_id" value="{$product.id}">
         <div class="submit">
             <input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Buy`]" />
