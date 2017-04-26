@@ -29,16 +29,12 @@
 !/wa-data/public/shop/themes/
 /wa-data/public/shop/themes/*
 !/wa-data/public/shop/themes/your_shop
-/wa-data/public/shop/themes/your_shop/theme.xml
-
-
 
 !/wa-data/public/site
 /wa-data/public/site/*
 !/wa-data/public/site/themes/
 /wa-data/public/site/themes/*
 !/wa-data/public/site/themes/your_shop
-/wa-data/public/site/themes/your_shop/theme.xml
 
 !/wa-config
 /wa-config/*
