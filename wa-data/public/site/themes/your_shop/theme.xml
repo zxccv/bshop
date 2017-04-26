@@ -16,7 +16,7 @@
     </file>
     <file path="content.html" custom="0" modified="1">
       <description locale="en_US">Main layout and navigation for the Site app content</description>
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="error.html">
       <description locale="en_US">Error page</description>
@@ -525,7 +525,7 @@
             </name>
     </setting>
     <setting var="color" control_type="image_select">
-      <value>img/colors/yellow/color.png</value>
+      <value>img/colors/black2/color.png</value>
       <name locale="ru_RU">
                 Цветовая гамма
                 
@@ -2970,7 +2970,7 @@
             </name>
     </setting>
     <setting var="pattern" control_type="image_select">
-      <value>img/patterns/auto-pattern.jpg</value>
+      <value>img/patterns/no-pattern.jpg</value>
       <name locale="ru_RU">Текстура фона</name>
       <name locale="en_US">Background pattern</name>
       <options>
@@ -3373,7 +3373,7 @@
       <name locale="en_US">Helpdesk placeholder</name>
     </setting>
     <setting var="search_type" control_type="radio">
-      <value>hidden</value>
+      <value>static</value>
       <name locale="ru_RU">Тип поиска</name>
       <name locale="en_US">Search type</name>
       <options>
@@ -4037,20 +4037,17 @@
       </options>
     </setting>
     <setting var="copyright" control_type="text">
-      <value locale="ru_RU">© Yourshop - Вы нашли, что искали&lt;br&gt;&lt;br&gt;&lt;span class='grey'&gt;Сделано на основе &lt;a href='http://www.shop-script.ru' title='Shop-Script'&gt;Shop-Script&lt;/a&gt;&lt;/span&gt;</value>
-      <value locale="en_US">© Yourshop - You have found everything you need&lt;br&gt;&lt;br&gt;&lt;span class='grey'&gt;Made with the help of &lt;a href='http://www.shop-script.com' title='Shop-Script'&gt;Shop-Script&lt;/a&gt;&lt;/span&gt;</value>
+      <value>© Music Labs</value>
       <name locale="ru_RU">Текст копирайта</name>
       <name locale="en_US">Copyright text</name>
     </setting>
     <setting var="footer_narrow_text" control_type="text">
-      <value locale="ru_RU">Если Вам нравится тема дизайна &lt;b&gt;YOUR SHOP&lt;/b&gt;, не ждите! &lt;a href='https://www.webasyst.ru/store/theme/your_shop/' title='Купите её'&gt;Купите её&lt;/a&gt; прямо сейчас!</value>
-      <value locale="en_US">If you like theme design &lt;b&gt;YOUR SHOP&lt;/b&gt;, don't wait! &lt;a href='https://www.webasyst.com/store/theme/your_shop/' title='Buy'&gt;Buy it&lt;/a&gt; right now!</value>
+      <value/>
       <name locale="ru_RU">Текст на узкой полоске</name>
       <name locale="en_US">Text on the narrow stripe</name>
     </setting>
     <setting var="footer_block" control_type="text">
-      <value locale="ru_RU">&lt;p&gt;Красная улица, дом 3&lt;/p&gt;</value>
-      <value locale="en_US"/>
+      <value>&lt;p&gt;Россия, Санкт-Петербург, Большой проспект В.О., дом 83, оф.319&lt;/p&gt;</value>
       <name locale="ru_RU">
                 Содержимое правого блока
                 
@@ -4183,8 +4180,7 @@
       <name locale="en_US">Show column</name>
     </setting>
     <setting var="footer_col1_head" control_type="text">
-      <value locale="ru_RU">Приложения</value>
-      <value locale="en_US">Applications</value>
+      <value>music labs</value>
       <name locale="ru_RU">
                 Заголовок
                 
@@ -4199,14 +4195,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row1" control_type="text">
-      <value locale="ru_RU">Веб-формы</value>
-      <value locale="en_US">Web-forms</value>
+      <value>Dj оборудование</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row1_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/multiform/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/multiform/</value>
+      <value>https://music-labs.ru/category/dj-oborudovanye/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4226,14 +4220,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row2" control_type="text">
-      <value locale="ru_RU">Голосование</value>
-      <value locale="en_US">Voting</value>
+      <value>Студия</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row2_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/voting/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/voting/</value>
+      <value>https://music-labs.ru/category/studiya-zvukozapisi/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4253,14 +4245,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row3" control_type="text">
-      <value locale="ru_RU">Рассылки</value>
-      <value locale="en_US">Mailer</value>
+      <value>Звук</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row3_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/mailer/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/mailer/</value>
+      <value>https://music-labs.ru/category/zvukovaya_apparatura/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4280,14 +4270,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row4" control_type="text">
-      <value locale="ru_RU">Поддержка</value>
-      <value locale="en_US">Helpdesc</value>
+      <value>Свет</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row4_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/helpdesk/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/helpdesk/</value>
+      <value>https://music-labs.ru/category/svetovoe-oborudovanye/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4307,14 +4295,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row5" control_type="text">
-      <value locale="ru_RU">Хаб</value>
-      <value locale="en_US">Hub</value>
+      <value>Наушники</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row5_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/hub/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/hub/</value>
+      <value>https://music-labs.ru/category/naushniki/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4334,14 +4320,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row6" control_type="text">
-      <value locale="ru_RU">Shop-Script 6</value>
-      <value locale="en_US">Shop-Script 6</value>
+      <value>Коммутация</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row6_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/app/shop/</value>
-      <value locale="en_US">https://www.webasyst.com/store/app/shop/</value>
+      <value>https://music-labs.ru/category/kommutatsiya-stoyki-sistemy-krepleniya-keysy/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4361,14 +4345,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row7" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>Музыкальные инструменты</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row7_link" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>https://music-labs.ru/category/muzykalnye-instrumenty/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4388,14 +4370,12 @@
             </name>
     </setting>
     <setting var="footer_col1_row8" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>Проекционное оборудование</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col1_row8_link" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>https://music-labs.ru/category/proektsionnoe-oborudovanie/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4420,8 +4400,7 @@
       <name locale="en_US">Show column</name>
     </setting>
     <setting var="footer_col2_head" control_type="text">
-      <value locale="ru_RU">Темы дизайна</value>
-      <value locale="en_US">Design themes</value>
+      <value>Помощь</value>
       <name locale="ru_RU">
                 Заголовок
                 
@@ -4436,14 +4415,12 @@
             </name>
     </setting>
     <setting var="footer_col2_row1" control_type="text">
-      <value locale="ru_RU">Yourshop</value>
-      <value locale="en_US">Yourshop</value>
+      <value>Оплата</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col2_row1_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/theme/your_shop/</value>
-      <value locale="en_US">https://www.webasyst.com/store/theme/your_shop/</value>
+      <value>https://music-labs.ru/payment</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4463,14 +4440,12 @@
             </name>
     </setting>
     <setting var="footer_col2_row2" control_type="text">
-      <value locale="ru_RU">Multi-shop</value>
-      <value locale="en_US">Multi-shop</value>
+      <value>Доставка</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col2_row2_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/theme/multishop/</value>
-      <value locale="en_US">https://www.webasyst.com/store/theme/multishop/</value>
+      <value>https://music-labs.ru/shipping</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4490,14 +4465,12 @@
             </name>
     </setting>
     <setting var="footer_col2_row3" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>Гарантия и возврат</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col2_row3_link" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>https://music-labs.ru/garantiya-i-vozvrat</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4657,8 +4630,7 @@
       <name locale="en_US">Show column</name>
     </setting>
     <setting var="footer_col3_head" control_type="text">
-      <value locale="ru_RU">Полезные плагины</value>
-      <value locale="en_US">Usefull plugins</value>
+      <value>Компания</value>
       <name locale="ru_RU">
                 Заголовок
                 
@@ -4673,14 +4645,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row1" control_type="text">
-      <value locale="ru_RU">Купить в 1 клик</value>
-      <value locale="en_US">1-Click Ordering</value>
+      <value>Контакты</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row1_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/quickorder/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/quickorder/</value>
+      <value>https://music-labs.ru/contacts</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4700,14 +4670,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row2" control_type="text">
-      <value locale="ru_RU">Комплекты со скидкой</value>
-      <value locale="en_US">Product sets with discount</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row2_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/productsets/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/productsets/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4727,14 +4695,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row3" control_type="text">
-      <value locale="ru_RU">Товары-комплекты</value>
-      <value locale="en_US">Product-sets</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row3_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/itemsets/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/itemsets/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4754,14 +4720,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row4" control_type="text">
-      <value locale="ru_RU">Гибкие скидки</value>
-      <value locale="en_US">Flexdiscount</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row4_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/flexdiscount/</value>
-      <value locale="en_US">https://www.webasyst.ru/store/plugin/shop/flexdiscount/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4781,14 +4745,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row5" control_type="text">
-      <value locale="ru_RU">Сжатие JPG и PNG файлов </value>
-      <value locale="en_US">Compress JPG and PNG</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row5_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/tinycompress/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/tinycompress/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4808,14 +4770,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row6" control_type="text">
-      <value locale="ru_RU">Приоритет товаров</value>
-      <value locale="en_US">Products priority</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row6_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/prioritysort/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/prioritysort/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4835,14 +4795,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row7" control_type="text">
-      <value locale="ru_RU">Количество товаров на странице</value>
-      <value locale="en_US">Products per page</value>
+      <value/>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row7_link" control_type="text">
-      <value locale="ru_RU">https://www.webasyst.ru/store/plugin/shop/productsperpage/</value>
-      <value locale="en_US">https://www.webasyst.com/store/plugin/shop/productsperpage/</value>
+      <value/>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4897,68 +4855,57 @@
             </name>
     </setting>
     <setting var="social_vk" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Вконтакте</name>
       <name locale="en_US">Vkontakte</name>
     </setting>
     <setting var="social_fb" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Facebook</name>
       <name locale="en_US">Facebook</name>
     </setting>
     <setting var="social_tw" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Twitter</name>
       <name locale="en_US">Twitter</name>
     </setting>
     <setting var="social_google" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Google+</name>
       <name locale="en_US">Google+</name>
     </setting>
     <setting var="social_mail" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Mail.ru</name>
       <name locale="en_US">Mail.ru</name>
     </setting>
     <setting var="social_lj" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Livejournal</name>
       <name locale="en_US">Livejournal</name>
     </setting>
     <setting var="social_ya" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Yandex</name>
       <name locale="en_US">Yandex</name>
     </setting>
     <setting var="social_odn" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Одноклассники</name>
       <name locale="en_US">Odnoklassniki</name>
     </setting>
     <setting var="social_youtube" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Youtube</name>
       <name locale="en_US">Youtube</name>
     </setting>
     <setting var="social_instagram" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Instagram</name>
       <name locale="en_US">Instagram</name>
     </setting>
     <setting var="social_pint" control_type="text">
-      <value locale="ru_RU">http://yourshop.igaponov.ru</value>
-      <value locale="en_US">http://yourshop-en.igaponov.ru</value>
+      <value/>
       <name locale="ru_RU">Pinterest</name>
       <name locale="en_US">Pinterest</name>
     </setting>
@@ -4997,7 +4944,7 @@
             </name>
     </setting>
     <setting var="payment_auto" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Автоматический режим
                 
@@ -5036,7 +4983,7 @@
       <name locale="en_US">Privat bank</name>
     </setting>
     <setting var="payment-sberbank" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Сбербанк</name>
       <name locale="en_US">Sberbank</name>
     </setting>
@@ -5056,7 +5003,7 @@
       <name locale="en_US">Unistream</name>
     </setting>
     <setting var="payment-visa" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Visa</name>
       <name locale="en_US">Visa</name>
     </setting>
@@ -5136,7 +5083,7 @@
       <name locale="en_US">Mail money</name>
     </setting>
     <setting var="payment-mastercard" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Mastercard</name>
       <name locale="en_US">Mastercard</name>
     </setting>
@@ -5403,7 +5350,7 @@
       </options>
     </setting>
     <setting var="fb_group_link" control_type="text">
-      <value>https://www.facebook.com/facebook</value>
+      <value/>
       <name locale="ru_RU">Ссылка на страницу</name>
       <name locale="en_US">Facebook page URL</name>
     </setting>
@@ -5720,7 +5667,7 @@
             </name>
     </setting>
     <setting var="sidebar_photos" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Отображать последние фотографии в сайдбаре</name>
       <name locale="en_US">Show latest photos</name>
     </setting>
@@ -5799,7 +5746,7 @@
             </name>
     </setting>
     <setting var="popupf" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Отображать всплывающую форму</name>
       <name locale="en_US">Show popup form</name>
     </setting>

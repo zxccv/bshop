@@ -973,38 +973,23 @@
             </name>
     </setting>
     <setting var="main_img" control_type="image">
-      <value>img/main_img.jpg</value>
+      <value/>
       <filename>img/main_img.*</filename>
       <name locale="ru_RU">Изображение</name>
       <name locale="en_US">Image</name>
     </setting>
     <setting var="main_title" control_type="text">
-      <value locale="ru_RU">Тема дизайна Yourshop</value>
-      <value locale="en_US">Theme design Yourshop</value>
+      <value/>
       <name locale="ru_RU">Заголовок</name>
       <name locale="en_US">Title</name>
     </setting>
     <setting var="main_desc" control_type="text">
-      <value><![CDATA[                
-                <p><strong>Yourshop</strong> - тема дизайна для основных приложений Webasyst (Сайт, Магазин, Блог, Фото, Поддержка, Хаб, Рассылки).</p>
-                <p>Благодаря большому количеству настроек и возможностям шаблона, Вы сможете создать современный сайт абсолютно любой тематики.</p>
-                <p><strong>Особенности:</strong></p>
-                <ul>
-                  <li>В Вашем распоряжении <b>22 цветовые схемы, 42 текстуры для сайта, 97 текстур для слайдера</b>.</li>
-                  <li>Возможность <b>создания любой цветовой схемы самостоятельно</b>, а также загрузки своих текстур.</li>
-                  <li>Доступно <b>более 500 настроек</b> темы дизайна, что позволяет удобно работать как профессионалу, так и новичку.</li>
-                  <li>Адаптивность. Работа на всех мобильных устройствах, во всех современных браузерах.</li>
-                  <li>Уделено внимание всем приложениям, не только Магазину.</li>
-                </ul>
-                <p>Тема дизайна Yourshop имеет множество возможностей, встроенных в шаблон. Благодаря им Вам не придется докупать дополнительные плагины или обращаться за помощью к профессионалам.</p>
-                
-            ]]></value>
+      <value/>
       <name locale="ru_RU">Текст описания</name>
       <name locale="en_US">Description text</name>
     </setting>
     <setting var="main_link_text" control_type="text">
-      <value locale="ru_RU">Подробнее</value>
-      <value locale="en_US">Read more</value>
+      <value/>
       <name locale="ru_RU">Текст ссылки</name>
       <name locale="en_US">Link text</name>
     </setting>
@@ -1030,7 +1015,7 @@
             </name>
     </setting>
     <setting var="main_gallery" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Отображать галерею</name>
       <name locale="en_US">Show gallery</name>
     </setting>
@@ -1079,7 +1064,7 @@
             </name>
     </setting>
     <setting var="round_menu" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Отображать круглое меню
                 
@@ -1479,7 +1464,7 @@
       </options>
     </setting>
     <setting var="catalog_desc_pos" control_type="select">
-      <value>up</value>
+      <value>down</value>
       <name locale="ru_RU">Расположение описания категорий</name>
       <name locale="en_US">Position of category description</name>
       <options>
@@ -1494,7 +1479,7 @@
       </options>
     </setting>
     <setting var="subcat_view" control_type="select">
-      <value>slider</value>
+      <value>list_images</value>
       <name locale="ru_RU">Отображение подкатегорий в каталоге</name>
       <name locale="en_US">Catalog subcategories view</name>
       <options>
@@ -1630,8 +1615,7 @@
             </name>
     </setting>
     <setting var="products_per_page" control_type="text">
-      <value locale="ru_RU">2, 20, 30, 50, Показать все</value>
-      <value locale="en_US">20, 30, 50, Show all</value>
+      <value>20, 30, 50, Показать все</value>
       <name locale="ru_RU">
                 Количество товаров на странице
                  
@@ -1716,7 +1700,7 @@
       </options>
     </setting>
     <setting var="category_img_pl" control_type="select">
-      <value>params</value>
+      <value>wmimageincat</value>
       <name locale="ru_RU">
                 Логотип категорий
                 
@@ -1781,7 +1765,7 @@
             </name>
     </setting>
     <setting var="show_cat_sku_sku" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Отображать артикул</name>
       <name locale="en_US">Show sku</name>
     </setting>
@@ -2010,7 +1994,7 @@
       <name locale="en_US">Hide part of filter values</name>
     </setting>
     <setting var="filter_position" control_type="select">
-      <value>up</value>
+      <value>down</value>
       <name locale="ru_RU">Расположение фильтра в каталоге</name>
       <name locale="en_US">Filter categories position</name>
       <options>
@@ -2463,7 +2447,7 @@
             </name>
     </setting>
     <setting var="pr_last_reviews" control_type="select">
-      <value>not_show</value>
+      <value>before_tabs</value>
       <name locale="ru_RU">Последние отзывы</name>
       <name locale="en_US">Last reviews</name>
       <options>
@@ -2652,7 +2636,7 @@
       <name locale="en_US">Juick</name>
     </setting>
     <setting var="yandex_share_liveinternet" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">LiveInternet</name>
       <name locale="en_US">LiveInternet</name>
     </setting>
@@ -2662,7 +2646,7 @@
       <name locale="en_US">LinkedIn</name>
     </setting>
     <setting var="yandex_share_lj" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Живой Журнал</name>
       <name locale="en_US">Livejournal</name>
     </setting>
@@ -2682,7 +2666,7 @@
       <name locale="en_US">Myspace</name>
     </setting>
     <setting var="yandex_share_odnoklassniki" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Одноклассники</name>
       <name locale="en_US">Odnoklassniki</name>
     </setting>
