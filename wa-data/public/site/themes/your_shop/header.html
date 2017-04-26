@@ -56,7 +56,9 @@
     </div>
 {/capture}
 {capture name=header-block-3 assign=header_block2}
-    {$block2 = $wa->block('yourshop.header.block2')}
+    {if $wa->app() == 'shop'}
+        {$block2 = $wa->block('yourshop.header.block2')}
+    {/if}
     <div class="header-bl-2 align-{$theme_settings.header_block2_align} mobile-align-{$theme_settings.header_block2_mob_align}{if empty($theme_settings.header_block2) && empty($block2)} default-view{/if}">
         {if ($wa->shop && $wa->shop->settings('phone')) || $theme_settings.phone}
             <div class="colored phone">{if $theme_settings.phone}{$theme_settings.phone}{elseif $wa->shop}{$wa->shop->settings('phone')}{/if}</div>
@@ -69,7 +71,7 @@
         {if !empty($theme_settings.header_block2)}
             {$theme_settings.header_block2}
         {/if}
-        {if !empty($block2)}{$block2}{/if}
+        {if $wa->app() == 'shop' && !empty($block2)}{$block2}{/if}
     </div>
 {/capture}
 {capture name=search-block-1 assign=search_block}
