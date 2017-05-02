@@ -45,13 +45,20 @@ class helperClass1cit
         $query->ParentType = KladrObjectType::Region;
         $query->ParentId = $region.'00000000000';
         $query->ContentType = KladrObjectType::City;        
-	$query->Limit = 1;   
+	$query->Limit = 5;   
         $query->WithParent = true;
         
         $arResult = $api->QueryToArray($query);
         
         if(count($arResult)>0)
         {
+            foreach ($arResult as $res)
+            {
+                if(strcasecmp($res['name'], $city) === 0)
+                {
+                    return $res['id'];
+                }
+            }
             return $arResult[0]['id'];           
         } 
         else
@@ -158,13 +165,16 @@ class helperClass1cit
             {
                 return $result['errors'];
             } 
-            elseif(is_array($result['errors']))
+            elseif(is_array($result['errors']['messages']))
             {
                 $error_text = '';
-                foreach ($result['errors'] as $error_key => $error_desc)
+                foreach ($result['errors']['messages'] as $error_key => $error_desc)
                 {
                     $error_text = $error_text.$error_key.'('.$error_desc.')<BR>';
                 }
+                //Самойлов НАЧАЛО 02.05.17 13:33 #
+                return $error_text;
+                //Самойлов КОНЕЦ 02.05.17 13:33
             }
             else
             {
