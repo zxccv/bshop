@@ -45,3 +45,9 @@
 !/wa-system/vendors
 /wa-system/vendors/*
 !/wa-system/vendors/1cit
+
+!/wa-system/contact
+/wa-system/contact/*
+!/wa-system/contact/data
+/wa-system/contact/data/*
+!/wa-system/contact/data/fields.php
