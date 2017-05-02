@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
 <theme id="your_shop" system="0" vendor="969712" author="Igor Gaponov" app="shop" parent_theme_id="site:your_shop" version="1.3.1">
-  <name locale="en_US">Yourshop</name> 
+  <name locale="en_US">Yourshop</name>
   <name locale="ru_RU">Yourshop</name>
   <files>
     <file path="breadcrumbs.html" parent="1"/>
@@ -19,9 +19,9 @@
     <file path="yourshop.js" parent="1"/>
     <file path="yourshop.min.css" parent="1"/>
     <file path="yourshop.min.js" parent="1"/>
-    <file path="app_sidebar.html">
+    <file path="app_sidebar.html" custom="0" modified="1">
       <description locale="en_US">Application sidebar</description>
-      <description locale="ru_RU">Сайдбар приложения</description>
+      <description locale="ru_RU"/>
     </file>
     <file path="cart.html" custom="0">
       <description locale="en_US">Shopping cart page</description>
@@ -35,9 +35,9 @@
       <description locale="en_US">Catalog</description>
       <description locale="ru_RU">Каталог товаров</description>
     </file>
-    <file path="category.html" custom="0">
+    <file path="category.html" custom="0" modified="1">
       <description locale="en_US">Wrapper for a category page</description>
-      <description locale="ru_RU">Обертка для страницы категории</description>
+      <description locale="ru_RU"/>
     </file>
     <file path="checkout.html" custom="0">
       <description locale="en_US">Checkout core wrapper</description>
@@ -91,13 +91,13 @@
       <description locale="en_US">Forgot password page</description>
       <description locale="ru_RU">Страница сброса пароля</description>
     </file>
-    <file path="head.html" custom="0">
+    <file path="head.html" custom="0" modified="1">
       <description locale="en_US">Shop-Script's &lt;head&gt; instructions</description>
-      <description locale="ru_RU">Блок &lt;head&gt; приложения Shop-Script</description>
+      <description locale="ru_RU"/>
     </file>
-    <file path="home.html" custom="0">
+    <file path="home.html" custom="0" modified="1">
       <description locale="en_US">Storefront homepage</description>
-      <description locale="ru_RU">Главная витрина магазина</description>
+      <description locale="ru_RU"/>
     </file>
     <file path="image-gallery.html" custom="0">
       <description locale="en_US">Product image gallery scripts</description>
@@ -147,9 +147,9 @@
       <description locale="en_US">Product add to cart block</description>
       <description locale="ru_RU">Блок добавления товара в корзину</description>
     </file>
-    <file path="product.html" custom="0">
+    <file path="product.html" custom="0" modified="1">
       <description locale="en_US">Dedicated product page</description>
-      <description locale="ru_RU">Шаблон основной страницы товара</description>
+      <description locale="ru_RU"/>
     </file>
     <file path="product.js" custom="0">
       <description locale="en_US">Product page JS</description>
@@ -1745,12 +1745,12 @@
       </options>
     </setting>
     <setting var="category_img_width" control_type="text">
-      <value>108</value>
+      <value>200</value>
       <name locale="ru_RU">Максимальная ширина изображения</name>
       <name locale="en_US">Maximum width of image</name>
     </setting>
     <setting var="category_img_height" control_type="text">
-      <value>108</value>
+      <value>200</value>
       <name locale="ru_RU">
                 Максимальная высота изображения
                 
@@ -1765,7 +1765,7 @@
             </name>
     </setting>
     <setting var="show_cat_sku_sku" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Отображать артикул</name>
       <name locale="en_US">Show sku</name>
     </setting>
@@ -1904,7 +1904,7 @@
       <name locale="en_US">Categories block title</name>
     </setting>
     <setting var="product_catalog" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Сайдбар на странице товара</name>
       <name locale="en_US">Sidebar in product page</name>
     </setting>
@@ -1974,7 +1974,7 @@
       <name locale="en_US">Filter block title</name>
     </setting>
     <setting var="filter_state" control_type="select">
-      <value>closed</value>
+      <value>opened</value>
       <name locale="ru_RU">Состояние фильтра в каталоге</name>
       <name locale="en_US">Filter categories state</name>
       <options>
@@ -1994,7 +1994,7 @@
       <name locale="en_US">Hide part of filter values</name>
     </setting>
     <setting var="filter_position" control_type="select">
-      <value>down</value>
+      <value>up</value>
       <name locale="ru_RU">Расположение фильтра в каталоге</name>
       <name locale="en_US">Filter categories position</name>
       <options>

@@ -147,7 +147,7 @@
         </div>
     {/if}
     <!-- End of Promo-cards -->
-
+    
     <!-- Products slider -->
     {if !empty($theme_settings.products_slider1)}
         {include file="slider.html" slider_id="1" search=$theme_settings.products_slider1 search_count=$theme_settings.products_slider_count1 name=$theme_settings.products_slider_name1 speed=$theme_settings.ps_slider_speed1 auto=1}
@@ -157,6 +157,10 @@
         {include file="slider.html" slider_id="2" search=$theme_settings.products_slider2 search_count=$theme_settings.products_slider_count2 name=$theme_settings.products_slider_name2 speed=$theme_settings.ps_slider_speed2 auto=1}
     {/if}
     <!-- End of Products slider -->
+    
+    <!--Самойлов++ вставка отзывов-->
+    {if $wa->shop}{shopCustomerreviewsPlugin::displayReviewsAtHomePage()}{/if}
+    <!--Самойлов-->
 {if empty($theme_settings.home_catalog)}
 </div>
 {/if}
