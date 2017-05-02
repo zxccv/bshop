@@ -42,7 +42,17 @@
     {/if}
 
     <div class="content-sidebar{if !empty($theme_settings.sidebar_catalog)}{if $theme_settings.catalog_sidebar == 'right'} right{/if}{if !empty($theme_settings.sidebar_social_fb)} fb-page{/if}{else} without-sidebar{/if}">
-        <h1 class="category-name">
+        
+        <!--Самойлов++ баннер-->
+        <div align="center">
+        {if $wa->shop && shopWmimageincatPlugin::getCategoryImage($category.id, 'banner')}
+        <img src="{shopWmimageincatPlugin::getCategoryImage($category.id, 'banner')}" />
+        {/if}
+        </div>
+        <BR>
+        <!--Самойлов-->
+        
+        <h1 align="center" class="category-name">
             {$category.name|escape}
         </h1>
 

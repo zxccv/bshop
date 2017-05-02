@@ -1,6 +1,6 @@
 <!-- plugin hook: 'frontend_nav' -->
 {* @event frontend_nav.%plugin_id% *}
-{if !empty($frontend_nav)}
+<!--{if !empty($frontend_nav)}
     {foreach $frontend_nav as $plugin_name => $_}
         {if !empty($_) && ((!empty($theme_settings.sidebar_brands) && ($plugin_name == 'brands-plugin' || $plugin_name == 'productbrands-plugin')) || ($plugin_name !== 'brands-plugin' && $plugin_name !== 'productbrands-plugin'))}
             <div class="sidebar-block">
@@ -9,7 +9,7 @@
             </div>
         {/if}
     {/foreach}
-{/if}
+{/if}-->
 
 <!-- plugin hook: 'frontend_nav_aux' -->
 {* @event frontend_nav.%plugin_id% *}

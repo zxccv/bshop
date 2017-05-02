@@ -227,13 +227,18 @@
                     {/foreach}
                 </p>
             {/if}
-
+                
             <!-- plugin hook: 'frontend_product.block_aux' -->
             {* @event frontend_product.%plugin_id%.block_aux *}
             {foreach $frontend_product as $_}{$_.block_aux}{/foreach}
 
         </div>
     </div>
+    <!--Самойлов++-->
+    <div align="center">
+        {shopProductsetsPlugin::showSet($product)}
+    </div>
+    <!--Самойлов-->
     <div class="product-full">
 
         {if $theme_settings.cross_sl_position == 'before_tabs' && $theme_settings.upsell_sl_position == 'before_tabs'}
