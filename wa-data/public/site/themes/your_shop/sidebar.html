@@ -299,6 +299,10 @@
             <div class="sidebar-block">{if $theme_settings.filter_title}<div class="heading">{$theme_settings.filter_title|escape}</div>{/if}{include file='filter.html'}</div>
         {/if}
 
+        <!-- Самойлов Список отзывов -->
+        {shopCustomerreviewsPlugin::displayReviewsList()}
+        <!-- Самойлов Список отзывов -->
+
         {* Страницы активного приложения *}
 
         {if $active_app == 'shop'}{$smarty.capture.active_pages}{/if}

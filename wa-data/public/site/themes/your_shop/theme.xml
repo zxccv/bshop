@@ -58,9 +58,9 @@
       <description locale="en_US">User account interface: contact info editing form</description>
       <description locale="ru_RU">Личный кабинет пользователя: редактирование контактной информации</description>
     </file>
-    <file path="navigation.html" custom="0">
+    <file path="navigation.html" custom="0" modified="1">
       <description locale="en_US">Horizontal navigation block</description>
-      <description locale="ru_RU">Горизонтальный блок навигации</description>
+      <description locale="ru_RU"/>
     </file>
     <file path="navigation_pages.html" custom="0" modified="1">
       <description locale="en_US">Custom app pages in horizontal menu</description>
@@ -84,7 +84,7 @@
     </file>
     <file path="sidebar.html" custom="0" modified="1">
       <description locale="en_US">Website sidebar</description>
-      <description locale="ru_RU"/>
+      <description locale="ru_RU"></description>
     </file>
     <file path="signup.html" custom="0">
       <description locale="en_US">Sign up page</description>

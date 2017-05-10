@@ -19,7 +19,7 @@
         <ul class="menu-v dropdown">
             {foreach $cats as $c}
             <li class="dropdown-menu{if $category_id == $c.id || in_array($c.url, $crumbs) || $wa->currentUrl() == $c.url} selected{/if}">
-                <a href="{$c.url}" title="{$c.name}">
+                <a href="{$c.url}" title="{$c.name}" data-icon-id="{$c.id}">
                     {$c.name}
                     {if !empty($c.params.badge)}<span class="badge{if !empty($c.params.badge_color)} {$c.params.badge_color|escape}{/if}"{if !empty($c.params.badge_color_hex) || !empty($c.params.badge_text_color)} style="{if !empty($c.params.badge_text_color)}color: #{$c.params.badge_text_color};{/if}{if !empty($c.params.badge_color_hex)}background-color: #{$c.params.badge_color_hex};{/if}"{/if}>{$c.params.badge}</span>{/if}
                     {if !empty($c.childs)}<i class="fa fa-chevron-right"></i>{/if}
@@ -75,7 +75,7 @@
                     {else}
                         {$hide_child = 0}
                     {/if}
-                    <a href="{$c.url}" title="{$c.name}" class='{if !$hide_child}has-child{/if}{if empty($theme_settings.category_heading_plus) && $level !== 0} no-margin{/if}'>
+                    <a href="{$c.url}" title="{$c.name}" class='{if !$hide_child}has-child{/if}{if empty($theme_settings.category_heading_plus) && $level !== 0} no-margin{/if}' data-icon-id="{$c.id}">
                         {if !empty($c.childs)}
                             {if $theme_settings.category_type == 'vertical_dropdown_list' && ((!empty($theme_settings.category_heading_plus) && $level == 0) || $level > 0)}
                                 {if ($collapsed == 'third' && $level == 1) || ($collapsed == 'fourth' && $level == 2) || $collapsed == 'fifth' && $level == 3}
@@ -156,7 +156,7 @@
                     {if $theme_settings.category_type == 'dropdown'}
                         {foreach from=$categories item=cat name=categories}
                             <li class="{if $smarty.foreach.categories.first}first{/if}{if $category_id == $cat.id || in_array($cat.url, $crumbs)} selected{/if}">
-                                <a href="{$cat.url}" title='{$cat.name}'>
+                                <a href="{$cat.url}" title='{$cat.name}' data-icon-id="{$cat.id}">
                                     {$cat.name}
                                     {if !empty($cat.params.badge)}<span class="badge{if !empty($cat.params.badge_color)} {$cat.params.badge_color|escape}{/if}"{if !empty($cat.params.badge_color_hex) || !empty($cat.params.badge_text_color)} style="{if !empty($cat.params.badge_text_color)}color: #{$cat.params.badge_text_color};{/if}{if !empty($cat.params.badge_color_hex)}background-color: #{$cat.params.badge_color_hex};{/if}"{/if}>{$cat.params.badge}</span>{/if}
                                 </a>
@@ -173,7 +173,7 @@
                             <ul class="menu-v dropdown vertical-menu{if $theme_settings.category_type == 'vertical_dropdown_list'} appear-menu{/if}">
                                 {foreach from=$categories item=cat name=categories}
                                      <li{if $category_id == $cat.id || in_array($cat.url, $crumbs)} class="selected"{/if}>
-                                        <a href="{$cat.url}" title="{$cat.name}">
+                                        <a href="{$cat.url}" title="{$cat.name} " data-icon-id="{$cat.id}">
                                             {$cat.name}
                                             {if !empty($cat.params.badge)}<span class="badge{if !empty($cat.params.badge_color)} {$cat.params.badge_color|escape}{/if}"{if !empty($cat.params.badge_color_hex) || !empty($cat.params.badge_text_color)} style="{if !empty($cat.params.badge_text_color)}color: #{$cat.params.badge_text_color};{/if}{if !empty($cat.params.badge_color_hex)}background-color: #{$cat.params.badge_color_hex};{/if}"{/if}>{$cat.params.badge}</span>{/if}
                                             {if !empty($cat.childs)}<i class="fa fa-chevron-right"></i>{/if}

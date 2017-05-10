@@ -171,6 +171,21 @@
         {if !empty($user_css)}{$user_css}{/if}
 
         {include file='color_scheme.css.html'}{/strip}
+        
+        <!--Самойлов Иконки категорий-->
+        <script type="text/javascript">
+        {if $wa->shop && class_exists(shopWmimageincatPlugin)}var images = {json_encode(shopWmimageincatPlugin::getCategoryImageObj())};{/if}
+      $(document).ready(function(){
+         if(typeof(images) != 'undefined'){
+            $.each(images, function(k,v){
+                if(v.icon) {
+                    $('[data-icon-id="'+k+'"]').prepend('<img src="'+v.icon+'" alt="" style="vertical-align:middle; margin-right:3px;">');
+                }
+            });
+        }
+    });
+        </script>
+        <!--Самойлов Иконки категорий-->
     </head>
     <body id="yourshop" class='{$wa_app} {$theme_settings.color}{if $isMobile} mobile{else} not-mobile{/if}'>
 
