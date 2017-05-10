@@ -218,6 +218,14 @@
                     {/foreach}
                 </p>
             {/if}
+            <!-- Самойлов НАЧАЛО-->
+            <p>
+            {$_b = shopProductbrandsPlugin::productBrand($product.id)}
+            {if $_b}
+                <a href="{$_b.url}">{if $_b.image}<img src="{$wa_url}wa-data/public/shop/brands/{$_b.id}/{$_b.id}{$_b.image}">{else}{$_b.name}{/if}</a>
+            {/if}
+            </p>
+            <!-- Самойлов КОНЕЦ-->
             <!-- tags -->
             {if $product.tags}
                 <p>

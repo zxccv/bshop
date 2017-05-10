@@ -149,7 +149,7 @@
     </file>
     <file path="product.html" custom="0" modified="1">
       <description locale="en_US">Dedicated product page</description>
-      <description locale="ru_RU"/>
+      <description locale="ru_RU"></description>
     </file>
     <file path="product.js" custom="0">
       <description locale="en_US">Product page JS</description>
