@@ -6,6 +6,7 @@ return array(
     'frontend' => true,
     'handlers' => array(
         'order_action.create' => 'orderCreateEvent',
-        'backend_order' => 'backendOrderHook'
+        'backend_order' => 'backendOrderHook',
+        'product_save' => 'productSave'
     ),
     );
