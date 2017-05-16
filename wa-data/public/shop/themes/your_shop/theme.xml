@@ -149,7 +149,7 @@
     </file>
     <file path="product.html" custom="0" modified="1">
       <description locale="en_US">Dedicated product page</description>
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="product.js" custom="0">
       <description locale="en_US">Product page JS</description>
@@ -587,7 +587,7 @@
             </name>
     </setting>
     <setting var="html_slider_pattern" control_type="image_select">
-      <value>img/patterns/auto-pattern.jpg</value>
+      <value>img/patterns/thumbs/pattern9.png</value>
       <name locale="ru_RU">Задний фон слайдера</name>
       <name locale="en_US">Slider background image</name>
       <options>
@@ -2329,8 +2329,7 @@
       <name locale="en_US">Show upselling slider</name>
     </setting>
     <setting var="upsell_sl_title" control_type="text">
-      <value locale="ru_RU">Рекомендуем</value>
-      <value locale="en_US">See also</value>
+      <value>Похожие товары</value>
       <name locale="ru_RU">Заголовок</name>
       <name locale="en_US">Title</name>
     </setting>

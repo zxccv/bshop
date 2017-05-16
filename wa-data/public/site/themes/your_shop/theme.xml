@@ -84,7 +84,7 @@
     </file>
     <file path="sidebar.html" custom="0" modified="1">
       <description locale="en_US">Website sidebar</description>
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="signup.html" custom="0">
       <description locale="en_US">Sign up page</description>
@@ -4042,7 +4042,7 @@
       <name locale="en_US">Copyright text</name>
     </setting>
     <setting var="footer_narrow_text" control_type="text">
-      <value/>
+      <value>Добро пожаловать в Music Labs! Если вы ищете звук или свет для вашего заведения, проигрыватель винила или dj-контроллер, то вы оказались в нужном месте. Позвоните или напишите нам, и мы с удовольствием поможем вам с выбором музыкального, диджейского и студийного оборудования.</value>
       <name locale="ru_RU">Текст на узкой полоске</name>
       <name locale="en_US">Text on the narrow stripe</name>
     </setting>
@@ -4136,8 +4136,7 @@
       <name locale="en_US">Show subscribe form</name>
     </setting>
     <setting var="mailer_head" control_type="text">
-      <value locale="ru_RU">Подписывайтесь на наши новости</value>
-      <value locale="en_US">Subscribe to our newsletter</value>
+      <value>Подпишитесь на наши новости и спец. предложения</value>
       <name locale="ru_RU">Текст заголовка</name>
       <name locale="en_US">Heading text</name>
     </setting>
@@ -4205,7 +4204,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row1_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4230,7 +4229,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row2_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4255,7 +4254,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row3_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4280,7 +4279,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row4_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4305,7 +4304,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row5_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4330,7 +4329,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row6_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4355,7 +4354,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row7_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4380,7 +4379,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col1_row8_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4425,7 +4424,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col2_row1_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4450,7 +4449,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col2_row2_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4475,7 +4474,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col2_row3_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4655,7 +4654,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col3_row1_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4680,7 +4679,7 @@
       <name locale="en_US">Link</name>
     </setting>
     <setting var="footer_col3_row2_target" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">
                 Открыть в новой вкладке
                 
@@ -4855,7 +4854,7 @@
             </name>
     </setting>
     <setting var="social_vk" control_type="text">
-      <value/>
+      <value><![CDATA[http://vk.com/musiclabs_shop]]></value>
       <name locale="ru_RU">Вконтакте</name>
       <name locale="en_US">Vkontakte</name>
     </setting>
@@ -4900,7 +4899,7 @@
       <name locale="en_US">Youtube</name>
     </setting>
     <setting var="social_instagram" control_type="text">
-      <value/>
+      <value><![CDATA[http://instagram.com/music_labs]]></value>
       <name locale="ru_RU">Instagram</name>
       <name locale="en_US">Instagram</name>
     </setting>
@@ -5429,7 +5428,7 @@
       </options>
     </setting>
     <setting var="category_list_plus_sidebar" control_type="select">
-      <value>left</value>
+      <value>right</value>
       <name locale="ru_RU">Расположение плюсика в меню категорий</name>
       <name locale="en_US">Plus icon location</name>
       <options>
