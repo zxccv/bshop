@@ -20,7 +20,20 @@ class shopBshopPlugin extends shopPlugin
     }
     
     public function productSave($params)
-    {        
+    {   
+        $params_model = new shopProductParamsModel(); 
+        
+        $types_model = new shopTypeModel();        
+        $vinyl_type_id = $types_model->getByField('name','Виниловая пластинка')['id'];
+
+        if($params['data']['type_id'] == $vinyl_type_id)
+        {
+            $current_params = array();
+            $current_params['yandexmarket.ignored'] = 1;
+            $params_model->set($params['data']['id'], $current_params);
+            return;            
+        }
+        
         $sku = reset($params['data']['skus']);
         $min_purchase_time = 200;
         
@@ -38,9 +51,7 @@ class shopBshopPlugin extends shopPlugin
                     $min_purchase_time = $stock_purchase_time;
             };
         };
-        
-        $params_model = new shopProductParamsModel(); 
-        
+                        
         if($min_purchase_time == 200)
         {
             $current_params = array();
