@@ -23,23 +23,35 @@ class shopBshopPlugin extends shopPlugin
     {   
         $params_model = new shopProductParamsModel(); 
         
-        $types_model = new shopTypeModel();        
-        $vinyl_type_id = $types_model->getByField('name','Виниловая пластинка')['id'];
+        //$types_model = new shopTypeModel();        
+        //$vinyl_type_id = $types_model->getByField('name','Виниловая пластинка')['id'];
+        $vinyl_type_id = 18;
 
         if($params['data']['type_id'] == $vinyl_type_id)
         {
-            $current_params = array();
-            $current_params['yandexmarket.ignored'] = 1;
-            $params_model->set($params['data']['id'], $current_params);
-            return;            
+            $product_params_entry = array();
+            $product_params_entry['product_id'] = $params['data']['id'];
+            $product_params_entry['name'] = 'yandexmarket.ignored';
+            $product_params_entry['value'] = '1';
+            $params_model->insert($product_params_entry,1);
+            return;             
+        }
+        
+        $stock_times_cache = new waRuntimeCache('shop_bshop_stockcache');
+        
+        if($stock_times_cache->isCached())
+        {
+            $stock_times = $stock_times_cache->get();
+        } else
+        {        
+            $settinsModel = new waAppSettingsModel();        
+            $stock_times_json = $settinsModel->get(array('shop','bshop'),'stock_time');
+            $stock_times = json_decode($stock_times_json,true);
+            $stock_times_cache->set($stock_times);
         }
         
         $sku = reset($params['data']['skus']);
-        $min_purchase_time = 200;
-        
-        $settinsModel = new waAppSettingsModel();        
-        $stock_times_json = $settinsModel->get(array('shop','bshop'),'stock_time');
-        $stock_times = json_decode($stock_times_json,true);
+        $min_purchase_time = 200;       
                 
         foreach ($sku['stock'] as $stock_key => $stock_remain)        
         {
@@ -54,16 +66,23 @@ class shopBshopPlugin extends shopPlugin
                         
         if($min_purchase_time == 200)
         {
-            $current_params = array();
+            $params_model->deleteByField(array('product_id'=>$params['data']['id'],'name'=>'yandexmarket.local_delivery_days'));
+            $params_model->deleteByField(array('product_id'=>$params['data']['id'],'name'=>'yandexmarket.local_delivery_cost'));
         }
         else
         {
-            $current_params = $params_model->get($params['data']['id']);
-            $current_params['yandexmarket.local_delivery_days'] = $min_purchase_time+1;
-            $current_params['yandexmarket.local_delivery_cost'] = 400;        
+            $product_params_entry = array();
+            $product_params_entry['product_id'] = $params['data']['id'];
+            $product_params_entry['name'] = 'yandexmarket.local_delivery_days';
+            $product_params_entry['value'] = $min_purchase_time+1;
+            $params_model->insert($product_params_entry,1);
+            
+            $product_params_entry = array();
+            $product_params_entry['product_id'] = $params['data']['id'];
+            $product_params_entry['name'] = 'yandexmarket.local_delivery_cost';
+            $product_params_entry['value'] = '400';
+            $params_model->insert($product_params_entry,1);
         }
-        
-        $params_model->set($params['data']['id'], $current_params);
     }
 }
 
