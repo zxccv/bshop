@@ -4489,14 +4489,12 @@
             </name>
     </setting>
     <setting var="footer_col2_row4" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>Как получить скидку?</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col2_row4_link" control_type="text">
-      <value locale="ru_RU"/>
-      <value locale="en_US"/>
+      <value>https://music-labs.ru/skidki/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4694,12 +4692,12 @@
             </name>
     </setting>
     <setting var="footer_col3_row3" control_type="text">
-      <value/>
+      <value>О нас</value>
       <name locale="ru_RU">Название</name>
       <name locale="en_US">Name</name>
     </setting>
     <setting var="footer_col3_row3_link" control_type="text">
-      <value/>
+      <value>https://music-labs.ru/about/</value>
       <name locale="ru_RU">Ссылка</name>
       <name locale="en_US">Link</name>
     </setting>
@@ -4854,7 +4852,7 @@
             </name>
     </setting>
     <setting var="social_vk" control_type="text">
-      <value><![CDATA[http://vk.com/musiclabs_shop]]></value>
+      <value>http://vk.com/musiclabs_shop</value>
       <name locale="ru_RU">Вконтакте</name>
       <name locale="en_US">Vkontakte</name>
     </setting>
@@ -4899,7 +4897,7 @@
       <name locale="en_US">Youtube</name>
     </setting>
     <setting var="social_instagram" control_type="text">
-      <value><![CDATA[http://instagram.com/music_labs]]></value>
+      <value/>
       <name locale="ru_RU">Instagram</name>
       <name locale="en_US">Instagram</name>
     </setting>
@@ -5197,7 +5195,7 @@
       <description locale="ru_RU"/>
     </setting>
     <setting var="vk_group_id" control_type="text">
-      <value>1</value>
+      <value>146317645</value>
       <name locale="ru_RU">
                 Идентификатор сообщества
                 
@@ -5594,7 +5592,7 @@
             </name>
     </setting>
     <setting var="sidebar_social_vk" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Отображать группу Вконтакте</name>
       <name locale="en_US">Show VK group</name>
     </setting>
@@ -5619,7 +5617,7 @@
             </name>
     </setting>
     <setting var="sidebar_news" control_type="checkbox">
-      <value>1</value>
+      <value/>
       <name locale="ru_RU">Отображать последние новости в сайдбаре</name>
       <name locale="en_US">Show latest news</name>
     </setting>
@@ -5745,7 +5743,7 @@
             </name>
     </setting>
     <setting var="popupf" control_type="checkbox">
-      <value/>
+      <value>1</value>
       <name locale="ru_RU">Отображать всплывающую форму</name>
       <name locale="en_US">Show popup form</name>
     </setting>
@@ -5774,8 +5772,7 @@
             </name>
     </setting>
     <setting var="popupf_title" control_type="text">
-      <value locale="ru_RU">Заголовок</value>
-      <value locale="en_US">Title</value>
+      <value>скидки от 7 до 15%</value>
       <name locale="ru_RU">Заголовок блока</name>
       <name locale="en_US">Block title</name>
     </setting>

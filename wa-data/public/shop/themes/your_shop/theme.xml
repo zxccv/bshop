@@ -587,7 +587,7 @@
             </name>
     </setting>
     <setting var="html_slider_pattern" control_type="image_select">
-      <value>img/patterns/thumbs/pattern9.png</value>
+      <value>img/patterns/thumbs/pattern35.jpg</value>
       <name locale="ru_RU">Задний фон слайдера</name>
       <name locale="en_US">Slider background image</name>
       <options>
@@ -704,7 +704,7 @@
       <name locale="en_US">Products slider count</name>
     </setting>
     <setting var="html_slider_speed" control_type="text">
-      <value>5000</value>
+      <value><![CDATA[10000]]></value>
       <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
       <name locale="en_US">Time between transitions (milliseconds)</name>
     </setting>
@@ -812,7 +812,7 @@
       <name locale="en_US">Name</name>
     </setting>
     <setting var="products_slider2" control_type="text">
-      <value>set/promo</value>
+      <value>set/new</value>
       <name locale="ru_RU">
                 Режим отображения
                  
@@ -839,7 +839,7 @@
             </name>
     </setting>
     <setting var="ps_slider_speed2" control_type="text">
-      <value>8000</value>
+      <value><![CDATA[10000]]></value>
       <name locale="ru_RU">Скорость смены слайдов (миллисекунды)</name>
       <name locale="en_US">Time between transitions (milliseconds)</name>
     </setting>

@@ -20,7 +20,7 @@ class shopBshopPlugin extends shopPlugin
     }
     
     public function productSave($params)
-    {   
+    {
         $params_model = new shopProductParamsModel(); 
         
         //$types_model = new shopTypeModel();        
