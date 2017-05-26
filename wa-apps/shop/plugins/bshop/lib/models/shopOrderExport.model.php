@@ -78,6 +78,11 @@ class shopOrderExportModel extends waModel
         
         $order_params = $order['params'];
         
+        //Самойлов НАЧАЛО 25.05.17 16:12 #276
+        $order_data['auth_code'] = $order_params['auth_code'];
+        $order_data['auth_pin'] = $order_params['auth_pin'];
+        //Самойлов КОНЕЦ 25.05.17 16:12
+        
         $order_data['ТипОплаты'] = $order_params['payment_plugin'];
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
         
