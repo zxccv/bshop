@@ -37,6 +37,16 @@ class shopBshopPlugin extends shopPlugin
             return;             
         }
         
+        if(isset($params['data']['image_id']) == 0)
+        {
+            $product_params_entry = array();
+            $product_params_entry['product_id'] = $params['data']['id'];
+            $product_params_entry['name'] = 'yandexmarket.ignored';
+            $product_params_entry['value'] = '1';
+            $params_model->insert($product_params_entry,1);
+            return;
+        }
+        
         $stock_times_cache = new waRuntimeCache('shop_bshop_stockcache');
         
         if($stock_times_cache->isCached())
