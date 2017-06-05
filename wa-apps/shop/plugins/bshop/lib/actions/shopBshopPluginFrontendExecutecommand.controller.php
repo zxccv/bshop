@@ -179,6 +179,45 @@ class shopBshopPluginFrontendExecutecommandController extends waJsonController
             $shop_order_export_model = new shopOrderExportModel();
             $shop_order_export_model->registerOrderExport($order_id,$error);
         }
+        elseif($command == 'YandexMarket')
+        {
+            $plugin = wa()->getPlugin('yandexmarket');
+
+            $profile_helper = new shopImportexportHelper('yandexmarket');
+
+            list($path, $profile_id) = $plugin->getInfoByHash($request['hash']);
+            if ($profile_id) {
+                $profile = $profile_helper->getConfig($profile_id);
+                if (!$profile) {
+                    throw new waException('Profile not found', 404);
+                }
+                
+                waRequest::setParam('profile_id', $profile_id);
+
+                $runner = new shopYandexmarketPluginRunController();
+                $_POST['processId'] = null;
+
+                $moved = false;
+                $ready = false;
+                do {
+                    ob_start();
+                    if (empty($_POST['processId'])) {
+                        $_POST['processId'] = $runner->processId;
+                    } else {
+                        sleep(1);
+                    }
+                    if ($ready) {
+                        $_POST['cleanup'] = true;
+                        $moved = true;
+                    }
+                    $runner->execute();
+                    $out = ob_get_clean();
+                    $result = json_decode($out, true);
+                    $ready = !empty($result) && is_array($result) && ifempty($result['ready']);
+                } while (!$ready || !$moved);
+                   
+            }
+        }
         else
         {
             $this->setError('Неизвестная команда');
