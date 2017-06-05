@@ -44,7 +44,7 @@
     </file>
     <file path="index.html" custom="0" modified="1">
       <description locale="en_US">Core layout of the YOURSHOP theme family</description>
-      <description locale="ru_RU"/>
+      <description locale="ru_RU"></description>
     </file>
     <file path="login.html" custom="0">
       <description locale="en_US">Login page</description>
@@ -4042,7 +4042,7 @@
       <name locale="en_US">Copyright text</name>
     </setting>
     <setting var="footer_narrow_text" control_type="text">
-      <value>Добро пожаловать в Music Labs! Если вы ищете звук или свет для вашего заведения, проигрыватель винила или dj-контроллер, то вы оказались в нужном месте. Позвоните или напишите нам, и мы с удовольствием поможем вам с выбором музыкального, диджейского и студийного оборудования.</value>
+      <value/>
       <name locale="ru_RU">Текст на узкой полоске</name>
       <name locale="en_US">Text on the narrow stripe</name>
     </setting>

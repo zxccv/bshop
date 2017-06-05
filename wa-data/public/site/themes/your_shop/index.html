@@ -28,6 +28,7 @@
                 window.js_onload_inline = [];
                 window.css_onload = [];
                 window.css_onload.push('https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,700,700italic&amp;subset=latin,cyrillic-ext,latin-ext,cyrillic');
+                
                 {if $wa->shop && $wa->shop->currency() == 'RUB' && $theme_settings.ruble == 'html'} window.css_onload.push("{$wa_url}wa-content/font/ruble/arial/fontface.css");{/if}
                 window.css_onload.push("{$wa_real_theme_url}igaponov/css/yourshop-icons.min.css");
                 window.js_onload.push("{$wa_theme_url}onload.js?v={$wa_theme_version}");
