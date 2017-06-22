@@ -91,6 +91,9 @@ class shopOrderExportModel extends waModel
         //Самойлов КОНЕЦ 22.06.17 9:33
         
         $order_data['ТипОплаты'] = $order_params['payment_plugin'];
+        //Самойлов НАЧАЛО 22.06.17 9:38 #
+        $order_data['ТипОплатыНаименование'] = $order_params['payment_name'];
+        //Самойлов КОНЕЦ 22.06.17 9:38
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
         
         $address = array();
