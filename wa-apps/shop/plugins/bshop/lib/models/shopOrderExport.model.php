@@ -83,6 +83,13 @@ class shopOrderExportModel extends waModel
         $order_data['auth_pin'] = $order_params['auth_pin'];
         //Самойлов КОНЕЦ 25.05.17 16:12
         
+        //Самойлов НАЧАЛО 22.06.17 9:33 #
+        if(isset($order_params['yandexmarket.campaign_id']))
+            $order_data['YandexMarket'] = true;
+        else
+            $order_data['YandexMarket'] = false;
+        //Самойлов КОНЕЦ 22.06.17 9:33
+        
         $order_data['ТипОплаты'] = $order_params['payment_plugin'];
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
         
