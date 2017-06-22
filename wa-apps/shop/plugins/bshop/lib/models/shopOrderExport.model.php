@@ -83,6 +83,13 @@ class shopOrderExportModel extends waModel
         $order_data['auth_pin'] = $order_params['auth_pin'];
         //Самойлов КОНЕЦ 25.05.17 16:12
         
+        //Самойлов НАЧАЛО 22.06.17 9:33 #
+        if(isset($order_params['yandexmarket.campaign_id']))
+            $order_data['YandexMarket'] = true;
+        else
+            $order_data['YandexMarket'] = false;
+        //Самойлов КОНЕЦ 22.06.17 9:33
+        
         $order_data['ТипОплаты'] = $order_params['payment_plugin'];
         $order_data['ТипДоставки'] = $order_params['shipping_plugin'];
         
@@ -135,7 +142,12 @@ class shopOrderExportModel extends waModel
             elseif(trim($address_field) != '-')
             {
                 $dot_pos = mb_stripos($address_field, '.');
-                $address['Улица'] = mb_substr($address_field, $dot_pos+2).' '.mb_substr($address_field, 0, $dot_pos);
+                if($dot_pos != 0)
+                {
+                    $address['Улица'] = mb_substr($address_field, $dot_pos+2).' '.mb_substr($address_field, 0, $dot_pos);
+                } else {
+                    $address['Улица'] = $address_field; 
+                }
             }            
         }
               

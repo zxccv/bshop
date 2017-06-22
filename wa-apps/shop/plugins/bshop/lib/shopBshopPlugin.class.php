@@ -21,6 +21,13 @@ class shopBshopPlugin extends shopPlugin
     
     public function productSave($params)
     {
+        //Самойлов НАЧАЛО 13.06.17 17:30 #Код в характеристику
+        $shop_product_features_model = new shopProductFeaturesModel();
+        $shop_product_features_model->setData($params['instance'], array('f_utm_value' => $params['data']['id']));
+        $search = new shopIndexSearch();
+        $search->onUpdate($params['data']['id']);
+        //Самойлов КОНЕЦ 13.06.17 17:31
+        
         $params_model = new shopProductParamsModel(); 
         
         //$types_model = new shopTypeModel();        
