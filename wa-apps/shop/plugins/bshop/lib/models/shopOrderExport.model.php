@@ -135,7 +135,12 @@ class shopOrderExportModel extends waModel
             elseif(trim($address_field) != '-')
             {
                 $dot_pos = mb_stripos($address_field, '.');
-                $address['Улица'] = mb_substr($address_field, $dot_pos+2).' '.mb_substr($address_field, 0, $dot_pos);
+                if($dot_pos != 0)
+                {
+                    $address['Улица'] = mb_substr($address_field, $dot_pos+2).' '.mb_substr($address_field, 0, $dot_pos);
+                } else {
+                    $address['Улица'] = $address_field; 
+                }
             }            
         }
               
