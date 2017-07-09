@@ -200,6 +200,9 @@ class shopYandexmarketPluginApiActions extends waActions
             //TODO subway
 
             $order['params']['yandexmarket.id'] = $raw_order->yandex_id;
+            if ($raw_order->outlet_id) {
+                $order['params']['yandexmarket.outlet_id'] = $raw_order->outlet_id;
+            }
             $order['params']['yandexmarket.campaign_id'] = $raw_order->campaign_id;
 
             if ($raw_order->id) {
@@ -219,14 +222,14 @@ class shopYandexmarketPluginApiActions extends waActions
                 'order' => array(
                     'accepted' => true,
                     'id'       => (string)$order_id,
-                )
+                ),
             );
         } else {
             $array = array(
                 'order' => array(
                     'accepted' => false,
-                    'reason'   => 'OUT_OF_DATE'
-                )
+                    'reason'   => 'OUT_OF_DATE',
+                ),
             );
         }
         $this->sendApiResponse($array);
@@ -358,6 +361,9 @@ class shopYandexmarketPluginApiActions extends waActions
         static $plugin;
         if (empty($plugin)) {
             $plugin = wa('shop')->getPlugin('yandexmarket');
+            /**
+             * @var shopYandexmarketPlugin $plugin
+             */
         }
         return $plugin;
     }
@@ -427,7 +433,9 @@ class shopYandexmarketPluginApiActions extends waActions
 
 
         $campaign_model = new shopYandexmarketCampaignsModel();
+
         $this->campaign = $campaign_model->get($order->campaign_id);
+        $this->campaign['id'] = (int)$order->campaign_id;
 
         $this->checkAuth();
 
@@ -487,10 +495,15 @@ class shopYandexmarketPluginApiActions extends waActions
         }
     }
 
-    private function getCalendarMap($to_days = 32)
+    private function getCalendarMap($to_days = 32, $order_before = null)
     {
-        static $map;
+        static $maps = array();
+        $key = md5(var_export($order_before, true));
         $to_days = max(32, $to_days);
+        if (!isset($maps[$key])) {
+            $maps[$key] = array();
+        }
+        $map = &$maps[$key];
         if (($map === null) || (count($map) <= $to_days)) {
             $map = array();
             $now = time();
@@ -498,15 +511,38 @@ class shopYandexmarketPluginApiActions extends waActions
             $week_day = (int)date('N', $now) - 1;
             $timezone = ifset($this->campaign['timezone']);
             $offset = 0;
+
+            if (!isset($this->campaign['schedule']) || ((time() - strtotime($this->campaign['schedule']['period']['fromDate'])) > 3600 * 48)) {
+                $options = array(
+                    'settings'    => true,
+                    'campaign_id' => $this->campaign['id'],
+                );
+
+                $campaigns = $this->getPlugin()->getCampaigns($options);
+
+                $campaign = ifset($campaigns[$this->campaign['id']], array());
+                if (!empty($campaign['settings']['localRegion']['schedule'])) {
+                    $this->campaign['schedule'] = $campaign['settings']['localRegion']['delivery']['schedule'];
+                } else {
+                    $this->campaign['schedule'] = array();
+                }
+            }
+
+            $holidays = ifset($this->campaign['schedule']['totalHolidays'], array());
+
             if ($timezone) {
                 $time = (int)waDateTime::date('G', $now, $timezone);
                 $week_day = (int)waDateTime::date('N', $now, $timezone) - 1;
             }
 
-            if (ifset($this->campaign['order_before_mode']) == 'per-day') {
-                $working_days = ifempty($this->campaign['order_before_per_day'], array_fill(0, 7, 17));
+            if ($order_before === null) {
+                $order_before = $this->campaign;
+            }
+
+            if (ifset($order_before['order_before_mode']) == 'per-day') {
+                $working_days = ifempty($order_before['order_before_per_day'], array_fill(0, 7, 17));
             } else {
-                $working_days = array_fill(0, 7, min(24, max(1, ifset($this->campaign['order_before'], 24))));
+                $working_days = array_fill(0, 7, min(24, max(1, ifset($order_before['order_before'], 24))));
             }
 
 
@@ -523,7 +559,15 @@ class shopYandexmarketPluginApiActions extends waActions
                 $offset_day = $offset;
                 while ($day <= $to_days) {
                     $current_week_day = ($offset_day + $week_day) % 7;
-                    if (!empty($working_days[$current_week_day])) {
+                    $current_date = strtotime(sprintf('+%d days', ($offset_day + $week_day)));
+
+                    if ($timezone) {
+                        $date = waDateTime::date('d-m-Y', $current_date, $timezone);
+                    } else {
+                        $date = date('d-m-Y', $current_date);
+                    }
+
+                    if (!in_array($date, $holidays) && !empty($working_days[$current_week_day])) {
                         $map[$day++] = $offset_day;
                     }
 
@@ -557,6 +601,9 @@ class shopYandexmarketPluginApiActions extends waActions
             }
         }
 
+        if (!count($interval)) {
+            $interval = array(32);
+        }
         $from = min($interval);
         $to = max($interval);
 
@@ -576,8 +623,12 @@ class shopYandexmarketPluginApiActions extends waActions
                 }
             }
         }
+        $order_before = null;
+        if (!empty($defaults['order_before_mode'])) {
+            $order_before = $defaults;
+        }
 
-        $map = $this->getCalendarMap(max($from, $to));
+        $map = $this->getCalendarMap(max($from, $to), $order_before);
 
         if (!empty($defaults['cal'])) {
             $from += $map[0];
@@ -708,14 +759,14 @@ class shopYandexmarketPluginApiActions extends waActions
                             $rates = $this->getPluginRates($order, $items, $shipping_info);
 
                             $debug['rates'][$shipping_id] = $rates;
-                            $defaults = ifset($profile_shipping_methods[$shipping_id], array());
+                            $method_defaults = ifset($profile_shipping_methods[$shipping_id], array());
 
                             //XXX CPA объединять сервисы доставки как точки продаж или как различные способы доставки
                             if ($rates && is_array($rates)) {
                                 foreach ($rates as $rate_id => $rate) {
                                     if ($rate['rate'] !== null) {
                                         $rate_id = ifset($rate['id'], $rate_id);
-                                        $defaults = ifset($profile_shipping_methods[$shipping_id.'.'.$rate_id], array()) + $defaults;
+                                        $defaults = ifset($profile_shipping_methods[$shipping_id.'.'.$rate_id], array()) + $method_defaults;
 
                                         #delivery price
                                         if (!empty($this->campaign['deliveryIncluded'])) {
@@ -746,6 +797,23 @@ class shopYandexmarketPluginApiActions extends waActions
                                                 && !in_array('YANDEX', $payment_methods)
                                             ) {
                                                 $carriers[$id]['paymentAllow'] = false;
+                                            }
+
+                                            if ($carriers[$id]['type'] == 'PICKUP') {
+                                                $this->campaign['pickup_map'];
+                                                $outlets = array();
+                                                foreach ($this->campaign['pickup_map'] as $outlet_id => $outlet_shipping_id) {
+                                                    if ($outlet_shipping_id == $shipping_id) {
+                                                        $outlets[] = array(
+                                                            'id' => $outlet_id,
+                                                        );
+                                                    }
+                                                }
+                                                if ($outlets) {
+                                                    $carriers[$id]['outlets'] = $outlets;
+                                                } else {
+                                                    $carriers[$id]['type'] = 'DELIVERY';
+                                                }
                                             }
                                         } else {
                                             $debug['payment_methods'][] = $id;
@@ -795,6 +863,7 @@ class shopYandexmarketPluginApiActions extends waActions
                     && (ifset($outlet['status']) != 'FAILED')
                     && (ifset($outlet['visibility']) != 'HIDDEN ')
                     && in_array(ifset($outlet['type']), array('MIXED', 'DEPOT'), true)
+                    && !isset($this->campaign['pickup_map'][$outlet['id']])
                 ) {
 
                     $price = 0;
@@ -812,8 +881,8 @@ class shopYandexmarketPluginApiActions extends waActions
                                 $price = floatval($delivery_rule['cost']);
 
                                 $defaults['estimate'] = implode('-', array(
-                                    $delivery_rule['minDeliveryDays'],
-                                    $delivery_rule['maxDeliveryDays'],
+                                    ifset($delivery_rule['minDeliveryDays'], 32),
+                                    ifset($delivery_rule['maxDeliveryDays'], 32),
                                 ));
                             }
                         }
