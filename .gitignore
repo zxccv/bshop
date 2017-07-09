@@ -12,6 +12,7 @@
 !/wa-apps/shop/plugins
 /wa-apps/shop/plugins/*
 !/wa-apps/shop/plugins/bshop
+!/wa-apps/shop/plugins/yandexmarket
 
 !/wa-apps/shop/lib
 /wa-apps/shop/lib/*
