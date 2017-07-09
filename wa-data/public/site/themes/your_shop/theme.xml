@@ -44,7 +44,7 @@
     </file>
     <file path="index.html" custom="0" modified="1">
       <description locale="en_US">Core layout of the YOURSHOP theme family</description>
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="login.html" custom="0">
       <description locale="en_US">Login page</description>
@@ -4047,7 +4047,7 @@
       <name locale="en_US">Text on the narrow stripe</name>
     </setting>
     <setting var="footer_block" control_type="text">
-      <value>&lt;p&gt;Россия, Санкт-Петербург, Большой проспект В.О., дом 83, оф.319&lt;/p&gt;</value>
+      <value><![CDATA[<p>Россия, Санкт-Петербург, Большой проспект В.О., дом 83, оф. 1</p>]]></value>
       <name locale="ru_RU">
                 Содержимое правого блока
                 
